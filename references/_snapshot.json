@@ -1,0 +1,12 @@
+{
+  "upstream": "https://github.com/daangn/seed-design",
+  "commit": "bb6f9a8ae4fdb762f74ae260ffc03619e4d4631a",
+  "snapshotDate": "2026-04-16",
+  "license": "Apache-2.0",
+  "scope": {
+    "tokens": "docs/public/rootage/*.json (raw token values, unmodified)",
+    "components": "packages/react/src/components/ + docs/content/react/components/ (distilled)",
+    "semanticMappings": "packages/css/vars/ (semantic token intent)"
+  },
+  "notes": "Token JSONs are copied verbatim from upstream Rootage; component docs are restructured for AI-first consumption (anatomy/variants/constraints/anti-patterns)."
+}
