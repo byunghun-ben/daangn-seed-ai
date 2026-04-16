@@ -29,7 +29,8 @@ const HARNESS_ROOT = resolve(SKILL_ROOT, "../..");
 const SCENARIOS = {
   signup: {
     summary: "폼 중심: TextField × 3 + Checkbox + Callout + 2-button footer",
-    expected: ["TextField", "Callout", "ActionButton", "neutralWeak", "brandSolid"],
+    // HTML-mode scenario: expectations match token/class patterns, not React names.
+    expected: ["--seed-color-bg-brand-solid", "neutral-weak", "aria-invalid", "type=\"email\""],
     forbidden: ["Dialog", "BottomSheet"],
     prompt: (outPath) => `daangn-ai 스킬을 사용해서 당근 스타일 회원가입 페이지를 만들어줘.
 
@@ -51,7 +52,7 @@ const SCENARIOS = {
 
   listDialog: {
     summary: "리스트 + 파괴적 Dialog (criticalSolid, 주 액션 우측)",
-    expected: ["Dialog", "criticalSolid", "neutralWeak"],
+    expected: ["critical-solid", "neutral-weak", "--seed-color-bg-overlay", "role=\"dialog\""],
     forbidden: ["Snackbar", "BottomSheet"],
     prompt: (outPath) => `daangn-ai 스킬을 사용해서 당근 중고거래 "내 판매 목록" 페이지 HTML을 만들어줘.
 
@@ -75,8 +76,8 @@ anti-patterns.md 체크리스트 준수.
 
   feedback: {
     summary: "Snackbar (성공 vs 실패+재시도), Dialog 금지 검증",
-    expected: ["Snackbar", "positive", "critical", "actionButton"],
-    forbidden: ["Dialog", "BottomSheet"],
+    expected: ["snackbar", "positive", "critical", "--seed-color-bg-neutral-inverted"],
+    forbidden: ["Dialog", "BottomSheet", "role=\"dialog\""],
     prompt: (outPath) => `daangn-ai 스킬을 사용해서 "저장 피드백" 데모 HTML을 만들어줘.
 
 요구사항:
@@ -103,16 +104,18 @@ anti-patterns.md 준수.
 function lint(html, scenario) {
   const findings = [];
 
-  // Strip CSS and HTML comments first (comment text is commentary, not code).
+  // Strip CSS/HTML comments and inline SVG (SVG fills can't use CSS vars easily
+  // and are a common false-positive source for hex checks).
   const noCssComments = html.replace(/\/\*[\s\S]*?\*\//g, "");
   const noComments = noCssComments.replace(/<!--[\s\S]*?-->/g, "");
+  const noSvg = noComments.replace(/<svg\b[\s\S]*?<\/svg>/g, "");
 
   // Separate <style> content (where hex/px checks apply but only OUTSIDE :root)
   // from the rest of the HTML (where element-level checks apply).
-  const styleBlocks = [...noComments.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/g)]
+  const styleBlocks = [...noSvg.matchAll(/<style[^>]*>([\s\S]*?)<\/style>/g)]
     .map((m) => m[1])
     .join("\n");
-  const htmlBody = noComments.replace(/<style[^>]*>[\s\S]*?<\/style>/g, "");
+  const htmlBody = noSvg.replace(/<style[^>]*>[\s\S]*?<\/style>/g, "");
 
   // Within style blocks, strip :root declarations (token vocabulary is allowed raw).
   const styleNoRoot = styleBlocks.replace(/:root[^{]*\{[^}]*\}/g, "");
