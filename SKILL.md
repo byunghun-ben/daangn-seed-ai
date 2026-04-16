@@ -35,10 +35,11 @@ description: "당근 Seed 디자인 시스템을 AI-first로 재구조화한 sel
 
 | 의도 | 읽을 파일 |
 |------|-----------|
-| 컬러 결정 / 토큰 이름 확인 | `references/tokens/color.md` + `references/tokens/semantic-map.md` |
+| 컬러 결정 / 토큰 이름 확인 | `references/tokens/color.md` |
 | 타이포 스케일 / 폰트 크기 | `references/tokens/typography.md` |
-| 간격·반경·그림자 | `references/tokens/dimension.md`, `radius.md`, `shadow.md` |
-| 레이아웃 구성 (Flex/Stack/Grid) | `references/layout/primitives.md` + `spacing-rhythm.md` |
+| 간격·반경 | `references/tokens/spacing.md`, `references/tokens/radius.md` |
+| 그림자·모션 | `references/tokens/shadow.json`, `duration.json`, `timing-function.json` (raw) |
+| 레이아웃 구성 (Flex/Stack/Grid) | `references/layout/primitives.md` (spacing rhythm은 `tokens/spacing.md`) |
 | 특정 컴포넌트 사용 | `references/components/{name}.md` |
 | "어떤 버튼/오버레이/입력을 써야 하나" | `references/decision-matrices/{which-*}.md` |
 | 여러 컴포넌트를 조합 | `references/decision-matrices/composition.md` |
