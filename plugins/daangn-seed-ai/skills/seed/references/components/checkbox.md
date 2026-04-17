@@ -343,7 +343,7 @@ interface CheckboxHiddenInputProps extends React.InputHTMLAttributes<HTMLInputEl
 
 ```tsx
 import { Checkbox } from "@seed-design/react";
-import IconCheckmarkFatFill from "@karrotmarket/react-monochrome-icon/IconCheckmarkFatFill";
+import { IconCheckmarkFatFill } from "@karrotmarket/react-monochrome-icon";
 
 <form onSubmit={handleSubmit}>
   <Checkbox.Root defaultChecked={false}>
@@ -363,7 +363,7 @@ import IconCheckmarkFatFill from "@karrotmarket/react-monochrome-icon/IconCheckm
 
 ```tsx
 import { Checkbox } from "@seed-design/react";
-import IconCheckmarkFatFill from "@karrotmarket/react-monochrome-icon/IconCheckmarkFatFill";
+import { IconCheckmarkFatFill } from "@karrotmarket/react-monochrome-icon";
 
 const [agreed, setAgreed] = React.useState(false);
 
@@ -387,7 +387,7 @@ const [agreed, setAgreed] = React.useState(false);
 
 ```tsx
 import { Checkbox } from "@seed-design/react";
-import IconCheckmarkFatFill from "@karrotmarket/react-monochrome-icon/IconCheckmarkFatFill";
+import { IconCheckmarkFatFill } from "@karrotmarket/react-monochrome-icon";
 
 <Checkbox.Root weight="regular" variant="ghost" tone="neutral">
   <Checkbox.Control>
@@ -407,8 +407,8 @@ import IconCheckmarkFatFill from "@karrotmarket/react-monochrome-icon/IconCheckm
 
 ```tsx
 import { Checkbox } from "@seed-design/react";
-import IconCheckmarkFatFill from "@karrotmarket/react-monochrome-icon/IconCheckmarkFatFill";
-import IconMinusFatFill from "@karrotmarket/react-monochrome-icon/IconMinusFatFill";
+import { IconCheckmarkFatFill } from "@karrotmarket/react-monochrome-icon";
+import { IconMinusFatFill } from "@karrotmarket/react-monochrome-icon";
 
 const items = ["약관1", "약관2", "약관3"];
 const [selected, setSelected] = React.useState<string[]>([]);
@@ -438,7 +438,7 @@ const isIndeterminate = selected.length > 0 && !allChecked;
 
 ```tsx
 import { Checkbox } from "@seed-design/react";
-import IconCheckmarkFatFill from "@karrotmarket/react-monochrome-icon/IconCheckmarkFatFill";
+import { IconCheckmarkFatFill } from "@karrotmarket/react-monochrome-icon";
 
 <Checkbox.Root size="large" disabled defaultChecked>
   <Checkbox.Control>
@@ -456,7 +456,7 @@ import IconCheckmarkFatFill from "@karrotmarket/react-monochrome-icon/IconCheckm
 ```tsx
 import { useForm } from "react-hook-form";
 import { Checkbox } from "@seed-design/react";
-import IconCheckmarkFatFill from "@karrotmarket/react-monochrome-icon/IconCheckmarkFatFill";
+import { IconCheckmarkFatFill } from "@karrotmarket/react-monochrome-icon";
 
 const { register, handleSubmit } = useForm();
 

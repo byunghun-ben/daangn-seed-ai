@@ -78,3 +78,11 @@
 {"ts":"2026-04-17T10:59:01Z","event":"issue_complete","host":"gimbyeonghun-ui-Macmini","issue":"#14"}
 {"ts":"2026-04-17T10:59:01Z","event":"follow_up_issue","host":"gimbyeonghun-ui-Macmini","issue":"#14+#19+#18","issue_number":"#20","qa_items":2,"manual_items":0}
 {"ts":"2026-04-17T10:59:01Z","event":"ralph_complete","host":"gimbyeonghun-ui-Macmini","issue":"#14+#19+#18","project":"daangn-seed-ai","stories_total":13,"stories_completed":13,"stories_skipped":0,"review_summary":{"total_rounds":3,"total_fixes":14,"codex_ran":true,"codex_issues":12},"follow_up_issue":"#20","duration_min":64,"outcome":"success","commits":"3e7c974,fb78804,91f4747,dc087c9,4b03080,6fcbb69,53ad75c"}
+{"ts":"2026-04-17T12:26:38Z","event":"triage_complete","host":"byunghun","issue":"#20,#14-1B,#14-1E","mode":"direct_classify","issues_count":3}
+{"ts":"2026-04-17T12:34:51Z","event":"plan_start","host":"byunghun","issue":"#20,#14-1B,#14-1E","draft_lines":460,"stories":11,"waves":5}
+{"ts":"2026-04-17T12:42:07Z","event":"plan_critic","host":"byunghun","issue":"#20,#14-1B,#14-1E","round":1,"verdict":"REJECT","critical":5,"high":5,"medium":5}
+{"ts":"2026-04-17T12:53:09Z","event":"plan_critic","host":"byunghun","issue":"#20,#14-1B,#14-1E","round":2,"verdict":"APPROVE_minor","minor":2}
+{"ts":"2026-04-17T12:53:09Z","event":"plan_complete","host":"byunghun","issue":"#20,#14-1B,#14-1E","critic_rounds":2,"stories":11,"waves":5}
+{"ts":"2026-04-17T09:30:00Z","event":"story_complete","host":"byunghun","issue":"#20","story":"S1","tests_passed":true,"files_changed":["plugins/daangn-seed-ai/skills/seed/references/components/input-button.md"],"lines_added":1,"lines_removed":0}
+{"ts":"2026-04-17T09:30:00Z","event":"story_start","host":"byunghun","issue":"#20","story":"S2"}
+{"ts":"2026-04-17T09:30:45Z","event":"story_complete","host":"byunghun","issue":"#20","story":"S2","tests_passed":true,"files_changed":["plugins/daangn-seed-ai/skills/seed/references/components/checkbox-group.md","plugins/daangn-seed-ai/skills/seed/references/components/checkbox.md"],"replaced":11}
