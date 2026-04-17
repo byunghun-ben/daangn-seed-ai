@@ -133,6 +133,8 @@ InputButton 은 **variant 축이 없다**. size 나 color variant 대신, 상태
 
 ## Token 매핑
 
+**YAML ↔ React recipe owner 분리** — `input-button.yaml` 의 `root` slot 은 YAML 단일 slot 이지만, React 에서는 `FieldButton.Control` 이 `inputButton` recipe context 를 소유한다. 즉 stroke / padding / height / bg 토큰은 `FieldButton.Root` 가 아닌 `FieldButton.Control` 의 `useClassNames()` 로 주입된다. `FieldButton.Root` 는 `field` recipe (layout + values context) 만 담당. 아래 표의 `root` 는 **YAML slot 이름** 이며, React 대응은 이미 위 "YAML ↔ React 매핑표" 에 정리된 3계층 (Root=layout / Control=style host / Button=trigger) 을 따른다.
+
 `input-button.yaml` 의 `definitions.base` 를 그대로 따르며, React 구현은 `@seed-design/css/recipes/input-button` recipe 를 통해 자동 주입한다.
 
 ### root (layout wrapper) — enabled
