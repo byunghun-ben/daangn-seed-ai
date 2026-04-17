@@ -18,7 +18,7 @@
 └── 선택/토글 (상태를 가짐)
     ├── on/off 2단계 토글                                → Switch
     ├── 선택 가능한 태그·필터 (다중 선택, 가로 나열)       → Chip / ControlChip
-    ├── 분절된 선택 (3-4개 중 1개, 가로 세그먼트)         → SegmentedControl
+    ├── 분절된 선택 (3-4개 중 1개, 가로 세그먼트)         → [SegmentedControl](../components/segmented-control.md)
     ├── 체크박스 (폼 내)                                 → Checkbox / CheckboxGroup
     ├── 라디오 (폼 내 단일 선택)                         → RadioGroup
     └── 누르고 있을 때만 강조 (토글은 아님)               → ToggleButton
@@ -40,7 +40,7 @@
 | **ReactionButton** | ✅ (count) | 게시글/댓글 | 좋아요 +1 같은 카운트 포함 |
 | **Chip** | ✅ (optional) | 태그·필터 | 여러 개 가로 나열. 선택 토글 가능 |
 | **ControlChip** | ✅ | 필터 UI | 선택 상태가 핵심인 Chip 변종 |
-| **SegmentedControl** | ✅ | 탭 대체 | 3-4개 중 1개만 선택, 시각적으로 분절 |
+| [**SegmentedControl**](../components/segmented-control.md) | ✅ | 탭 대체 | 3-4개 중 1개만 선택, 시각적으로 분절 |
 | **Switch** | ✅ | 설정 토글 | on/off 2단계. 즉시 적용 |
 | **ToggleButton** | ✅ | 도구 UI | 볼드/이탤릭 같은 포맷 토글 → [toggle-button](../components/toggle-button.md) |
 | **Checkbox** | ✅ | 폼 내 다중 선택 | 체크박스 그리드·리스트 |
@@ -65,9 +65,11 @@
 ### 2. 탭 vs SegmentedControl
 
 ```
-탭: 페이지 내에서 영역 전환, 5개 이상도 허용           → Tabs
-SegmentedControl: 2-4개의 설정 전환, 폼 스타일        → SegmentedControl
+탭: 페이지 내에서 영역 전환, 5개 이상도 허용           → [Tabs](../components/tablist.md)
+SegmentedControl: 2-4개의 설정 전환, 폼 스타일        → [SegmentedControl](../components/segmented-control.md)
 ```
+
+> 상세 비교는 [which-tab.md](./which-tab.md) 참조
 
 ### 3. 플로팅 버튼
 

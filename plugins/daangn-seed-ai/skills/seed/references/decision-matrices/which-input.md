@@ -11,10 +11,13 @@
 │   ├── 폼 내부, "저장" 눌러야 반영                → Checkbox (단일) — ../components/checkbox.md
 │   └── 즉시 적용, 설정형                          → Switch — ../components/switch.md
 ├── 여러 옵션 중 1개 선택
-│   ├── 3-4개, 가로 세그먼트                      → SegmentedControl
+│   ├── 3-4개, 가로 세그먼트                      → [SegmentedControl](../components/segmented-control.md)
 │   ├── 드롭다운형                                → SelectBox
 │   ├── 세로 라디오 리스트                         → RadioGroup / RadioGroupField — ../components/radio-group.md
 │   └── 하단 시트에서 선택                         → BottomSheet + RadioGroup — ../components/radio-group.md
+│
+├── 탭형 콘텐츠 전환 (페이지 내 영역 전환)
+│   └── 탭 UI 전반                               → [which-tab.md](./which-tab.md) 참조
 ├── 여러 옵션 중 다중 선택
 │   ├── 체크박스 그리드                            → CheckboxGroup — ../components/checkbox-group.md
 │   └── 태그 스타일 (필터 UI)                     → ControlChip 여러 개
@@ -35,7 +38,7 @@
 | [**RadioGroup**](../components/radio-group.md) | string | 단일 | 옵션 리스트 |
 | [**RadioGroupField**](../components/radio-group.md) | string | 단일 | label/error 포함 RadioGroup |
 | **SelectBox** | string | 단일 | 드롭다운 |
-| **SegmentedControl** | string | 단일 | 3-4 가로 분절 |
+| [**SegmentedControl**](../components/segmented-control.md) | string | 단일 | 3-4 가로 분절 |
 | [**Switch**](../components/switch.md) | boolean | 단일 | 즉시 토글 |
 | **Slider** | number | 단일/범위 | 수치 범위 |
 | [**ToggleButton**](../components/toggle-button.md) | boolean | 단일 | 포맷 토글 (Bold/Italic) |
