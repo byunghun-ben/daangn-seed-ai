@@ -1,0 +1,26 @@
+{
+  "name": "daangn-seed-ai",
+  "owner": {
+    "name": "byunghun",
+    "email": "yojeong.biz@gmail.com"
+  },
+  "metadata": {
+    "description": "daangn-seed-ai plugin — AI-first snapshot of the Seed design system",
+    "version": "0.1.0"
+  },
+  "plugins": [
+    {
+      "name": "daangn-seed-ai",
+      "source": "./plugins/daangn-seed-ai",
+      "description": "AI-first Seed design system skill (tokens/components/decision matrices)",
+      "category": "design-system",
+      "tags": [
+        "daangn",
+        "seed",
+        "design-system",
+        "korean-ui",
+        "ai-slop-avoidance"
+      ]
+    }
+  ]
+}
