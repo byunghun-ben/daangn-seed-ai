@@ -17,7 +17,7 @@
     ├── 하단에서 잠깐 뜨고 사라지는 피드백           → Snackbar
     ├── 페이지 상단의 영구 고지                       → PageBanner
     ├── 섹션 내부 고정 알림                           → Callout
-    ├── 리스트 아이템 근처의 플로팅 안내              → PageBanner (InlineBanner는 deprecated)
+    ├── 섹션 내부·리스트 근처의 정적 안내             → Callout (InlineBanner는 deprecated — PageBanner 는 페이지 최상단 고정이라 여기 오지 않음)
     └── 아이콘·버튼의 숫자 뱃지                       → NotificationBadge / Badge
 ```
 

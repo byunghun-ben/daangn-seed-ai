@@ -1,0 +1,90 @@
+{
+  "source": "review",
+  "round": 2,
+  "verdict": "pass",
+  "critical": 0,
+  "high": 0,
+  "medium": 0,
+  "low": 0,
+  "findings": [],
+  "summary": "All 10 round-1 fixes verified against upstream source (SHA 1f1d21d). No regressions or collateral damage detected.",
+  "verification": [
+    {
+      "fix": 1,
+      "file": "plugins/daangn-seed-ai/skills/seed/references/components/progress-circle.md",
+      "line": 38,
+      "status": "applied",
+      "note": "Broken link `feedback-channel.md` replaced with `which-overlay.md`. Parenthetical clarifies '로딩·피드백 채널 선택 기준 포함' so AI consumers understand the redirect."
+    },
+    {
+      "fix": 2,
+      "file": "plugins/daangn-seed-ai/skills/seed/references/components/content-placeholder.md",
+      "line": 90,
+      "status": "applied",
+      "note": "Token `$dimension.x40` replaced with literal `160px`. Comment now explicitly documents 'YAML 원문 리터럴 — $dimension 토큰으로 치환 없이 그대로 사용'. Matches upstream content-placeholder.yaml line 31 (`maxWidth: 160px`)."
+    },
+    {
+      "fix": 3,
+      "file": "plugins/daangn-seed-ai/skills/seed/references/components/content-placeholder.md",
+      "line": 40,
+      "status": "applied",
+      "note": "Standalone Asset behavior now correctly documents fallback to default preset, not failure. Matches upstream ContentPlaceholder.tsx line 49: `contentPlaceholderAssetPresetMap[parentProps?.type ?? \"default\"]`. Anti-pattern section (line 157) also updated consistently."
+    },
+    {
+      "fix": 4,
+      "file": "plugins/daangn-seed-ai/skills/seed/references/components/inline-banner.md",
+      "line": 5,
+      "status": "applied",
+      "note": "All 7 compound variant names now used correctly: neutralWeak, positiveWeak, informativeWeak, warningWeak, warningSolid, criticalWeak, criticalSolid. Matches upstream inline-banner.yaml."
+    },
+    {
+      "fix": 5,
+      "file": "plugins/daangn-seed-ai/skills/seed/references/components/page-banner.md",
+      "line": 129,
+      "status": "applied",
+      "note": "Pressed state now clearly scoped to Root-as-button via asChild. Explicit sub-section 'root pressed 의 실제 적용 범위' added with 3 bullets explaining div-default, asChild-button, and CloseButton interaction. Matches upstream page-banner.css selector `.seed-page-banner__root:is(button):is(:hover/:active)`."
+    },
+    {
+      "fix": 6,
+      "file": "plugins/daangn-seed-ai/skills/seed/references/components/page-banner.md",
+      "line": 48,
+      "status": "applied",
+      "note": "PrefixIcon guidance corrected. Anatomy note (line 48) and YAML mapping table (line 59) both explain React namespace does NOT export PrefixIcon wrapper; user must use `className=\"seed-prefix-icon\"` manually. Verified via grep — only TextField/Chip/Snackbar/FieldButton/Icon export PrefixIcon; PageBanner does not."
+    },
+    {
+      "fix": 7,
+      "file": "plugins/daangn-seed-ai/skills/seed/references/index.md",
+      "line": 48,
+      "status": "applied",
+      "note": "`indeterminate (true/false)` claim removed. Now reads 'value 생략=스피너, value=number=진행률' — value-based mode switching only. Matches upstream React API (no `indeterminate` prop)."
+    },
+    {
+      "fix": 8,
+      "file": "plugins/daangn-seed-ai/skills/seed/references/components/typography.md",
+      "line": 187,
+      "status": "applied",
+      "note": "Default textStyle now correctly documented as recipe default `t5Regular`. Citation includes upstream path `packages/css/recipes/text.mjs` — verified as `defaultVariant.textStyle = 't5Regular'`."
+    },
+    {
+      "fix": 9,
+      "file": "plugins/daangn-seed-ai/skills/seed/references/components/skeleton.md",
+      "line": 0,
+      "status": "applied",
+      "note": "Section order now follows 1F pattern: 언제 쓰나 → Anatomy → Variants → Motion/Base 토큰 → Props → States → 합성 규칙 → 접근성 → Anti-patterns → 예제. `## States` section added (line 87) with non-interactive note — exact structure proposed in round 1 fix. Matches divider.md/avatar.md/badge.md 1F conventions."
+    },
+    {
+      "fix": 10,
+      "file": "plugins/daangn-seed-ai/skills/seed/references/decision-matrices/which-overlay.md",
+      "line": 20,
+      "status": "applied",
+      "note": "Decision tree leaf corrected. Line 20 now reads '섹션 내부·리스트 근처의 정적 안내 → Callout (InlineBanner는 deprecated — PageBanner 는 페이지 최상단 고정이라 여기 오지 않음)'. Routes in-section notices to Callout, not PageBanner."
+    }
+  ],
+  "regression_scan": {
+    "broken_links": "none — `feedback-channel` no longer referenced anywhere in references/",
+    "fabricated_tokens": "none — `$dimension.x40` no longer referenced",
+    "invented_api": "none — `indeterminate (true/false)` and short variant names no longer appear",
+    "markdown_integrity": "all tables/formatting intact; section anchors preserved",
+    "collateral_damage": "none detected"
+  }
+}

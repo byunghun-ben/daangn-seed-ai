@@ -45,7 +45,7 @@ references/
 │   ├── content-placeholder.md  ← 빈 상태 일러스트 + 메시지 (12 type preset)
 │   ├── inline-banner.md        ← ⚠️ deprecated — PageBanner 마이그레이션 가이드
 │   ├── page-banner.md          ← 페이지 최상단 고정 알림 띠 (weak/solid × 6 tone)
-│   ├── progress-circle.md      ← 원형 로딩 스피너 / 진행률 (indeterminate true/false)
+│   ├── progress-circle.md      ← 원형 로딩 스피너 / 진행률 (value 생략=스피너, value=number=진행률)
 │   ├── skeleton.md             ← 로딩 중 임시 골격 (shimmer 애니메이션)
 │   └── typography.md           ← Text 컴포넌트 (51 textStyle, tokens/typography.md와 별개)
 │
