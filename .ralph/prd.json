@@ -4,21 +4,40 @@
   "description": "Tier 1F data-display port (avatar, avatar-stack, badge, notification-badge, divider) + #17 internal primitives section in composition.md",
   "follow_up_issue": null,
   "epic": "#2",
-  "source_issues": ["#17", "#14"],
+  "source_issues": [
+    "#17",
+    "#14"
+  ],
   "waves": {
     "1": {
       "description": "6 disjoint stories — parallel safe",
-      "stories": ["W1-S1", "W1-S2", "W1-S3", "W1-S4", "W1-S5", "W1-S6"]
+      "stories": [
+        "W1-S1",
+        "W1-S2",
+        "W1-S3",
+        "W1-S4",
+        "W1-S5",
+        "W1-S6"
+      ]
     },
     "2": {
       "description": "Integration — depends on Wave 1 artifacts",
-      "stories": ["W2-S7", "W2-S8"],
+      "stories": [
+        "W2-S7",
+        "W2-S8"
+      ],
       "depends_on_wave": 1
     }
   },
   "issues": {
-    "#17": { "status": "pending", "review_rounds": 0 },
-    "#14": { "status": "pending", "review_rounds": 0 }
+    "#17": {
+      "status": "pending",
+      "review_rounds": 0
+    },
+    "#14": {
+      "status": "pending",
+      "review_rounds": 0
+    }
   },
   "userStories": [
     {
@@ -41,7 +60,9 @@
       "wave": 1,
       "complexity": "M",
       "model": "opus",
-      "files": ["plugins/daangn-seed-ai/skills/seed/references/decision-matrices/composition.md"]
+      "files": [
+        "plugins/daangn-seed-ai/skills/seed/references/decision-matrices/composition.md"
+      ]
     },
     {
       "id": "W1-S2",
@@ -64,7 +85,9 @@
       "wave": 1,
       "complexity": "M",
       "model": "opus",
-      "files": ["plugins/daangn-seed-ai/skills/seed/references/components/avatar.md"]
+      "files": [
+        "plugins/daangn-seed-ai/skills/seed/references/components/avatar.md"
+      ]
     },
     {
       "id": "W1-S3",
@@ -87,7 +110,9 @@
       "wave": 1,
       "complexity": "S",
       "model": "sonnet",
-      "files": ["plugins/daangn-seed-ai/skills/seed/references/components/avatar-stack.md"]
+      "files": [
+        "plugins/daangn-seed-ai/skills/seed/references/components/avatar-stack.md"
+      ]
     },
     {
       "id": "W1-S4",
@@ -111,7 +136,9 @@
       "wave": 1,
       "complexity": "M",
       "model": "opus",
-      "files": ["plugins/daangn-seed-ai/skills/seed/references/components/badge.md"]
+      "files": [
+        "plugins/daangn-seed-ai/skills/seed/references/components/badge.md"
+      ]
     },
     {
       "id": "W1-S5",
@@ -130,12 +157,14 @@
         "notification-badge.mdx 부재 시 badge.mdx + React 소스 주석 참조"
       ],
       "priority": 5,
-      "passes": false,
+      "passes": true,
       "source_issue": "#14",
       "wave": 1,
       "complexity": "M",
       "model": "opus",
-      "files": ["plugins/daangn-seed-ai/skills/seed/references/components/notification-badge.md"]
+      "files": [
+        "plugins/daangn-seed-ai/skills/seed/references/components/notification-badge.md"
+      ]
     },
     {
       "id": "W1-S6",
@@ -152,12 +181,15 @@
         "예제 3개 (기본/vertical/list inset)"
       ],
       "priority": 6,
-      "passes": false,
+      "passes": true,
       "source_issue": "#14",
       "wave": 1,
       "complexity": "M",
       "model": "opus",
-      "files": ["plugins/daangn-seed-ai/skills/seed/references/components/divider.md"]
+      "files": [
+        "plugins/daangn-seed-ai/skills/seed/references/components/divider.md"
+      ],
+      "completed_at": "2026-04-17T07:11:36Z"
     },
     {
       "id": "W2-S7",
@@ -171,13 +203,21 @@
         "기존 톤·문체 유지, 새 섹션 추가 금지"
       ],
       "priority": 7,
-      "passes": false,
+      "passes": true,
       "source_issue": "#14",
       "wave": 2,
-      "depends_on": ["W1-S2", "W1-S3", "W1-S4", "W1-S5", "W1-S6"],
+      "depends_on": [
+        "W1-S2",
+        "W1-S3",
+        "W1-S4",
+        "W1-S5",
+        "W1-S6"
+      ],
       "complexity": "S",
       "model": "sonnet",
-      "files": ["plugins/daangn-seed-ai/skills/seed/references/index.md"]
+      "files": [
+        "plugins/daangn-seed-ai/skills/seed/references/index.md"
+      ]
     },
     {
       "id": "W2-S8",
@@ -195,10 +235,19 @@
       "passes": false,
       "source_issue": "#17",
       "wave": 2,
-      "depends_on": ["W1-S1", "W1-S2", "W1-S3", "W1-S4", "W1-S5", "W1-S6"],
+      "depends_on": [
+        "W1-S1",
+        "W1-S2",
+        "W1-S3",
+        "W1-S4",
+        "W1-S5",
+        "W1-S6"
+      ],
       "complexity": "S",
       "model": "sonnet",
-      "files": ["scripts/sync-from-seed.mjs"]
+      "files": [
+        "scripts/sync-from-seed.mjs"
+      ]
     }
   ]
 }
