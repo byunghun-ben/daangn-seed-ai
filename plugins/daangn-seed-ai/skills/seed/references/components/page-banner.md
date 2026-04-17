@@ -258,7 +258,7 @@ import { IconSparkleFill } from "@daangn/react-monochrome-icon";
 
 <PageBanner.Root variant="weak" tone="magic">
   <PageBanner.Body>
-    <IconSparkleFill />
+    <IconSparkleFill className="seed-prefix-icon" aria-hidden />
     <PageBanner.Content>
       <PageBanner.Title>AI 가 대신 찾아드릴게요</PageBanner.Title>
       <PageBanner.Description>원하는 조건을 알려주시면 매물을 추천해드려요.</PageBanner.Description>
