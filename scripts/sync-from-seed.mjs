@@ -17,7 +17,7 @@ import { dirname, join, resolve } from "node:path";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const SKILL_ROOT = resolve(__dirname, "..", "plugins/daangn-seed-ai/skills/daangn-seed-ai");
+const SKILL_ROOT = resolve(__dirname, "..", "plugins/daangn-seed-ai/skills/seed");
 const SNAPSHOT = JSON.parse(readFileSync(join(SKILL_ROOT, "references/_snapshot.json"), "utf8"));
 
 const args = process.argv.slice(2);
@@ -142,4 +142,4 @@ if (compEntries.length === 0) log("  (all ported components in sync)");
 else for (const [n, info] of compEntries) log(`  ${n.padEnd(25)} ${info.status}`);
 
 log("\nReview the diff manually. Do NOT auto-apply — AI-first translation needs judgment.");
-log("When reflecting changes, update plugins/daangn-seed-ai/skills/daangn-seed-ai/references/_snapshot.json with the new SHA + date.");
+log("When reflecting changes, update plugins/daangn-seed-ai/skills/seed/references/_snapshot.json with the new SHA + date.");
