@@ -2,7 +2,9 @@
 
 > AI-first snapshot of daangn/seed-design, packaged as a Claude Code plugin.
 
-빠른 앱 개발에서 generic AI-slop을 회피하고, 토큰·컴포넌트·결정 매트릭스 기반으로 [Seed Design System](https://github.com/daangn/seed-design) 스타일의 UI를 작성하도록 안내한다.
+Claude를 이용해서 앱을 디자인할 때, generic AI-slop을 뱉지 않도록. 당근의 [Seed Design System](https://github.com/daangn/seed-design) 기반의 토큰·컴포넌트·결정 매트릭스를 활용하여 디자인할 수 있도록 안내해요.
+
+<sub>*AI-slop: AI가 반복적으로 뱉는 뻔한 UI 패턴*</sub>
 
 ## 한눈에 보기
 
