@@ -8,18 +8,18 @@
 어떤 종류의 값을 받나?
 ├── 자유 텍스트 (이름, 메일, 메모)                 → TextField
 ├── 2개 상태 (on/off)
-│   ├── 폼 내부, "저장" 눌러야 반영                → Checkbox (단일)
-│   └── 즉시 적용, 설정형                          → Switch
+│   ├── 폼 내부, "저장" 눌러야 반영                → Checkbox (단일) — ../components/checkbox.md
+│   └── 즉시 적용, 설정형                          → Switch — ../components/switch.md
 ├── 여러 옵션 중 1개 선택
 │   ├── 3-4개, 가로 세그먼트                      → SegmentedControl
 │   ├── 드롭다운형                                → SelectBox
-│   ├── 세로 라디오 리스트                         → RadioGroup / RadioGroupField
-│   └── 하단 시트에서 선택                         → BottomSheet + RadioGroup
+│   ├── 세로 라디오 리스트                         → RadioGroup / RadioGroupField — ../components/radio-group.md
+│   └── 하단 시트에서 선택                         → BottomSheet + RadioGroup — ../components/radio-group.md
 ├── 여러 옵션 중 다중 선택
-│   ├── 체크박스 그리드                            → CheckboxGroup
+│   ├── 체크박스 그리드                            → CheckboxGroup — ../components/checkbox-group.md
 │   └── 태그 스타일 (필터 UI)                     → ControlChip 여러 개
 ├── 수치 범위 (슬라이더)                          → Slider
-├── 짧은 트리거 (날짜·위치 버튼처럼)              → FieldButton
+├── 짧은 트리거 (날짜·위치 버튼처럼)              → FieldButton — ../components/input-button.md
 └── 자유 선택 (ChipGroup)                        → TagGroup
 ```
 
@@ -30,16 +30,16 @@
 | 컴포넌트 | 값 타입 | 단일/다중 | 주 맥락 |
 |----------|---------|-----------|---------|
 | **TextField** | string | — | 자유 텍스트 |
-| **Checkbox** | boolean | 단일 | 동의, 선택지 |
-| **CheckboxGroup** | `string[]` | 다중 | 체크박스 그리드 |
-| **RadioGroup** | string | 단일 | 옵션 리스트 |
-| **RadioGroupField** | string | 단일 | label/error 포함 RadioGroup |
+| [**Checkbox**](../components/checkbox.md) | boolean | 단일 | 동의, 선택지 |
+| [**CheckboxGroup**](../components/checkbox-group.md) | `string[]` | 다중 | 체크박스 그리드 |
+| [**RadioGroup**](../components/radio-group.md) | string | 단일 | 옵션 리스트 |
+| [**RadioGroupField**](../components/radio-group.md) | string | 단일 | label/error 포함 RadioGroup |
 | **SelectBox** | string | 단일 | 드롭다운 |
 | **SegmentedControl** | string | 단일 | 3-4 가로 분절 |
-| **Switch** | boolean | 단일 | 즉시 토글 |
+| [**Switch**](../components/switch.md) | boolean | 단일 | 즉시 토글 |
 | **Slider** | number | 단일/범위 | 수치 범위 |
-| **ToggleButton** | boolean | 단일 | 포맷 토글 (Bold/Italic) |
-| **FieldButton** | — | — | 선택 트리거 (값은 외부 picker) |
+| [**ToggleButton**](../components/toggle-button.md) | boolean | 단일 | 포맷 토글 (Bold/Italic) |
+| [**FieldButton**](../components/input-button.md) | — | — | 선택 트리거 (값은 외부 picker) |
 | **TagGroup** | `string[]` | 다중 | 자유 태그 입력 |
 | **ControlChip** | boolean (선택됨) | — | 필터 토글 (여러 개 조합) |
 

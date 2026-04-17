@@ -89,6 +89,9 @@ const LOCAL_ONLY_COMPONENTS = new Set([
   "text-field", // composition of upstream `text-input` + `field` + `field-label`
 ]);
 
+// ROOTAGE_ONLY_COMPONENTS: upstream-only independent components (not internal primitives).
+const ROOTAGE_ONLY_COMPONENTS = new Set(["text-button"]);
+
 // INTERNAL_PRIMITIVES: 부모 컴포넌트가 자동 조립하므로 개별 doc 없음. composition.md 에서 통합 문서화.
 // These primitives exist in upstream rootage yaml but are internal implementation details
 // assembled automatically by their parent components. They are documented collectively
@@ -130,21 +133,27 @@ function diffComponents(upstreamRoot) {
 
   for (const name of localNames) {
     if (LOCAL_ONLY_COMPONENTS.has(name)) {
-      report[name] = { status: "local-only (slot utility / guidance)" };
+      report[name] = { status: "local-only", kind: "local-only", note: "slot utility / guidance" };
+      continue;
+    }
+    if (ROOTAGE_ONLY_COMPONENTS.has(name)) {
+      report[name] = { status: "rootage-only", kind: "rootage-only", note: "Rootage spec only, no React export" };
       continue;
     }
     if (!upstreamNames.has(name)) {
-      report[name] = { status: "removed-upstream" };
+      report[name] = { status: "removed-upstream", kind: "removed-upstream" };
     } else {
-      report[name] = { status: "ported" };
+      report[name] = { status: "ported", kind: "ported" };
     }
   }
   for (const name of upstreamNames) {
     if (!localNames.has(name)) {
       if (INTERNAL_PRIMITIVES.has(name)) {
-        report[name] = { status: "internal-primitive (see composition.md)" };
+        report[name] = { status: "internal-primitive", kind: "internal-primitive", note: "Documented collectively in decision-matrices/composition.md" };
+      } else if (ROOTAGE_ONLY_COMPONENTS.has(name)) {
+        report[name] = { status: "rootage-only", kind: "rootage-only" };
       } else {
-        report[name] = { status: "not-ported" };
+        report[name] = { status: "not-ported", kind: "not-ported" };
       }
     }
   }
@@ -181,7 +190,10 @@ else for (const [f, info] of tokenEntries) log(`  ${f.padEnd(25)} ${info.status}
 log("\n== Components ==");
 const compEntries = Object.entries(report.components);
 if (compEntries.length === 0) log("  (all ported components in sync)");
-else for (const [n, info] of compEntries) log(`  ${n.padEnd(25)} ${info.status}`);
+else for (const [n, info] of compEntries) {
+  const display = info.note ? `${info.status} — ${info.note}` : info.status;
+  log(`  ${n.padEnd(25)} ${display}`);
+}
 
 log("\nReview the diff manually. Do NOT auto-apply — AI-first translation needs judgment.");
 log("When reflecting changes, update plugins/daangn-seed-ai/skills/seed/references/_snapshot.json with the new SHA + date.");

@@ -123,6 +123,8 @@ badge / badgeMask:
 ```ts
 import type * as React from "react";
 
+// upstream: AvatarRootProps extends AvatarVariantProps & Image.RootProps (from @seed-design/react-image)
+// 여기서는 namespace 사용자가 직접 접하는 주요 prop 만 문서화.
 // 1) Root ─ sizing · stroke · badgeMask 결정 (부모)
 interface AvatarRootProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: "20" | "24" | "36" | "42" | "48" | "56" | "64" | "80" | "96" | "108";  // default: "48"
@@ -130,6 +132,7 @@ interface AvatarRootProps extends React.HTMLAttributes<HTMLDivElement> {
   asChild?: boolean;                            // default: false (Radix Slot 병합)
 }
 
+// upstream: AvatarImageProps extends Image.ContentProps (from @seed-design/react-image)
 // 2) Image ─ 실제 <img> 속성
 interface AvatarImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   src?: string;                                 // 없거나 로드 실패 시 Fallback으로 전환

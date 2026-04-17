@@ -47,7 +47,15 @@ references/
 │   ├── page-banner.md          ← 페이지 최상단 고정 알림 띠 (weak/solid × 6 tone)
 │   ├── progress-circle.md      ← 원형 로딩 스피너 / 진행률 (value 생략=스피너, value=number=진행률)
 │   ├── skeleton.md             ← 로딩 중 임시 골격 (shimmer 애니메이션)
-│   └── typography.md           ← Text 컴포넌트 (51 textStyle, tokens/typography.md와 별개)
+│   ├── typography.md           ← Text 컴포넌트 (51 textStyle, tokens/typography.md와 별개)
+│   ├── checkbox.md             ← 단일 체크박스 (동의·단일 선택지)
+│   ├── checkbox-group.md       ← 체크박스 그리드/리스트 (다중 선택, `string[]`)
+│   ├── radio.md                ← Radio 단일 아이템 (실사용은 RadioGroup 권장, redirect stub)
+│   ├── radio-group.md          ← 라디오 그룹 (폼 내 단일 선택, value: string)
+│   ├── switch.md               ← 즉시 적용 on/off 토글 (설정형)
+│   ├── toggle-button.md        ← 포맷 토글 버튼 (Bold/Italic 등 도구 UI)
+│   ├── input-button.md         ← FieldButton 폼 내부 선택 트리거 (날짜·위치 picker 등)
+│   └── text-button.md          ← ⚠️ Rootage-only — React 미제공, 스펙 참고용
 │
 ├── layout/
 │   └── primitives.md           ← Box/Flex/Stack/Grid 등 레이아웃 컴포넌트
@@ -79,7 +87,7 @@ references/
 
 ## 커버리지
 
-**MVP 스코프**: 토큰 전체 + MVP 6(ActionButton, Callout, Snackbar, Dialog, BottomSheet, TextField) + Icon + Tier 1F 5(Avatar, AvatarStack, Badge, NotificationBadge, Divider) + **Tier 1G 6**(InlineBanner⚠️, PageBanner, ContentPlaceholder, Skeleton, ProgressCircle, Typography) = 총 **18 컴포넌트** + 레이아웃 + 결정 매트릭스 4개.
+**MVP 스코프**: 토큰 전체 + MVP 6(ActionButton, Callout, Snackbar, Dialog, BottomSheet, TextField) + Icon + Tier 1F 5(Avatar, AvatarStack, Badge, NotificationBadge, Divider) + **Tier 1G 6**(InlineBanner⚠️, PageBanner, ContentPlaceholder, Skeleton, ProgressCircle, Typography) + **Wave 2-3 신규 8**(Checkbox, CheckboxGroup, Radio, RadioGroup, Switch, ToggleButton, InputButton/FieldButton, TextButton⚠️Rootage-only) = 총 26 컴포넌트 (총 **26 컴포넌트**) + 레이아웃 + 결정 매트릭스 4개.
 
 **Icon 관련 주의** — Seed는 아이콘 **슬롯 API**(`Icon`/`PrefixIcon`/`SuffixIcon`/`IconRequired`)만 제공하고 **아이콘 에셋은 의도적으로 제공하지 않는다**. `components/icon.md`는 슬롯 anatomy + BYO(Bring Your Own) 라이브러리 선택 가이드까지 다룬다. 당근팀은 `@karrotmarket/react-monochrome-icon`, 외부는 Lucide/Tabler 권장.
 
@@ -87,7 +95,11 @@ references/
 - `Typography`는 React에선 `Text` 컴포넌트. `tokens/typography.md`(스케일 정의)와 `components/typography.md`(컴포넌트 API)를 분리. 혼동 주의.
 - `InlineBanner`는 upstream에서 deprecated — 마이그레이션 가이드로 유지. 신규 사용 금지 → PageBanner.
 
+**Rootage-only (React 미제공)**:
+- [`./components/text-button.md`](./components/text-button.md) — Rootage 스펙 전용. React 바인딩 없이 디자인 토큰·anatomy 참고용으로만 존재. 코드 구현 시 `ActionButton variant="ghost"` 또는 Anchor로 대체.
+- [`./components/radio.md`](./components/radio.md) — 단일 Radio는 거의 항상 `RadioGroup` 래퍼와 함께 쓰이므로, radio.md는 redirect stub 역할. 실제 사용 문서는 [`./components/radio-group.md`](./components/radio-group.md).
+
 **미포팅 컴포넌트** (필요 시 `_template.md` 기반으로 추가):
-- Chip, Checkbox, RadioGroup, Switch, SegmentedControl, Tabs, List, Slider, SelectBox, FieldButton, Fab 등
+- Chip, SegmentedControl, Tabs, List, Slider, SelectBox, Fab 등
 
 추가 시 `packages/rootage/components/{name}.yaml`(upstream clone)에서 slot/variant 데이터를 가져오고 `_template.md` 포맷으로 작성. `scripts/sync-from-seed.mjs`의 component diff가 미포팅을 `not-ported`로 표시한다.

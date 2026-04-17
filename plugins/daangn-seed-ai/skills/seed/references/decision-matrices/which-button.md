@@ -10,7 +10,7 @@
 │         ├── 주요 CTA (한 화면 1개)                     → ActionButton (brandSolid / neutralSolid)
 │         ├── 보조 액션                                   → ActionButton (neutralWeak / neutralOutline)
 │         ├── 파괴적 액션 (삭제, 초기화)                  → ActionButton (criticalSolid)
-│         ├── 폼 필드 내부 (날짜 선택, 검색, 클리어)       → FieldButton
+│         ├── 폼 필드 내부 (날짜 선택, 검색, 클리어)       → FieldButton / InputButton (picker trigger)
 │         ├── 화면 구석에 뜨는 플로팅 원형                 → Fab / ExtendedFab
 │         ├── 스크롤 따라다니는 맥락형 버튼                → ContextualFloatingButton
 │         └── 이모지·아이콘 리액션 (+1, 좋아요 등)         → ReactionButton
@@ -32,6 +32,8 @@
 |----------|-------------|-------------|------------|
 | **ActionButton** | ❌ | 어디든 | 1회성 액션의 기본 선택. 모르겠으면 이것. |
 | **FieldButton** | ❌ | 폼 내부 | Field wrapper 안에 들어가 필드처럼 보이는 버튼 |
+| **InputButton** (→ FieldButton) | ❌ | 폼 내부 picker | Rootage의 `input-button` = React의 `FieldButton`. 값은 외부 picker로 결정 → [input-button](../components/input-button.md) |
+| **TextButton** (Rootage-only) | ❌ | — | ⚠️ Rootage 스펙 전용, React 미제공. 실구현은 `ActionButton variant="ghost"` 또는 Anchor로 대체 → [text-button](../components/text-button.md) |
 | **Fab** | ❌ | 화면 우하단 고정 | 1개만 사용. 글로벌 주요 액션(글쓰기, 추가) |
 | **ExtendedFab** | ❌ | 화면 우하단 | Fab + 텍스트 라벨 |
 | **ContextualFloatingButton** | ❌ | 리스트/스크롤 | 스크롤에 따라 등장/사라지는 맥락 액션 |
@@ -40,7 +42,7 @@
 | **ControlChip** | ✅ | 필터 UI | 선택 상태가 핵심인 Chip 변종 |
 | **SegmentedControl** | ✅ | 탭 대체 | 3-4개 중 1개만 선택, 시각적으로 분절 |
 | **Switch** | ✅ | 설정 토글 | on/off 2단계. 즉시 적용 |
-| **ToggleButton** | ✅ | 도구 UI | 볼드/이탤릭 같은 포맷 토글 |
+| **ToggleButton** | ✅ | 도구 UI | 볼드/이탤릭 같은 포맷 토글 → [toggle-button](../components/toggle-button.md) |
 | **Checkbox** | ✅ | 폼 내 다중 선택 | 체크박스 그리드·리스트 |
 | **RadioGroup** | ✅ | 폼 내 단일 선택 | 라디오 그룹 |
 
