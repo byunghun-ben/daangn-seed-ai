@@ -94,7 +94,8 @@ const LOCAL_ONLY_COMPONENTS = new Set([
 // (size/weight/label colors) that are consumed by RadioGroup.Item — but upstream
 // ships no standalone `Radio` React export. The md frontmatter carries
 // `status: rootage-only`; keep this set in sync with those files.
-const ROOTAGE_ONLY_COMPONENTS = new Set(["text-button", "radio"]);
+// top-navigation: no React/CSS recipe, Rootage spec only
+const ROOTAGE_ONLY_COMPONENTS = new Set(["text-button", "radio", "top-navigation"]);
 
 // INTERNAL_PRIMITIVES: 부모 컴포넌트가 자동 조립하므로 개별 doc 없음. composition.md 에서 통합 문서화.
 // These primitives exist in upstream rootage yaml but are internal implementation details
