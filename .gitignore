@@ -1,0 +1,8 @@
+node_modules/
+.DS_Store
+*.tmp
+
+# Local scratch / test harness artifacts
+temp/
+.tmp/
+daangn-runs/
