@@ -8,6 +8,8 @@ Seed Design is licensed under the **Apache License 2.0**. See the upstream [LICE
 
 ## Snapshot Scope
 
+The skill lives at `plugins/daangn-seed-ai/skills/daangn-seed-ai/` (paths below are relative to that directory).
+
 The following content in this skill is a restructured snapshot of upstream Seed:
 
 - `references/tokens/*.json` — Raw token values derived from `docs/public/rootage/*.json`

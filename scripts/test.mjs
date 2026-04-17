@@ -19,8 +19,7 @@ import { dirname, join, resolve, basename } from "node:path";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const SKILL_ROOT = resolve(__dirname, "..");
-const HARNESS_ROOT = resolve(SKILL_ROOT, "../..");
+const REPO_ROOT = resolve(__dirname, "..");
 
 // ---------- Scenarios ----------
 // Each scenario drives one fresh claude session. The prompt must push
@@ -245,7 +244,7 @@ function runClaude(promptText, outPath) {
   console.log(`  → claude -p ... (writing to ${basename(outPath)})`);
   const started = Date.now();
   const result = spawnSync("claude", args, {
-    cwd: HARNESS_ROOT,
+    cwd: REPO_ROOT,
     encoding: "utf8",
     stdio: ["ignore", "pipe", "pipe"],
     timeout: 5 * 60 * 1000,
@@ -298,7 +297,7 @@ if (args[0] === "--lint-only") {
 ensureClaudeAvailable();
 const requested = args.length ? args : Object.keys(SCENARIOS);
 const ts = new Date().toISOString().replace(/[:.]/g, "-").slice(0, 19);
-const runDir = join(HARNESS_ROOT, "temp", "daangn-runs", ts);
+const runDir = join(REPO_ROOT, "temp", "daangn-runs", ts);
 mkdirSync(runDir, { recursive: true });
 console.log(`Run dir: ${runDir}`);
 
