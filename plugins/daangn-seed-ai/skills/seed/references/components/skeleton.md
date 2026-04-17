@@ -57,6 +57,18 @@ import { Skeleton } from "@seed-design/react";
 
 ---
 
+## States
+
+Skeleton 은 **인터랙티브 상태가 없다**. pressed/hover/focus/disabled 같은 상호작용 변주를 갖지 않으며, 유일한 상태는 shimmer 애니메이션 한 가지다 — `root` 위에 `::after` pseudo-element 로 `1.5s` 주기의 shimmer gradient 가 계속 반복된다.
+
+| State | 트리거 | 시각 변화 |
+|-------|--------|-----------|
+| `enabled` | 기본 (유일) | tone 별 배경 + shimmer 애니메이션 지속 |
+
+Skeleton 을 hover 하거나 click 해도 시각 변화는 일어나지 않는다. 인터랙션이 필요한 플레이스홀더라면 Skeleton 이 아닌 실제 컴포넌트를 써야 한다.
+
+---
+
 ## Motion / Base 토큰
 
 shimmer 애니메이션은 모든 tone에 공통으로 적용된다.
@@ -81,18 +93,6 @@ interface SkeletonProps {
 ```
 
 `width`와 `height`는 **반드시 명시**한다. 생략하면 콘텐츠가 없어 높이가 0이 되거나 부모 크기에 의존하게 되어 레이아웃이 깨진다.
-
----
-
-## States
-
-Skeleton 은 **인터랙티브 상태가 없다**. pressed/hover/focus/disabled 같은 상호작용 변주를 갖지 않으며, 유일한 상태는 shimmer 애니메이션 한 가지다 — `root` 위에 `::after` pseudo-element 로 `1.5s` 주기의 shimmer gradient 가 계속 반복된다.
-
-| State | 트리거 | 시각 변화 |
-|-------|--------|-----------|
-| `enabled` | 기본 (유일) | tone 별 배경 + shimmer 애니메이션 지속 |
-
-Skeleton 을 hover 하거나 click 해도 시각 변화는 일어나지 않는다. 인터랙션이 필요한 플레이스홀더라면 Skeleton 이 아닌 실제 컴포넌트를 써야 한다.
 
 ---
 
