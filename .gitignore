@@ -9,3 +9,6 @@ daangn-runs/
 .playwright-mcp/
 scripts/validate/runs/
 .reconcile/
+
+# Ralph orchestrator — PID-scoped ephemeral state (commit decisions/plan/prd for handoff)
+.ralph/heartbeat.*.json
