@@ -1,6 +1,6 @@
 # NOTICE
 
-This skill (`daangn-ai`) is derived from [daangn/seed-design](https://github.com/daangn/seed-design), the official design system of Karrot (당근).
+This skill (`daangn-seed-ai`) is derived from [daangn/seed-design](https://github.com/daangn/seed-design), the official design system of Karrot (당근).
 
 ## Upstream License
 

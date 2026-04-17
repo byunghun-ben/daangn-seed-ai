@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // sync-from-seed.mjs
-// Compare the daangn-ai snapshot against upstream seed-design and report differences.
+// Compare the daangn-seed-ai snapshot against upstream seed-design and report differences.
 // This script does NOT auto-apply changes — it emits a diff report for human review,
 // because human-first → AI-first translation requires judgment.
 //

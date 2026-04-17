@@ -1,14 +1,14 @@
 #!/usr/bin/env node
-// test.mjs — daangn-ai skill dry-run harness.
+// test.mjs — daangn-seed-ai skill dry-run harness.
 //
 // Launches a FRESH `claude -p` subprocess per scenario so the skill is
 // consumed without the parent session's context pollution. Captures the
 // generated HTML file and runs a grep-based anti-pattern lint against it.
 //
 // Usage:
-//   node skills/daangn-ai/scripts/test.mjs                    # all scenarios
-//   node skills/daangn-ai/scripts/test.mjs signup             # single
-//   node skills/daangn-ai/scripts/test.mjs --lint-only <path> # lint existing file
+//   node scripts/test.mjs                    # all scenarios
+//   node scripts/test.mjs signup             # single
+//   node scripts/test.mjs --lint-only <path> # lint existing file
 //
 // Output goes to temp/daangn-runs/<timestamp>/ (gitignored).
 
@@ -24,7 +24,7 @@ const HARNESS_ROOT = resolve(SKILL_ROOT, "../..");
 
 // ---------- Scenarios ----------
 // Each scenario drives one fresh claude session. The prompt must push
-// daangn-ai to be loaded (we mention the skill name explicitly) AND
+// daangn-seed-ai to be loaded (we mention the skill name explicitly) AND
 // specify an absolute output path so lint can find the result.
 const SCENARIOS = {
   signup: {
@@ -32,7 +32,7 @@ const SCENARIOS = {
     // HTML-mode scenario: expectations match token/class patterns, not React names.
     expected: ["--seed-color-bg-brand-solid", "neutral-weak", "aria-invalid", "type=\"email\""],
     forbidden: ["Dialog", "BottomSheet"],
-    prompt: (outPath) => `daangn-ai 스킬을 사용해서 당근 스타일 회원가입 페이지를 만들어줘.
+    prompt: (outPath) => `daangn-seed-ai 스킬을 사용해서 당근 스타일 회원가입 페이지를 만들어줘.
 
 요구사항:
 - 단일 HTML 파일로 완결 (외부 CDN 의존 없이 self-contained <style>)
@@ -44,7 +44,7 @@ const SCENARIOS = {
 - 하단 액션 바: 취소(neutralWeak) + 가입하기(brandSolid, 주 액션 오른쪽)
 - 한국어 라벨·메시지
 
-반드시 daangn-ai의 references/anti-patterns.md를 읽고 저촉되지 않도록 작성.
+반드시 daangn-seed-ai의 references/anti-patterns.md를 읽고 저촉되지 않도록 작성.
 출력 파일 경로(절대경로): ${outPath}
 
 다른 질문 없이 바로 Write 도구로 파일을 생성해줘.`,
@@ -54,7 +54,7 @@ const SCENARIOS = {
     summary: "리스트 + 파괴적 Dialog (criticalSolid, 주 액션 우측)",
     expected: ["critical-solid", "neutral-weak", "--seed-color-bg-overlay", "role=\"dialog\""],
     forbidden: ["Snackbar", "BottomSheet"],
-    prompt: (outPath) => `daangn-ai 스킬을 사용해서 당근 중고거래 "내 판매 목록" 페이지 HTML을 만들어줘.
+    prompt: (outPath) => `daangn-seed-ai 스킬을 사용해서 당근 중고거래 "내 판매 목록" 페이지 HTML을 만들어줘.
 
 요구사항:
 - 단일 HTML 파일, 모바일 뷰포트
@@ -78,7 +78,7 @@ anti-patterns.md 체크리스트 준수.
     summary: "Snackbar (성공 vs 실패+재시도), Dialog 금지 검증",
     expected: ["snackbar", "positive", "critical", "--seed-color-bg-neutral-inverted"],
     forbidden: ["Dialog", "BottomSheet", "role=\"dialog\""],
-    prompt: (outPath) => `daangn-ai 스킬을 사용해서 "저장 피드백" 데모 HTML을 만들어줘.
+    prompt: (outPath) => `daangn-seed-ai 스킬을 사용해서 "저장 피드백" 데모 HTML을 만들어줘.
 
 요구사항:
 - 단일 HTML 파일, 모바일 뷰포트
