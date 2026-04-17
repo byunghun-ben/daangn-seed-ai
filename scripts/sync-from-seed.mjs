@@ -82,8 +82,12 @@ function diffTokens(upstreamRoot) {
 }
 
 // Local-only component docs that intentionally have no upstream rootage yaml.
-// These document slot utilities or guidance, not tokenized components.
-const LOCAL_ONLY_COMPONENTS = new Set(["icon"]);
+// These document slot utilities, guidance, or compositions (multiple upstream
+// primitives merged into one user-facing doc).
+const LOCAL_ONLY_COMPONENTS = new Set([
+  "icon",       // slot container (Icon/PrefixIcon/SuffixIcon) + BYO guidance
+  "text-field", // composition of upstream `text-input` + `field` + `field-label`
+]);
 
 function diffComponents(upstreamRoot) {
   const report = {};
