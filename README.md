@@ -2,6 +2,21 @@
 
 Claude Code 플러그인. 당근 [Seed Design System](https://github.com/daangn/seed-design)을 AI-first로 재구조화한 self-contained 스냅샷. 빠른 앱 개발에서 generic AI-slop을 회피하고, 토큰·컴포넌트·결정 매트릭스 기반으로 Seed 스타일 UI를 작성하도록 안내한다.
 
+## 한눈에 보기
+
+<table>
+<tr>
+<th align="center">원본 — 직접 작성한 랜딩</th>
+<th align="center">daangn-seed-ai 적용 후</th>
+</tr>
+<tr>
+<td align="center"><img src="./docs/images/before-main.png" width="280" alt="Bridge Studio original landing" /></td>
+<td align="center"><img src="./docs/images/after-daangn.png" width="280" alt="Bridge Studio styled with daangn-seed-ai" /></td>
+</tr>
+</table>
+
+같은 정보(Bridge Studio 서비스 리스트)를 Seed 토큰·컴포넌트 anatomy로 재구성한 예시. "Claude로 Seed 스타일 만들어줘" 한 번으로 오른쪽 구성(`ActionButton` brandSolid CTA, `List` 패턴, `Badge`로 "서비스 중/출시 예정" 상태)이 나온다. 스킬은 의미론적 토큰·기존 컴포넌트 anatomy·브랜드 컬러 일관성을 강제한다.
+
 ## 왜 필요한가
 
 Seed 공식 문서는 사람이 읽기 위해 설계됐다. 마케팅 랜딩, 인터랙티브 playground, 산문형 설명. Claude가 그 구조를 소비하려면 여러 페이지를 왔다 갔다 하며 맥락을 재구성해야 하고, "언제 쓰지 말아야 하나"는 거의 보이지 않는다.
