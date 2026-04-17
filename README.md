@@ -19,21 +19,26 @@ Claude를 이용해서 앱을 디자인할 때, generic AI-slop을 뱉지 않도
 </tr>
 </table>
 
-같은 정보(Bridge Studio 서비스 리스트)를 Seed 토큰·컴포넌트 anatomy로 재구성한 예시. "Claude로 Seed 스타일 만들어줘" 한 번으로 오른쪽 구성(`ActionButton` brandSolid CTA, `List` 패턴, `Badge`로 "서비스 중/출시 예정" 상태)이 나온다. 스킬은 의미론적 토큰·기존 컴포넌트 anatomy·브랜드 컬러 일관성을 강제한다.
+같은 Bridge Studio 서비스 리스트예요. 왼쪽은 직접 작성한 랜딩, 오른쪽은 `/daangn-seed-ai:seed 랜딩 페이지를 리디자인해줘` 한 줄로 나온 결과고요.
 
-## 왜 필요한가
+`ActionButton`·`List`·`Badge` 조합과 브랜드 컬러가 자연스럽게 잡혀요.
 
-Seed 공식 문서는 사람이 읽기 위해 설계됐다. 마케팅 랜딩, 인터랙티브 playground, 산문형 설명. Claude가 그 구조를 소비하려면 여러 페이지를 왔다 갔다 하며 맥락을 재구성해야 하고, "언제 쓰지 말아야 하나"는 거의 보이지 않는다.
+## 왜 필요할까요?
 
-당근이 배포하는 공식 `seed-design` 스킬도 좋지만 `seed-design.io`의 llms.txt를 런타임 WebFetch로 불러오는 구조라 upstream이 사라지면 동작하지 않는다.
+Seed 공식 문서와 공식 `seed-design` 스킬은 훌륭하지만 Claude가 소비하기엔 한계가 있어요. 공식 문서는 여러 페이지를 왔다 갔다 해야 맥락이 잡히고 "언제 쓰지 말아야 하는지"가 잘 안 보여요. 공식 스킬은 `seed-design.io`의 llms.txt를 런타임에 WebFetch로 가져오는 구조라 upstream이 사라지면 동작을 멈추고요.
 
-이 스킬은 Seed를 Claude의 소비 방식에 맞춰 재구조화한 **self-contained 스냅샷**이다.
+이 스킬은 Seed를 Claude의 소비 방식에 맞춰 재구조화한 **self-contained 스냅샷**이에요.
 
-- **decision-first** — "어느 컴포넌트를 쓸지"가 제일 어렵다. `decision-matrices/`가 `components/`보다 먼저 참조된다.
-- **anti-patterns 일급** — "이렇게 쓰지 마세요"가 AI-slop을 더 잘 막는다. generic AI가 반복하는 실수 13종을 grep 가능한 형태로 나열.
-- **structured data > 산문** — slot/variant/state/token을 테이블로. Claude는 테이블을 더 정확히 소비한다.
-- **self-contained** — 모든 토큰·anatomy가 파일로 들어있다. seed-design.io가 private 돼도 동작.
-- **한국어 UX 내장** — `maxGraphemeCount`, Seed의 한국어 line-height 등 한국어 기준 세팅 반영.
+**핵심 차별점**
+
+- **decision-first** — "어느 컴포넌트를 쓸지"가 제일 어려워요. `decision-matrices/`가 `components/`보다 먼저 참조되도록 설계했어요.
+- **self-contained** — 모든 토큰·anatomy가 파일로 들어있어서 `seed-design.io`가 private이 돼도 동작해요.
+
+**품질을 받치는 것들**
+
+- **anti-patterns 일급** — "이렇게 쓰지 마세요"가 AI-slop을 더 잘 막아줘요. generic AI가 반복하는 실수 13종을 grep 가능한 형태로 정리했어요.
+- **structured data > 산문** — slot/variant/state/token을 테이블로 정리했어요. Claude는 테이블을 더 정확히 소비해요.
+- **한국어 UX 내장** — `maxGraphemeCount`, Seed의 한국어 line-height 등 한국어 기준 세팅이 반영돼 있어요.
 
 ## 설치
 
