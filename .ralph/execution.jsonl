@@ -87,3 +87,4 @@
 {"ts":"2026-04-17T09:30:00Z","event":"story_start","host":"byunghun","issue":"#20","story":"S2"}
 {"ts":"2026-04-17T09:30:45Z","event":"story_complete","host":"byunghun","issue":"#20","story":"S2","tests_passed":true,"files_changed":["plugins/daangn-seed-ai/skills/seed/references/components/checkbox-group.md","plugins/daangn-seed-ai/skills/seed/references/components/checkbox.md"],"replaced":11}
 {"ts":"2026-04-17T13:00:00Z","event":"story_complete","host":"byunghun","issue":"#14-1B","story":"S3","tests_passed":true,"files_changed":["plugins/daangn-seed-ai/skills/seed/references/components/tablist.md"],"lines":458}
+{"ts":"2026-04-17T13:30:00Z","event":"story_complete","host":"byunghun","issue":"#14-1B","story":"S4","tests_passed":true,"files_changed":["plugins/daangn-seed-ai/skills/seed/references/components/segmented-control.md"],"lines":363}
