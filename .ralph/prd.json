@@ -1,247 +1,394 @@
 {
   "project": "daangn-seed-ai",
   "branchName": "main",
-  "description": "Tier 1G cluster port (inline-banner deprecated, page-banner, content-placeholder, skeleton, progress-circle, typography/Text) + integration of index.md & which-overlay.md",
-  "follow_up_issue": "#19",
-  "epic": "#2",
-  "source_issues": [
-    "#14"
-  ],
-  "cluster": "1G",
-  "upstream_sha": "1f1d21d",
-  "waves": {
-    "1": {
-      "description": "6 disjoint component MDs — parallel safe (no file overlap, cross-links use relative paths)",
-      "stories": [
-        "W1-S1",
-        "W1-S2",
-        "W1-S3",
-        "W1-S4",
-        "W1-S5",
-        "W1-S6"
-      ]
-    },
-    "2": {
-      "description": "Integration — index.md coverage + which-overlay deprecated marking",
-      "stories": [
-        "W2-S7"
-      ],
-      "depends_on_wave": 1
-    }
-  },
+  "description": "A(#19 polish) + B(#18 polish) + C(#14 1A form controls + 1D buttons) composite run — 13 stories across 5 waves",
+  "follow_up_issue": null,
   "issues": {
+    "#19": {
+      "status": "pending",
+      "review_rounds": 0
+    },
+    "#18": {
+      "status": "pending",
+      "review_rounds": 0
+    },
     "#14": {
-      "status": "in_progress",
-      "cluster": "1G",
+      "status": "pending",
       "review_rounds": 0
     }
   },
   "userStories": [
     {
-      "id": "W1-S1",
-      "title": "InlineBanner reference (deprecated)",
-      "description": "plugins/daangn-seed-ai/skills/seed/references/components/inline-banner.md 작성. upstream이 deprecated 표시했으므로 MD 상단 경고 블록 + PageBanner 마이그레이션 가이드 역할. Namespace API 기반 Anatomy(Root/Content/Title/Description/Link/CloseButton 6 slot) + YAML Slot tokens 보조 표(root/prefixIcon/title/description/link/suffixIcon 6 slot 별도 섹션).",
-      "files": [
-        "plugins/daangn-seed-ai/skills/seed/references/components/inline-banner.md"
-      ],
-      "sources": [
-        "/tmp/seed-design-sync/packages/rootage/components/inline-banner.yaml",
-        "/tmp/seed-design-sync/packages/react/src/components/InlineBanner/"
-      ],
+      "id": "19-1",
+      "title": "page-banner.md — PrefixIcon 예제에 seed-prefix-icon className 부착",
+      "description": "page-banner.md §예제 3 'AI 프로모션 magic weak' 내 <IconSparkleFill /> 를 className='seed-prefix-icon' 부착 형태로 교체. Anti-patterns 블록의 아이콘 없음 예제는 손대지 않음.",
       "acceptanceCriteria": [
-        "파일 상단에 '⚠️ Deprecated' 경고 블록 + [PageBanner](./page-banner.md) 링크",
-        "Anatomy 테이블: React namespace 6 slot (Root/Content/Title/Description/Link/CloseButton)",
-        "YAML Slot tokens 보조 표: 별도 섹션으로 YAML 6 slot (root/prefixIcon/title/description/link/suffixIcon) + 토큰 properties + 네이밍 차이 1줄 설명",
-        "Variants 테이블: variant 7개 전체 (neutralWeak/positiveWeak/informativeWeak/warningWeak/warningSolid/criticalWeak/criticalSolid) + bg/fg 토큰",
-        "import: import { InlineBanner } from \"@seed-design/react\";",
-        "예제 코드 namespace 패턴 사용 (<InlineBanner.Root><InlineBanner.Title>...)",
-        "'언제 쓰나' 첫 행: '기존 코드 유지보수'. 신규는 PageBanner로 라우팅",
-        "Anti-pattern 섹션에 '신규 기능에 InlineBanner 사용' 케이스 포함",
-        "150-250 lines"
+        "grep -c 'seed-prefix-icon' page-banner.md ≥ 3",
+        "grep -n 'IconSparkleFill' page-banner.md 모든 매치에 className='seed-prefix-icon' 동반",
+        "grep -cE '<PrefixIcon\\b' page-banner.md = 0",
+        "문서 전체 H2 수 변동 없음"
       ],
-      "priority": 1,
-      "passes": true,
-      "source_issue": "#14",
-      "wave": 1,
-      "complexity": "M",
-      "model": "opus",
-      "dependencies": []
-    },
-    {
-      "id": "W1-S2",
-      "title": "PageBanner reference",
-      "description": "plugins/daangn-seed-ai/skills/seed/references/components/page-banner.md 작성. variant × tone 매트릭스 + magic tone gradient 특수 규칙. React namespace (7 slot) + YAML slot tokens 보조 표.",
       "files": [
         "plugins/daangn-seed-ai/skills/seed/references/components/page-banner.md"
       ],
-      "sources": [
-        "/tmp/seed-design-sync/packages/rootage/components/page-banner.yaml",
-        "/tmp/seed-design-sync/packages/react/src/components/PageBanner/"
+      "upstream_refs": [
+        "/tmp/seed-design-sync/packages/react/src/components/PageBanner/PageBanner.namespace.ts",
+        "/tmp/seed-design-sync/packages/rootage/components/page-banner.yaml"
       ],
-      "acceptanceCriteria": [
-        "Anatomy: React namespace 7 slot (Root/Body/Content/Title/Description/Button/CloseButton)",
-        "YAML Slot tokens 보조 표: YAML 7 slot (root/prefixIcon/content/title/description/button/suffixIcon) + Body/CloseButton는 React layout wrapper (no YAML token) + prefixIcon/suffixIcon는 YAML-only slot임을 1줄 설명",
-        "Variants: variant(weak/solid) + tone(neutral/positive/informative/warning/critical/magic) 분리 테이블",
-        "호환 매트릭스: magic+solid = '❌ not supported'",
-        "States: enabled / pressed (YAML pressed 토큰 반영)",
-        "tone=magic: $gradient.glow-magic 사용 명시",
-        "import: import { PageBanner } from \"@seed-design/react\";",
-        "합성 규칙: PageBanner(페이지 최상단) vs Callout(섹션 내부) vs InlineBanner(deprecated) 구분",
-        "250-350 lines"
-      ],
-      "priority": 1,
-      "passes": true,
-      "source_issue": "#14",
       "wave": 1,
-      "complexity": "L",
-      "model": "opus",
+      "priority": 1,
+      "complexity": "S",
+      "model": "sonnet",
+      "passes": true,
+      "source_issue": "#19",
       "dependencies": []
     },
     {
-      "id": "W1-S3",
-      "title": "ContentPlaceholder reference",
-      "description": "plugins/daangn-seed-ai/skills/seed/references/components/content-placeholder.md. 12 type variants(empty state). React namespace(Root, Asset) + preset SVG 설명.",
-      "files": [
-        "plugins/daangn-seed-ai/skills/seed/references/components/content-placeholder.md"
-      ],
-      "sources": [
-        "/tmp/seed-design-sync/packages/rootage/components/content-placeholder.yaml",
-        "/tmp/seed-design-sync/packages/react/src/components/ContentPlaceholder/"
-      ],
+      "id": "19-2",
+      "title": "skeleton.md — H2 섹션 순서 _template.md 표준으로 재배치",
+      "description": "skeleton.md 의 H2 블록 순서를 _template.md 표준으로 정리. States 를 Variants 뒤로, Motion/Base 토큰 을 Props 앞으로. 본문 텍스트/코드 블록은 불변, 블록 단위 재배치만.",
       "acceptanceCriteria": [
-        "Anatomy: Root / Asset 2 slot",
-        "Variants: type 12개 (default/buySell/car/commerce/coupon/food/group/image/jobs/business/post/realty) + 각 용례",
-        "React preset SVG 위치(presets.tsx) 명시 + BYO SVG 가능 표기",
-        "base 토큰은 YAML 원문 그대로: $color.palette.gray-200, $dimension.x4, $dimension.x40, 0.5 (heightFraction)",
-        "'언제 쓰나' 표에 Skeleton과의 대비 행 포함 (Skeleton=로딩 중 임시 골격, ContentPlaceholder=영속적 empty state)",
-        "import: import { ContentPlaceholder } from \"@seed-design/react\"; namespace 패턴",
-        "180-250 lines"
+        "grep -n '^## ' skeleton.md 출력이 정확히: 언제 쓰나·Anatomy·Variants·States·Motion/Base 토큰·Props·합성 규칙·접근성·Anti-patterns·예제",
+        "wc -l skeleton.md 전후 차이 ≤ 2",
+        "H2 아래 본문 블록 hash 집합이 재배치 전후 동일 (awk + sha256sum 검증)"
       ],
-      "priority": 1,
-      "passes": true,
-      "source_issue": "#14",
-      "wave": 1,
-      "complexity": "M",
-      "model": "opus",
-      "dependencies": []
-    },
-    {
-      "id": "W1-S4",
-      "title": "Skeleton reference",
-      "description": "plugins/daangn-seed-ai/skills/seed/references/components/skeleton.md. Flat export(namespace 아님). tone × radius 매트릭스 + shimmer base tokens.",
       "files": [
         "plugins/daangn-seed-ai/skills/seed/references/components/skeleton.md"
       ],
-      "sources": [
-        "/tmp/seed-design-sync/packages/rootage/components/skeleton.yaml",
-        "/tmp/seed-design-sync/packages/react/src/components/Skeleton/"
+      "upstream_refs": [
+        "plugins/daangn-seed-ai/skills/seed/references/components/_template.md"
       ],
-      "acceptanceCriteria": [
-        "Anatomy: Root(=Skeleton 자체) + Shimmer(pseudo-element) 2 slot 설명",
-        "Variants: tone(neutral/magic), radius(0/8/16/full — full=pill/circle)",
-        "tone=magic: $gradient.shimmer-magic 사용 명시",
-        "base shimmer 토큰(shimmer.duration: 1.5s, shimmer.timingFunction: $timing-function.easing) Motion 또는 base token 섹션에 기록",
-        "width/height prop 필수 — 자주 쓰는 패턴 예제 3개 이상 (text line / card / avatar circle)",
-        "import: import { Skeleton } from \"@seed-design/react\"; (flat, namespace 아님 — 1줄 주석)",
-        "'언제 쓰나' 표에 ProgressCircle과의 비교 행 포함",
-        "150-200 lines"
-      ],
-      "priority": 1,
-      "passes": true,
-      "source_issue": "#14",
       "wave": 1,
+      "priority": 2,
       "complexity": "S",
       "model": "sonnet",
+      "passes": true,
+      "source_issue": "#19",
       "dependencies": []
     },
     {
-      "id": "W1-S5",
-      "title": "ProgressCircle reference",
-      "description": "plugins/daangn-seed-ai/skills/seed/references/components/progress-circle.md. size × tone × indeterminate 매트릭스 + 접근성.",
-      "files": [
-        "plugins/daangn-seed-ai/skills/seed/references/components/progress-circle.md"
-      ],
-      "sources": [
-        "/tmp/seed-design-sync/packages/rootage/components/progress-circle.yaml",
-        "/tmp/seed-design-sync/packages/react/src/components/ProgressCircle/"
-      ],
+      "id": "18-3",
+      "title": "avatar.md — Image.RootProps/Image.ContentProps upstream 주석 추가",
+      "description": "avatar.md §Props 섹션의 AvatarRootProps 정의 바로 위에 upstream 이 Image.RootProps 를 extends 한다는 주석 2-3 줄. AvatarImageProps 위에 Image.ContentProps 주석.",
       "acceptanceCriteria": [
-        "Anatomy: Root / Track(배경 원) / Range(진행 호·스피너) 3 slot (namespace)",
-        "Variants: size(24 inline / 40 page) × tone(neutral/brand/staticWhite) × indeterminate(true/false)",
-        "indeterminate=true 애니메이션 토큰(lengthDuration 1.2s, rotateDuration 1.2s, head/tail/rotate timingFunction) 명시",
-        "indeterminate=false: lengthDuration 300ms + value prop 0-1 사용 패턴 예제",
-        "접근성: role=progressbar, aria-valuenow/valuemin/valuemax(indeterminate=false만), aria-busy=true+aria-label(indeterminate=true)",
-        "import: import { ProgressCircle } from \"@seed-design/react\"; namespace",
-        "'언제 쓰나' 표에 Skeleton과의 비교 행 포함",
-        "180-260 lines"
+        "grep -n 'Image.RootProps' avatar.md ≥ 1",
+        "grep -n 'Image.ContentProps' avatar.md ≥ 1",
+        "grep -n '@seed-design/react-image' avatar.md ≥ 1",
+        "기존 interface body, default 설명, 예제 코드 불변"
       ],
-      "priority": 1,
-      "passes": true,
-      "source_issue": "#14",
+      "files": [
+        "plugins/daangn-seed-ai/skills/seed/references/components/avatar.md"
+      ],
+      "upstream_refs": [
+        "/tmp/seed-design-sync/packages/react/src/components/Avatar/Avatar.tsx:14,20"
+      ],
       "wave": 1,
+      "priority": 3,
+      "complexity": "S",
+      "model": "sonnet",
+      "passes": true,
+      "source_issue": "#18",
+      "dependencies": []
+    },
+    {
+      "id": "18-4",
+      "title": "sync-from-seed.mjs — status/kind 분리 + rootage-only 도입",
+      "description": "diffComponents 에서 report 엔트리를 {status, kind, note?} 형태로 정규화. ROOTAGE_ONLY_COMPONENTS=new Set(['text-button']) 추가. status 는 kebab 태그만, 상세는 note 로 분리. Human 인쇄부는 note 있으면 '${status} — ${note}' 형식.",
+      "acceptanceCriteria": [
+        "grep -c 'see composition.md' scripts/sync-from-seed.mjs = 0",
+        "grep -c 'ROOTAGE_ONLY_COMPONENTS' scripts/sync-from-seed.mjs ≥ 1",
+        "grep -c '\"text-button\"' scripts/sync-from-seed.mjs ≥ 1",
+        "JSON 출력의 모든 component 가 status+kind 보유, status 는 {ported,not-ported,removed-upstream,local-only,internal-primitive,rootage-only} 중 하나",
+        "components['text-button'].status === 'rootage-only'",
+        "Human mode 에서 internal-primitive 는 'internal-primitive — Documented collectively in decision-matrices/composition.md' 형식",
+        "git diff scripts/sync-from-seed.mjs 변경 ≤ 60 줄"
+      ],
+      "files": [
+        "scripts/sync-from-seed.mjs"
+      ],
+      "wave": 1,
+      "priority": 4,
       "complexity": "M",
       "model": "opus",
+      "passes": true,
+      "source_issue": "#18",
       "dependencies": []
     },
     {
-      "id": "W1-S6",
-      "title": "Typography (Text) reference",
-      "description": "plugins/daangn-seed-ai/skills/seed/references/components/typography.md. YAML=Typography, React=Text. 51 textStyle variants(3 semantic + 24 rem + 24 static) + 토큰과 구분.",
-      "files": [
-        "plugins/daangn-seed-ai/skills/seed/references/components/typography.md"
-      ],
-      "sources": [
-        "/tmp/seed-design-sync/packages/rootage/components/typography.yaml",
-        "/tmp/seed-design-sync/packages/react/src/components/Text/"
-      ],
+      "id": "14-1A-5",
+      "title": "checkbox.md — standalone Checkbox 문서 신규 작성",
+      "description": "Checkbox namespace 의 Root/Control/Group(ref)/HiddenInput/Indicator/Label 6 slot 을 self-contained MD 로 문서화. YAML checkbox.yaml + checkmark.yaml 의 variant (weight regular/bold, checkmark variant square/ghost, tone brand/neutral, size medium/large) 반영. Indicator 의 unchecked/checked/indeterminate prop 은 SVG 전달 형태 예제.",
       "acceptanceCriteria": [
-        "파일 상단 네이밍 노트: 'upstream rootage는 Typography, React는 Text 컴포넌트'",
-        "'tokens/typography.md와의 관계' 섹션 Anatomy 다음 위치. 토큰=스케일 정의, 컴포넌트=적용 API. → [tokens/typography.md](../tokens/typography.md) 링크",
-        "textStyle 51개를 3그룹 테이블 분리: Semantic(3: screenTitle/articleBody/articleNote) / Rem scale(24: t1-t7 각 R/M/B + t8-t10 Bold-only) / Static(24: 동일 구조 Static prefix)",
-        "Props 테이블: React-only 기능 전부 (as / maxLines / color / align / userSelect / whiteSpace / textDecorationLine / fontSize / lineHeight / fontWeight 부분 오버라이드)",
-        "as prop 허용 값: span(default) / p / h1-h6 / strong / dt / dd / legend 명시",
-        "maxLines 동작: 1=ellipsis single line, 2+=multi-line clamp",
-        "import: import { Text } from \"@seed-design/react\";",
-        "Anti-pattern: textStyle 없이 Text로 감싸고 fontSize만 지정 / Text 대신 plain div + 수동 className 2가지",
-        "250-350 lines"
+        "파일 존재, 최소 150 줄",
+        "H2 섹션 순서: 언제 쓰나·Anatomy·Variants·States·Token 매핑·Props·합성 규칙·접근성·Anti-patterns·예제 중 최소 8개 이상 포함",
+        "grep -cE 'Checkbox\\.(Root|Control|Indicator|Label|HiddenInput)' checkbox.md ≥ 5",
+        "weight='regular' 와 weight='bold' 둘 다 예제 등장",
+        "indeterminate 사용 예제 최소 1개",
+        "deprecated default/stronger 안내 1 문단",
+        "Anti-patterns 에 '<input type=checkbox> 직접 사용' 케이스",
+        "예제 내 아이콘 import 가 @daangn/react-monochrome-icon 실제 export 와 일치"
       ],
-      "priority": 1,
-      "passes": true,
-      "source_issue": "#14",
-      "wave": 1,
-      "complexity": "L",
-      "model": "opus",
-      "dependencies": []
-    },
-    {
-      "id": "W2-S7",
-      "title": "Integration — index.md + which-overlay.md",
-      "description": "references/index.md 트리·커버리지 갱신 + decision-matrices/which-overlay.md의 InlineBanner deprecated 표기 패치 + sync-from-seed.mjs 재실행 검증.",
       "files": [
-        "plugins/daangn-seed-ai/skills/seed/references/index.md",
-        "plugins/daangn-seed-ai/skills/seed/references/decision-matrices/which-overlay.md"
+        "plugins/daangn-seed-ai/skills/seed/references/components/checkbox.md"
       ],
-      "acceptanceCriteria": [
-        "index.md components/ 트리에 6개 신규 파일 + 1줄 설명 추가 (inline-banner/page-banner/content-placeholder/skeleton/progress-circle/typography)",
-        "index.md 커버리지 섹션: MVP 12→18 컴포넌트 반영, Skeleton/ProgressCircle 미포팅 목록에서 제거, Typography ↔ tokens/typography.md 구분 1줄, InlineBanner 'deprecated 마이그레이션 가이드로 유지' 표기",
-        "which-overlay.md 결정트리의 '리스트 아이템 근처 플로팅 안내' 라인을 'PageBanner (InlineBanner는 deprecated 마이그레이션 대상)'로 수정",
-        "which-overlay.md 비교표 InlineBanner 행 첫 컬럼을 '**InlineBanner** ⚠️ deprecated'로 변경",
-        "node scripts/sync-from-seed.mjs 실행 결과: inline-banner/page-banner/content-placeholder/skeleton/progress-circle/typography 가 not-ported에서 없다",
-        "ls components/*.md | grep -v '/_' | wc -l = 18"
+      "upstream_refs": [
+        "/tmp/seed-design-sync/packages/rootage/components/checkbox.yaml",
+        "/tmp/seed-design-sync/packages/rootage/components/checkmark.yaml",
+        "/tmp/seed-design-sync/packages/react/src/components/Checkbox/Checkbox.namespace.ts",
+        "/tmp/seed-design-sync/packages/react/src/components/Checkbox/Checkbox.tsx"
       ],
-      "priority": 2,
-      "passes": true,
-      "source_issue": "#14",
       "wave": 2,
+      "priority": 5,
+      "complexity": "M",
+      "model": "opus",
+      "passes": false,
+      "source_issue": "#14",
+      "dependencies": []
+    },
+    {
+      "id": "14-1A-6",
+      "title": "checkbox-group.md — CheckboxGroup wrapper 문서 신규 작성",
+      "description": "CheckboxGroup 은 gapY 만 관리하는 경량 wrapper. Fieldset role, legend 접근성, name 공유, FormData 처리, 가로/세로 배치 예제. controlled + uncontrolled 양쪽 예제.",
+      "acceptanceCriteria": [
+        "파일 존재, 최소 100 줄",
+        "'언제 쓰나' 표에 Checkbox 단일 vs CheckboxGroup vs RadioGroup 구분",
+        "<fieldset>/<legend> 접근성 패턴 예제 1개",
+        "gapY 토큰 표기 $dimension.x1 명시",
+        "import { Checkbox } from '@seed-design/react' + <Checkbox.Group> 명시",
+        "controlled (value/onValueChange) + uncontrolled (defaultValue) 예제 양쪽",
+        "[./checkbox.md](./checkbox.md) 교차 링크 ≥ 1, 파일 working tree 존재"
+      ],
+      "files": [
+        "plugins/daangn-seed-ai/skills/seed/references/components/checkbox-group.md"
+      ],
+      "upstream_refs": [
+        "/tmp/seed-design-sync/packages/rootage/components/checkbox-group.yaml",
+        "/tmp/seed-design-sync/packages/react/src/components/Checkbox/Checkbox.tsx"
+      ],
+      "wave": 3,
+      "priority": 6,
       "complexity": "S",
       "model": "sonnet",
+      "passes": false,
+      "source_issue": "#14",
       "dependencies": [
-        "W1-S1",
-        "W1-S2",
-        "W1-S3",
-        "W1-S4",
-        "W1-S5",
-        "W1-S6"
+        "14-1A-5"
+      ]
+    },
+    {
+      "id": "14-1A-7",
+      "title": "radio.md — RadioGroup.Item 개념 stub",
+      "description": "upstream React 에 Radio standalone export 가 없다는 사실 + YAML radio.yaml spec 존재를 설명하는 short redirect doc.",
+      "acceptanceCriteria": [
+        "파일 존재, 40-80 줄 (stub)",
+        "첫 H2 또는 callout 에 'React 에서는 RadioGroup.Item 으로만 사용' 명시",
+        "[./radio-group.md](./radio-group.md) 링크 ≥ 2회",
+        "weight=regular/bold + size=medium/large 토큰 표 포함",
+        "'standalone Radio 는 React API 에 없음' 문장 직접 명기"
+      ],
+      "files": [
+        "plugins/daangn-seed-ai/skills/seed/references/components/radio.md"
+      ],
+      "upstream_refs": [
+        "/tmp/seed-design-sync/packages/rootage/components/radio.yaml",
+        "/tmp/seed-design-sync/packages/react/src/components/RadioGroup/RadioGroup.namespace.ts"
+      ],
+      "wave": 2,
+      "priority": 7,
+      "complexity": "S",
+      "model": "sonnet",
+      "passes": true,
+      "source_issue": "#14",
+      "dependencies": []
+    },
+    {
+      "id": "14-1A-8",
+      "title": "radio-group.md — RadioGroup namespace 전체 문서 신규 작성",
+      "description": "Root, Item, ItemLabel, ItemControl, ItemIndicator, ItemHiddenInput 6 slot 문서화. radiomark.yaml 의 tone(brand/neutral) + size(medium/large) Item 축 포함.",
+      "acceptanceCriteria": [
+        "파일 존재, 최소 180 줄",
+        "6 slot 모두 Anatomy 표에 등장",
+        "tone='brand' 와 tone='neutral' 양쪽 예제",
+        "controlled (value/onValueChange) + uncontrolled (defaultValue) 예제",
+        "[./radio.md](./radio.md) 상호 링크 ≥ 1, 파일 working tree 존재",
+        "Anti-patterns 에 'RadioGroup 없이 Item 단독 사용' 금지 케이스",
+        "접근성: <fieldset>/<legend> 또는 role='radiogroup' 1 문단"
+      ],
+      "files": [
+        "plugins/daangn-seed-ai/skills/seed/references/components/radio-group.md"
+      ],
+      "upstream_refs": [
+        "/tmp/seed-design-sync/packages/rootage/components/radio-group.yaml",
+        "/tmp/seed-design-sync/packages/rootage/components/radio.yaml",
+        "/tmp/seed-design-sync/packages/rootage/components/radiomark.yaml",
+        "/tmp/seed-design-sync/packages/react/src/components/RadioGroup/RadioGroup.namespace.ts",
+        "/tmp/seed-design-sync/packages/react/src/components/RadioGroup/RadioGroup.tsx"
+      ],
+      "wave": 3,
+      "priority": 8,
+      "complexity": "M",
+      "model": "opus",
+      "passes": false,
+      "source_issue": "#14",
+      "dependencies": [
+        "14-1A-7"
+      ]
+    },
+    {
+      "id": "14-1A-9",
+      "title": "switch.md — Switch namespace 문서 신규 작성",
+      "description": "Root/Control/Thumb/Label/HiddenInput 5 slot 문서화. switch.yaml + switchmark.yaml 의 size·tone 축 명시. thumb scale/translate/color 모션 토큰 표, controlled vs uncontrolled 예제, form integration.",
+      "acceptanceCriteria": [
+        "파일 존재, 최소 180 줄",
+        "Switch.Root/Control/Thumb/Label/HiddenInput 모든 slot 언급",
+        "Variants 표의 size 값이 Switch.tsx 의 SwitchVariantProps['size'] 타입 리터럴과 정확히 일치",
+        "deprecated 값에 대한 migration 경고 1 문단",
+        "tone brand/neutral 양쪽 예제",
+        "'Switch vs Checkbox' 구분 callout",
+        "form integration 예제: name/value/form + Switch.HiddenInput + FormData 결과"
+      ],
+      "files": [
+        "plugins/daangn-seed-ai/skills/seed/references/components/switch.md"
+      ],
+      "upstream_refs": [
+        "/tmp/seed-design-sync/packages/rootage/components/switch.yaml",
+        "/tmp/seed-design-sync/packages/rootage/components/switchmark.yaml",
+        "/tmp/seed-design-sync/packages/react/src/components/Switch/Switch.namespace.ts",
+        "/tmp/seed-design-sync/packages/react/src/components/Switch/Switch.tsx"
+      ],
+      "wave": 2,
+      "priority": 9,
+      "complexity": "M",
+      "model": "opus",
+      "passes": false,
+      "source_issue": "#14",
+      "dependencies": []
+    },
+    {
+      "id": "14-1D-10",
+      "title": "text-button.md — Rootage 토큰 스펙 문서 (R2 재정의)",
+      "description": "upstream 1f1d21d 시점 React 미제공. MD 는 Rootage YAML 토큰 스펙 + native <button> + Rootage 토큰 적용 가이드 + ActionButton ghost 대안 비교.",
+      "acceptanceCriteria": [
+        "파일 존재, 최소 100 줄",
+        "첫 단락(또는 callout) 에 'React 컴포넌트 미제공 · Rootage 토큰 스펙 문서' 문구",
+        "grep -c 'import.*TextButton.*@seed-design/react' text-button.md = 0",
+        "Variants 섹션 없음 또는 '없음' 명시. 대신 '## 기본 스펙 (Rootage tokens)'",
+        "minHeight=x9, paddingX=x3_5, paddingY=x2, cornerRadius=r2, fg.neutral-muted, fontWeight=bold, fontSize=t4 모두 Token 매핑",
+        "pressed state 토큰 bg.layer-default-pressed 명시",
+        "'## 직접 구현 시 가이드' 섹션 — native button + Rootage CSS 변수, ActionButton variant='ghost' 두 대안",
+        "[./action-button.md](./action-button.md) 교차 링크 ≥ 1",
+        "예제 최소 2개 (native button + ActionButton ghost)"
+      ],
+      "files": [
+        "plugins/daangn-seed-ai/skills/seed/references/components/text-button.md"
+      ],
+      "upstream_refs": [
+        "/tmp/seed-design-sync/packages/rootage/components/text-button.yaml"
+      ],
+      "wave": 4,
+      "priority": 10,
+      "complexity": "S",
+      "model": "sonnet",
+      "passes": false,
+      "source_issue": "#14",
+      "dependencies": []
+    },
+    {
+      "id": "14-1D-11",
+      "title": "toggle-button.md — ToggleButton 문서 신규 작성",
+      "description": "ToggleButton 은 flat export(namespace 아님). variant brandSolid|neutralWeak, size xsmall|small, loading, pressed/onPressedChange. YAML toggle-button.yaml 의 selected,pressed · selected,loading 조합 state 표.",
+      "acceptanceCriteria": [
+        "파일 존재, 최소 170 줄",
+        "variant='brandSolid', variant='neutralWeak' 양쪽 예제",
+        "size='xsmall', size='small' 모두 언급",
+        "loading + progressCircle slot 자동 렌더 설명 1 문단",
+        "controlled 예제: pressed={isPressed} onPressedChange={setIsPressed}",
+        "State 매트릭스: selected,pressed · selected,loading · disabled 모두 등장",
+        "ToggleButton vs Switch 구분 callout",
+        "'## YAML slot 과 React API 구분' 1 문단 — slot 은 CSS className, React API 는 pressed/onPressedChange 매핑표",
+        "selected 와 pressed 혼용 금지 — React API 섹션은 pressed, 시각적/YAML 은 selected"
+      ],
+      "files": [
+        "plugins/daangn-seed-ai/skills/seed/references/components/toggle-button.md"
+      ],
+      "upstream_refs": [
+        "/tmp/seed-design-sync/packages/rootage/components/toggle-button.yaml",
+        "/tmp/seed-design-sync/packages/react/src/components/ToggleButton/ToggleButton.tsx",
+        "/tmp/seed-design-sync/packages/react/src/components/ToggleButton/index.ts"
+      ],
+      "wave": 4,
+      "priority": 11,
+      "complexity": "M",
+      "model": "opus",
+      "passes": false,
+      "source_issue": "#14",
+      "dependencies": []
+    },
+    {
+      "id": "14-1D-12",
+      "title": "input-button.md — FieldButton alias 문서 (R2 재정의)",
+      "description": "input-button.yaml 은 Rootage ID. React 에서는 FieldButton namespace 로 구현됨. 파일명은 input-button.md 유지, 첫 단락+YAML↔React 매핑표로 alias 관계 명시. text-field.md 와 경계: text-field=자유 입력, input-button=picker trigger.",
+      "acceptanceCriteria": [
+        "파일 존재, 최소 140 줄",
+        "첫 단락에 import { FieldButton } from '@seed-design/react' 명시",
+        "YAML↔React 매핑표: input-button.yaml 8 slot (root/value/placeholder/prefixText/prefixIcon/suffixText/suffixIcon/clearButton) ↔ FieldButton.{Root,Value,Placeholder,PrefixText,PrefixIcon,SuffixText,SuffixIcon,ClearButton}",
+        "8 slot 모두 Anatomy 섹션 등장",
+        "FieldButton namespace 의 18 exports 중 input-button.yaml 에 없는 slot 은 '## Field 조합 시 추가 slot' 하위로 분리",
+        "State 매트릭스: enabled/pressed/invalid/disabled/readonly 5종",
+        "height=x13, cornerRadius=r3, strokeColor=stroke.neutral-weak, strokeColor(invalid)=stroke.critical-solid 명시",
+        "[./text-field.md](./text-field.md) 교차 링크 ≥ 1 + 경계 설명 1 문단",
+        "Anti-patterns 에 '자유 입력 필요한데 InputButton 사용' 케이스"
+      ],
+      "files": [
+        "plugins/daangn-seed-ai/skills/seed/references/components/input-button.md"
+      ],
+      "upstream_refs": [
+        "/tmp/seed-design-sync/packages/rootage/components/input-button.yaml",
+        "/tmp/seed-design-sync/packages/react/src/components/FieldButton/FieldButton.namespace.ts",
+        "/tmp/seed-design-sync/packages/react/src/components/FieldButton/FieldButton.tsx"
+      ],
+      "wave": 4,
+      "priority": 12,
+      "complexity": "M",
+      "model": "opus",
+      "passes": false,
+      "source_issue": "#14",
+      "dependencies": []
+    },
+    {
+      "id": "14-INT-13",
+      "title": "index.md + which-input.md + which-button.md 통합 갱신",
+      "description": "Wave 1-4 완료 후 references 인덱스와 결정 매트릭스 갱신. index.md 커버리지 18→26, rootage-only 섹션 추가. which-input.md 결정트리에 신규 MD 링크. which-button.md 비교표에 TextButton/InputButton/ToggleButton 추가.",
+      "acceptanceCriteria": [
+        "index.md 에서 grep -c 'checkbox.md|checkbox-group.md|radio.md|radio-group.md|switch.md|text-button.md|toggle-button.md|input-button.md' ≥ 8",
+        "grep -c '총 26 컴포넌트' index.md ≥ 1",
+        "which-button.md 에 TextButton, InputButton, ToggleButton 행 모두 존재",
+        "which-input.md 에 components/checkbox|radio-group|switch.md 링크 ≥ 3",
+        "node scripts/sync-from-seed.mjs --json 결과: checkbox/checkbox-group/radio-group/switch/toggle-button/input-button 모두 status='ported', text-button='rootage-only'",
+        "components/ 아래 .md 파일 수 = 기존 19 + 8 = 27",
+        "dead-link 검증 스크립트 exit 0 (상대 링크 실존 확인)"
+      ],
+      "files": [
+        "plugins/daangn-seed-ai/skills/seed/references/index.md",
+        "plugins/daangn-seed-ai/skills/seed/references/decision-matrices/which-input.md",
+        "plugins/daangn-seed-ai/skills/seed/references/decision-matrices/which-button.md"
+      ],
+      "wave": 5,
+      "priority": 13,
+      "complexity": "M",
+      "model": "opus",
+      "passes": false,
+      "source_issue": "#14",
+      "dependencies": [
+        "18-4",
+        "14-1A-5",
+        "14-1A-6",
+        "14-1A-7",
+        "14-1A-8",
+        "14-1A-9",
+        "14-1D-10",
+        "14-1D-11",
+        "14-1D-12"
       ]
     }
   ]
