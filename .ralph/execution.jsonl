@@ -13,3 +13,4 @@
 {"ts":"2026-04-17T07:12:16Z","event":"story_complete","host":"gimbyeonghun-ui-Macmini","issue":"#14","story":"W1-S6","tests_passed":true,"files_changed":["plugins/daangn-seed-ai/skills/seed/references/components/divider.md"],"retroactive":true,"reason":"executor did not append"}
 {"ts":"2026-04-17T07:12:16Z","event":"wave_complete","host":"gimbyeonghun-ui-Macmini","issue":"#17,#14","wave":1,"stories_completed":6,"stories_skipped":0}
 {"ts":"2026-04-17T07:35:00Z","event":"story_complete","host":"gimbyeonghun-ui-Macmini","issue":"#14","story":"W2-S7","tests_passed":true,"files_changed":["plugins/daangn-seed-ai/skills/seed/references/index.md"]}
+{"ts":"2026-04-17T07:20:00Z","event":"story_complete","host":"gimbyeonghun-ui-Macmini","issue":"#17","story":"W2-S8","tests_passed":true,"files_changed":["scripts/sync-from-seed.mjs"],"metrics":{"not_ported_before":72,"not_ported_after":54,"primitives_promoted":13,"ported_added":5}}

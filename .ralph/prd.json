@@ -232,7 +232,7 @@
         "lint/node 실행 경고 0개"
       ],
       "priority": 8,
-      "passes": false,
+      "passes": true,
       "source_issue": "#17",
       "wave": 2,
       "depends_on": [

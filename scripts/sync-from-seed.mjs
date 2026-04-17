@@ -89,6 +89,26 @@ const LOCAL_ONLY_COMPONENTS = new Set([
   "text-field", // composition of upstream `text-input` + `field` + `field-label`
 ]);
 
+// INTERNAL_PRIMITIVES: 부모 컴포넌트가 자동 조립하므로 개별 doc 없음. composition.md 에서 통합 문서화.
+// These primitives exist in upstream rootage yaml but are internal implementation details
+// assembled automatically by their parent components. They are documented collectively
+// in references/decision-matrices/composition.md rather than as individual component docs.
+const INTERNAL_PRIMITIVES = new Set([
+  "checkmark",
+  "radiomark",
+  "switchmark",
+  "select-box-checkmark",
+  "segmented-control-indicator",
+  "bottom-sheet-close-button",
+  "bottom-sheet-handle",
+  "action-sheet-close-button",
+  "extended-action-sheet-close-button",
+  "menu-sheet-close-button",
+  "slider-thumb",
+  "slider-tick",
+  "field-label",
+]);
+
 function diffComponents(upstreamRoot) {
   const report = {};
   const localDir = join(SKILL_ROOT, "references/components");
@@ -113,10 +133,20 @@ function diffComponents(upstreamRoot) {
       report[name] = { status: "local-only (slot utility / guidance)" };
       continue;
     }
-    if (!upstreamNames.has(name)) report[name] = { status: "removed-upstream" };
+    if (!upstreamNames.has(name)) {
+      report[name] = { status: "removed-upstream" };
+    } else {
+      report[name] = { status: "ported" };
+    }
   }
   for (const name of upstreamNames) {
-    if (!localNames.has(name)) report[name] = { status: "not-ported" };
+    if (!localNames.has(name)) {
+      if (INTERNAL_PRIMITIVES.has(name)) {
+        report[name] = { status: "internal-primitive (see composition.md)" };
+      } else {
+        report[name] = { status: "not-ported" };
+      }
+    }
   }
 
   return report;
