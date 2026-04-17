@@ -1,6 +1,8 @@
 # daangn-seed-ai
 
-Claude Code 플러그인. 당근 [Seed Design System](https://github.com/daangn/seed-design)을 AI-first로 재구조화한 self-contained 스냅샷. 빠른 앱 개발에서 generic AI-slop을 회피하고, 토큰·컴포넌트·결정 매트릭스 기반으로 Seed 스타일 UI를 작성하도록 안내한다.
+> AI-first snapshot of daangn/seed-design, packaged as a Claude Code plugin.
+
+빠른 앱 개발에서 generic AI-slop을 회피하고, 토큰·컴포넌트·결정 매트릭스 기반으로 [Seed Design System](https://github.com/daangn/seed-design) 스타일의 UI를 작성하도록 안내한다.
 
 ## 한눈에 보기
 
