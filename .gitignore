@@ -7,3 +7,5 @@ temp/
 .tmp/
 daangn-runs/
 .playwright-mcp/
+scripts/validate/runs/
+.reconcile/

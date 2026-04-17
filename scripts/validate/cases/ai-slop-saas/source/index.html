@@ -1,0 +1,385 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Nimbus AI — Supercharge your product workflow</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    color: #1f2937;
+    font-size: 14px;
+    line-height: 1.5;
+    background: #ffffff;
+  }
+
+  /* Header */
+  header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 17px 23px;
+    border-bottom: 1px solid #eee;
+  }
+  .header-inner {
+    width: 100%;
+    max-width: 1180px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+  }
+  .logo {
+    font-weight: 700;
+    font-size: 18px;
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  nav { display: flex; gap: 23px; }
+  nav a {
+    color: #6b7280;
+    text-decoration: none;
+    font-size: 14px;
+  }
+  .header-cta { display: flex; gap: 9px; align-items: center; }
+  .header-cta a {
+    color: #6b7280;
+    text-decoration: none;
+    font-size: 14px;
+    padding: 9px 15px;
+  }
+  .btn-primary-sm {
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    color: #ffffff;
+    border: none;
+    padding: 10px 17px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.4);
+  }
+
+  /* Hero */
+  .hero {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 95px 23px 105px;
+    background: linear-gradient(180deg, #fdf4ff 0%, #eff6ff 50%, #ffffff 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: -120px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 700px;
+    height: 700px;
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.18), transparent 60%);
+    pointer-events: none;
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 15px;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(99, 102, 241, 0.2);
+    color: #6366f1;
+    font-weight: 600;
+    font-size: 13px;
+    margin-bottom: 23px;
+  }
+  .hero h1 {
+    font-size: 56px;
+    line-height: 1.1;
+    font-weight: 800;
+    margin: 0 0 23px;
+    max-width: 820px;
+    background: linear-gradient(135deg, #1f2937 0%, #6366f1 50%, #ec4899 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .hero p {
+    font-size: 18px;
+    line-height: 1.5;
+    color: #4b5563;
+    max-width: 620px;
+    margin: 0 0 35px;
+  }
+  .hero-cta {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+  .btn-primary-lg {
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+    color: #ffffff;
+    border: none;
+    padding: 17px 35px;
+    border-radius: 28px;
+    font-weight: 700;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 10px 40px rgba(99, 102, 241, 0.35);
+    transition: transform 0.2s;
+  }
+  .btn-outline-lg {
+    background: #ffffff;
+    color: #1f2937;
+    border: 1px solid #e5e7eb;
+    padding: 17px 35px;
+    border-radius: 28px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+  }
+  .hero-note {
+    margin-top: 17px;
+    color: #9ca3af;
+    font-size: 13px;
+  }
+
+  /* Features */
+  .features {
+    padding: 95px 23px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+  }
+  .features h2 {
+    font-size: 38px;
+    margin: 0 0 15px;
+    background: linear-gradient(135deg, #1f2937, #6366f1);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .features .sub {
+    color: #6b7280;
+    font-size: 17px;
+    margin: 0 0 55px;
+    max-width: 620px;
+  }
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 23px;
+    max-width: 1080px;
+    width: 100%;
+  }
+  .feature-card {
+    padding: 35px 23px;
+    border-radius: 28px;
+    background: linear-gradient(180deg, #ffffff 0%, #fdf4ff 100%);
+    border: 1px solid rgba(99, 102, 241, 0.08);
+    box-shadow: 0 10px 40px rgba(99, 102, 241, 0.08);
+    text-align: center;
+  }
+  .feature-card .emoji {
+    font-size: 38px;
+    margin-bottom: 17px;
+  }
+  .feature-card h3 {
+    font-size: 19px;
+    margin: 0 0 9px;
+    color: #1f2937;
+  }
+  .feature-card p {
+    color: #6b7280;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* Newsletter CTA */
+  .newsletter {
+    margin: 0 23px 95px;
+    padding: 55px 35px;
+    border-radius: 28px;
+    background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #ffffff;
+    box-shadow: 0 20px 60px rgba(168, 85, 247, 0.35);
+  }
+  .newsletter h2 {
+    font-size: 32px;
+    margin: 0 0 9px;
+  }
+  .newsletter p {
+    font-size: 15px;
+    opacity: 0.9;
+    margin: 0 0 25px;
+    max-width: 520px;
+  }
+  .newsletter-form {
+    display: flex;
+    gap: 9px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 7px;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 480px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  }
+  .newsletter-form input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 13px 17px;
+    font-size: 14px;
+    background: transparent;
+    color: #1f2937;
+    border-radius: 15px;
+  }
+  .newsletter-form button {
+    background: linear-gradient(135deg, #1f2937, #374151);
+    color: #ffffff;
+    border: none;
+    padding: 13px 25px;
+    border-radius: 15px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Footer */
+  footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 35px 23px;
+    border-top: 1px solid #eee;
+    color: #9ca3af;
+    font-size: 13px;
+  }
+  .footer-inner {
+    width: 100%;
+    max-width: 1180px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
+  .footer-links {
+    display: flex;
+    gap: 23px;
+  }
+  .footer-links div[role="button"] {
+    cursor: pointer;
+    color: #6b7280;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <div class="logo">✨ Nimbus AI</div>
+      <nav>
+        <a href="#">Features</a>
+        <a href="#">Pricing</a>
+        <a href="#">Docs</a>
+        <a href="#">Blog</a>
+      </nav>
+      <div class="header-cta">
+        <a href="#">Sign in</a>
+        <button class="btn-primary-sm">Start free</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <span class="badge">🚀 Now with GPT‑5 reasoning</span>
+    <h1>Supercharge your product<br />workflow with AI magic.</h1>
+    <p>
+      Nimbus AI turns messy specs, scattered feedback, and endless meetings into
+      clean, shippable plans — effortlessly.
+    </p>
+    <div class="hero-cta">
+      <button class="btn-primary-lg">Start free — it's on us</button>
+      <button class="btn-outline-lg">▶ Watch 2‑min demo</button>
+    </div>
+    <div class="hero-note">No credit card required · Cancel anytime</div>
+  </section>
+
+  <section class="features">
+    <h2>Everything you need, nothing you don't.</h2>
+    <p class="sub">
+      Built for product teams who ship fast. Designed to feel magical from
+      day one.
+    </p>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="emoji">💡</div>
+        <h3>Instant specs</h3>
+        <p>
+          Drop a Slack thread, get a clean PRD. Nimbus summarizes, structures,
+          and flags open questions.
+        </p>
+      </div>
+      <div class="feature-card">
+        <div class="emoji">⚡</div>
+        <h3>Smart prioritization</h3>
+        <p>
+          Effortlessly rank features with AI‑backed scoring across impact,
+          effort, and strategic fit.
+        </p>
+      </div>
+      <div class="feature-card">
+        <div class="emoji">🪄</div>
+        <h3>Automated follow‑ups</h3>
+        <p>
+          Never chase decisions again. Nimbus watches every thread and nudges
+          owners at the right moment.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="newsletter">
+    <h2>Ready to ship faster?</h2>
+    <p>
+      Join 12,000+ product teams already using Nimbus. Get weekly tips straight
+      to your inbox.
+    </p>
+    <form class="newsletter-form" onsubmit="event.preventDefault()">
+      <input type="email" placeholder="your@company.com" />
+      <button type="submit">Subscribe</button>
+    </form>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div>© 2026 Nimbus Labs, Inc.</div>
+      <div class="footer-links">
+        <div role="button">Privacy</div>
+        <div role="button">Terms</div>
+        <div role="button">Contact</div>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
