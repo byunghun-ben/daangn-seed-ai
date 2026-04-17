@@ -89,11 +89,12 @@ import { SegmentedControl } from "@seed-design/react";
 ❌ 사이즈 S/M/L/XL 선택을 Tabs로 구현
    (Tabs는 콘텐츠 영역 전환 — 값 선택 UI가 아님)
 
-✅ <SegmentedControl value={size} onValueChange={setSize}>
+✅ <SegmentedControl.Root value={size} onValueChange={setSize} aria-label="사이즈">
+     <SegmentedControl.Indicator />
      <SegmentedControl.Item value="S">S</SegmentedControl.Item>
      ...
-   </SegmentedControl>
-   (3-4개 단일 값 선택 → SegmentedControl)
+   </SegmentedControl.Root>
+   (3-4개 단일 값 선택 → SegmentedControl namespace)
 ```
 
 **규칙**: "이 컴포넌트를 선택하면 아래 콘텐츠 영역이 바뀌는가?" → YES: Tabs / NO: SegmentedControl 또는 RadioGroup
@@ -104,11 +105,12 @@ import { SegmentedControl } from "@seed-design/react";
 ❌ "최신순 / 인기순 / 거리순" 정렬을 Tabs namespace로 구현
    (선택 결과가 콘텐츠 전환이 아니라 정렬 파라미터 변경이면 Tabs가 아님)
 
-✅ <SegmentedControl value={sort} onValueChange={setSort}>
+✅ <SegmentedControl.Root value={sort} onValueChange={setSort} aria-label="정렬">
+     <SegmentedControl.Indicator />
      <SegmentedControl.Item value="recent">최신순</SegmentedControl.Item>
      <SegmentedControl.Item value="popular">인기순</SegmentedControl.Item>
      <SegmentedControl.Item value="nearby">거리순</SegmentedControl.Item>
-   </SegmentedControl>
+   </SegmentedControl.Root>
 ```
 
 ### 3. SegmentedControl을 가로 스크롤 탭으로 오용
