@@ -102,8 +102,9 @@ interface CheckboxGroupProps
 ❌ <Checkbox.Group tone="brand">...</Checkbox.Group>
    {/* variant/tone/size prop 자체가 없음 — 타입 에러 */}
 
-❌ import Icon from "@daangn/react-monochrome-icon/IconCheckmarkFatFill";
-   // 올바른 패키지는 @karrotmarket/react-monochrome-icon
+❌ import Icon from "@karrotmarket/react-monochrome-icon/IconCheckmarkFatFill";
+   // (anti-pattern: deep path import 대신 named export 사용)
+   // 올바른 import: import { IconCheckmarkFatFill } from "@karrotmarket/react-monochrome-icon";
 ```
 
 ---

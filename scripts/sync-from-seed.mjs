@@ -90,7 +90,11 @@ const LOCAL_ONLY_COMPONENTS = new Set([
 ]);
 
 // ROOTAGE_ONLY_COMPONENTS: upstream-only independent components (not internal primitives).
-const ROOTAGE_ONLY_COMPONENTS = new Set(["text-button"]);
+// `radio` is documented as a separate file because its Rootage spec defines tokens
+// (size/weight/label colors) that are consumed by RadioGroup.Item — but upstream
+// ships no standalone `Radio` React export. The md frontmatter carries
+// `status: rootage-only`; keep this set in sync with those files.
+const ROOTAGE_ONLY_COMPONENTS = new Set(["text-button", "radio"]);
 
 // INTERNAL_PRIMITIVES: 부모 컴포넌트가 자동 조립하므로 개별 doc 없음. composition.md 에서 통합 문서화.
 // These primitives exist in upstream rootage yaml but are internal implementation details
@@ -121,6 +125,26 @@ const INTERNAL_PRIMITIVES = new Set([
 // and .github/workflows — only README mentions and internal docs reference it).
 // If an external consumer is added later, prefer widening the enum or adding a
 // new structured field over resurrecting composite strings.
+//
+// R3 fix (codex review response): even though no external consumer was found in-repo,
+// any ad-hoc tooling outside the repo that parsed the pre-R2 composite strings would
+// silently break after R2. To keep the migration non-breaking for unknown consumers,
+// each entry also carries `legacyStatus` — the exact pre-R2 composite string. New
+// code should read `status` + `kind` + `note`; `legacyStatus` exists only as a
+// compatibility bridge and may be removed after a full deprecation cycle.
+const LEGACY_STATUS_MAP = {
+  "local-only": "local-only (slot utility / guidance)",
+  "rootage-only": "rootage-only (no React export)",
+  "internal-primitive": "internal-primitive (see composition.md)",
+  "removed-upstream": "removed-upstream",
+  "ported": "ported",
+  "not-ported": "not-ported",
+};
+
+function withLegacyStatus(entry) {
+  return { ...entry, legacyStatus: LEGACY_STATUS_MAP[entry.status] ?? entry.status };
+}
+
 function diffComponents(upstreamRoot) {
   const report = {};
   const localDir = join(SKILL_ROOT, "references/components");
@@ -142,27 +166,27 @@ function diffComponents(upstreamRoot) {
 
   for (const name of localNames) {
     if (LOCAL_ONLY_COMPONENTS.has(name)) {
-      report[name] = { status: "local-only", kind: "local-only", note: "slot utility / guidance" };
+      report[name] = withLegacyStatus({ status: "local-only", kind: "local-only", note: "slot utility / guidance" });
       continue;
     }
     if (ROOTAGE_ONLY_COMPONENTS.has(name)) {
-      report[name] = { status: "rootage-only", kind: "rootage-only", note: "Rootage spec only, no React export" };
+      report[name] = withLegacyStatus({ status: "rootage-only", kind: "rootage-only", note: "Rootage spec only, no React export" });
       continue;
     }
     if (!upstreamNames.has(name)) {
-      report[name] = { status: "removed-upstream", kind: "removed-upstream" };
+      report[name] = withLegacyStatus({ status: "removed-upstream", kind: "removed-upstream" });
     } else {
-      report[name] = { status: "ported", kind: "ported" };
+      report[name] = withLegacyStatus({ status: "ported", kind: "ported" });
     }
   }
   for (const name of upstreamNames) {
     if (!localNames.has(name)) {
       if (INTERNAL_PRIMITIVES.has(name)) {
-        report[name] = { status: "internal-primitive", kind: "internal-primitive", note: "Documented collectively in decision-matrices/composition.md" };
+        report[name] = withLegacyStatus({ status: "internal-primitive", kind: "internal-primitive", note: "Documented collectively in decision-matrices/composition.md" });
       } else if (ROOTAGE_ONLY_COMPONENTS.has(name)) {
-        report[name] = { status: "rootage-only", kind: "rootage-only" };
+        report[name] = withLegacyStatus({ status: "rootage-only", kind: "rootage-only" });
       } else {
-        report[name] = { status: "not-ported", kind: "not-ported" };
+        report[name] = withLegacyStatus({ status: "not-ported", kind: "not-ported" });
       }
     }
   }
