@@ -12,14 +12,16 @@
     {
       "name": "daangn-seed-ai",
       "source": "./plugins/daangn-seed-ai",
-      "description": "AI-first Seed design system skill (tokens/components/decision matrices)",
+      "description": "AI-first Seed design system skills — /seed (새 프로젝트용), /reconcile + /reconcile-apply (기존 앱 마이그레이션용)",
       "category": "design-system",
       "tags": [
         "daangn",
         "seed",
         "design-system",
         "korean-ui",
-        "ai-slop-avoidance"
+        "ai-slop-avoidance",
+        "migration",
+        "reconcile"
       ]
     }
   ]
