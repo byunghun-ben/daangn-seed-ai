@@ -1,5 +1,4 @@
 ---
-name: daangn-seed-ai
 description: "당근 Seed 디자인 시스템을 AI-first로 재구조화한 self-contained 스냅샷. 빠른 앱 개발에서 generic AI-slop 회피, 토큰/컴포넌트/결정 매트릭스 기반 UI 설계 시 사용. '당근 디자인으로 만들어줘', 'Seed 기반 UI', 'daangn-seed-ai', 'daangn-ai', 'AI 스럽지 않은 UI' 같은 요청에 로드."
 ---
 
