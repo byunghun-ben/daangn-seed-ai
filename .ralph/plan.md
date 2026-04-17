@@ -37,7 +37,11 @@ story_count: 8
   5. Slider 서브섹션에 `slider-thumb` + `slider-tick` 2개 기록
   6. Form 서브섹션은 `field-label` 1개를 "Tier 2C field 와 함께 처리" 주석과 함께 기록
   7. 섹션 도입부에 "이들 primitive 는 부모 컴포넌트가 자동 조립한다. 예외적 수동 조합 (고도로 커스텀된 Sheet 등) 외에는 직접 import 금지" 문장 포함
-  8. 섹션 길이 40~80 줄 사이 (과다 상세 금지 · 각 primitive 3줄 이내)
+  8. 구조적 제약 (라인 수 대신):
+     - 섹션 도입부 문단 1개, 최대 5줄
+     - 각 primitive 행 = 3열 테이블 1행 (이름 · 소비 컴포넌트 · 역할), 각 셀 60자 이내
+     - 각 서브섹션은 "## {섹션명}" 헤더 + 선택적 설명 1줄 + 테이블. 문단형 설명 금지.
+     - deprecated 블록도 동일 3열 테이블 포맷
 - **복잡도**: M (단일 파일 · 13 항목 · 구조화된 편집)
 - **의존성**: 없음
 - **Wave**: 1
@@ -56,7 +60,7 @@ story_count: 8
 - **수정 파일**:
   - `plugins/daangn-seed-ai/skills/seed/references/components/avatar.md` (신규)
 - **수락 기준**:
-  1. 파일이 `_template.md` 의 모든 H2 섹션 (언제 쓰나 · Anatomy · Variants · States · Props · 합성규칙 · 접근성 · Anti-patterns · 예제) 을 모두 포함
+  1. 필수 H2 섹션: `언제 쓰나 / 언제 쓰지 않나` · `Anatomy` · `Size` · `States` · `Props` · `합성 규칙 (composition)` · `접근성` · `Anti-patterns` · `예제 (minimum usage)`. Avatar 는 variant 개념 없으므로 `Variants` 대신 `Size` 섹션 사용 (icon.md 패턴). 해당 없는 섹션은 "N/A — 이유" 한 줄 스텁 금지, 섹션 자체를 생략 가능.
   2. Anatomy 표에 4개 slot (root · image · fallback · badge) 각각 필수/선택 표시 + 역할 기재
   3. Size 표에 10개 값 (20/24/36/42/48/56/64/80/96/108) 모두 기재 + 각 size 의 대표 사용처 (upstream yaml 의 description 참고)
   4. size=20 에서 badge/badgeMask 미지원 조건 명시
@@ -84,7 +88,7 @@ story_count: 8
 - **수정 파일**:
   - `plugins/daangn-seed-ai/skills/seed/references/components/avatar-stack.md` (신규)
 - **수락 기준**:
-  1. `_template.md` 의 필수 H2 섹션 전부 포함
+  1. 필수 H2 섹션: `언제 쓰나 / 언제 쓰지 않나` · `Anatomy` · `Size` · `Props` · `합성 규칙 (composition)` · `접근성` · `Anti-patterns` · `예제 (minimum usage)`. States/Variants 는 AvatarStack 자체 속성이 없으므로 생략.
   2. Anatomy 표에 2 slot (root · item) + 역할
   3. Size 표에 10개 값 + 각 size 의 gap 값 + item strokeWidth
   4. Props: `AvatarStackProps` 인터페이스 (size · children)
@@ -109,11 +113,11 @@ story_count: 8
 - **수정 파일**:
   - `plugins/daangn-seed-ai/skills/seed/references/components/badge.md` (신규)
 - **수락 기준**:
-  1. `_template.md` 필수 H2 섹션 전부 포함
+  1. 필수 H2 섹션: `언제 쓰나 / 언제 쓰지 않나` · `Anatomy` · `Variants` (tone + variant 하위 분리) · `Size` · `Truncating` · `Props` · `합성 규칙 (composition)` · `접근성` · `Anti-patterns` · `예제 (minimum usage)`. States 는 Badge 에 없으므로 생략.
   2. Anatomy 표: root · label 2 slot
   3. Variants 섹션: variant (solid · outline · weak) 3개 · tone (neutral · brand · informative · positive · warning · critical) 6개 각각 표로 기재 + 사용처 (upstream yaml description 반영)
   4. Size 표: large (minHeight x6 · fontSize t2 · paddingX x2) + medium (minHeight x5 · fontSize t1 · paddingX x1_5) 각각 픽셀·토큰 병기
-  5. Variant × Tone 매트릭스 표 1개 (가로: 6 tone · 세로: 3 variant · 셀: bg 토큰만 요약)
+  5. Variant × Tone 매트릭스 표 1개 (가로: 6 tone · 세로: 3 variant · 셀 내용 = 해당 variant 의 대표 토큰: solid→bg 토큰 · outline→stroke 토큰 · weak→bg 토큰. weak 의 bg 가 투명이면 fg 토큰 명시)
   6. Props: `BadgeProps extends BadgeVariantProps` (size · variant · tone · children)
   7. Truncating 섹션 (`maxWidth` 6.75rem/7.5rem · 말줄임 ellipsis 자동) 명시
   8. 합성 규칙: "NotificationBadge 와 혼용 금지" · "같은 줄에 3개 이상 금지" · "tone 은 실제 상태 반영 (positive = 성공 · critical = 거절 · neutral = 기본)"
@@ -136,7 +140,7 @@ story_count: 8
 - **수정 파일**:
   - `plugins/daangn-seed-ai/skills/seed/references/components/notification-badge.md` (신규)
 - **수락 기준**:
-  1. `_template.md` 필수 H2 섹션 전부 포함
+  1. 필수 H2 섹션: `언제 쓰나 / 언제 쓰지 않나` (Badge 와의 구분 포함) · `Anatomy` (NotificationBadge + Positioner 분리) · `Size` · `Props` · `합성 규칙 (composition)` · `접근성` · `Anti-patterns` · `예제 (minimum usage)`. States/Variants 없음.
   2. Anatomy 표: NotificationBadge (root · label) + NotificationBadgePositioner (root) 분리 기재
   3. Size 표: large (minHeight 18px · fontSize t1 · paddingX x1 · 라벨 가능) · small (6×6px 도트 · 라벨 없음) 구분
   4. Props 2개 인터페이스: `NotificationBadgeProps` · `NotificationBadgePositionerProps` (attach · size)
@@ -145,6 +149,7 @@ story_count: 8
   7. Anti-patterns ❌ 3개 (예: Positioner 없이 절대 위치 수동 지정 · small size 에 label 지정 · 상태 정보를 NotificationBadge 로 표현)
   8. 예제 2개 이상 (icon 위 small 도트 · tab 위 large 카운트)
   9. `badge.md` 와의 구분을 "언제 쓰나" 표에 포함
+  10. `/tmp/seed-design-sync/docs/content/react/components/notification-badge.mdx` 파일이 없을 경우 `badge.mdx` 의 NotificationBadge 언급 섹션 + React 소스 주석을 근거로 사용
 - **복잡도**: M (2 컴포넌트 · Positioner 위치 지정 메커니즘)
 - **의존성**: 없음 (badge.md 와 병렬 가능)
 - **Wave**: 1
@@ -161,11 +166,14 @@ story_count: 8
 - **수정 파일**:
   - `plugins/daangn-seed-ai/skills/seed/references/components/divider.md` (신규)
 - **수락 기준**:
-  1. `_template.md` 필수 H2 섹션 전부 포함
+  1. 필수 H2 섹션: `언제 쓰나 / 언제 쓰지 않나` · `Anatomy` · `Orientation` (horizontal + vertical 분리) · `Props` · `합성 규칙 (composition)` · `접근성 (스크린리더 동작)` · `Anti-patterns` · `예제 (minimum usage)`. Variants/States/Size 없음.
   2. Anatomy: root 1 slot (`thickness: 1px` default) + `as` 에 따른 렌더링 요소 차이 설명
   3. Props: `DividerProps` (as · color · thickness · orientation · inset · ...HTMLAttributes) 전체 기재 + 각 prop default
   4. Orientation 섹션: horizontal · vertical 2 예제 + inset (16px margin) 효과 설명
-  5. 접근성 섹션: hr = implicit role=separator · as=div = 장식용 (스크린리더 무시) · as=li + role=separator = 명시 필요 · aria-orientation 자동 주입 조건 3가지 경우 모두 기재
+  5. 접근성 섹션에 3가지 렌더링 케이스 각각 기재 (각 케이스는 하위 불릿 1개로 충분):
+     (a) `as="hr"` — implicit role=separator, aria-orientation 자동
+     (b) `as="div"` — 장식용, 스크린리더 무시 (role/aria 불필요)
+     (c) `as="li"` — 명시적 `role="separator"` 필요. 리스트 시맨틱 유지.
   6. 합성 규칙: "List 내부에서는 `as="li"`" · "orientation=vertical 은 Flex 내부에서만" · "color 는 `stroke.*` 계열만"
   7. Anti-patterns ❌ 3개 (예: 장식용인데 `as="hr"` 유지 · inset 과 Flex vertical 동시 사용 · fg 토큰 사용)
   8. 예제 3개 (기본 horizontal · vertical in Flex · list inset)
@@ -210,9 +218,9 @@ story_count: 8
   2. `diffComponents` 함수에서 upstream 에 있고 local 에 없는 primitive 가 `INTERNAL_PRIMITIVES` 에 속하면 status 를 `"internal-primitive (see composition.md)"` 로 표시하고 not-ported 에서 제외
   3. 주석으로 "INTERNAL_PRIMITIVES: 부모 컴포넌트가 자동 조립하므로 개별 doc 없음. composition.md 에서 통합 문서화." 설명 추가
   4. `node scripts/sync-from-seed.mjs --json` 실행 시 출력 JSON 의 `components` 객체에서:
-     - `avatar`, `avatar-stack`, `badge`, `notification-badge`, `divider` 키가 존재하지 않음 (포팅 완료 = 보고 없음)
-     - 13개 primitive 이름이 각각 `internal-primitive` 상태로 표시됨
-     - not-ported 상태 카운트가 이전 대비 최소 18개 감소
+     - `avatar`, `avatar-stack`, `badge`, `notification-badge`, `divider` 는 `status="ported"` 로 표시 (포팅 완료)
+     - 13개 primitive 이름이 각각 `status` 필드에 `internal-primitive` 문자열을 포함 (정확한 라벨은 구현 시 결정, "internal-primitive" substring match 필수)
+     - 현재 baseline: not-ported=72 (resume 시점 확인됨). 기대값: `not-ported=72 - 18 = 54` (1F 5개 + primitives 13개). 검증은 exact match (not-ported count == 54). 만약 구현 중 yaml 업데이트로 baseline 이 달라지면 executor 가 `.ralph/execution.jsonl` 의 `plan_blocker_cleared` 이벤트의 `baseline_not_ported` 필드를 기준으로 다시 계산.
   5. `node scripts/test.mjs` 실행 시 3 시나리오 (signup · listDialog · feedback) 모두 pass (Tier 1F 컴포넌트는 해당 시나리오에서 쓰이지 않으므로 회귀 없음)
   6. lint / node 실행 경고 0개
 - **복잡도**: S (단일 파일 · 세트 추가 · 조건 분기 1줄)
@@ -255,8 +263,10 @@ Wave 2:
 ## 리스크
 
 ### R1 — upstream clone 경로 의존
-**내용**: 모든 스토리가 `/tmp/seed-design-sync/` 가 유효한 daangn/seed-design clone 임을 전제. `ls /tmp/seed-design-sync/packages/rootage/components/avatar.yaml` 이 이미 확인됨 (bb6f9a8) 이므로 현재 run 에서는 안전. Ralph 런너가 executor 서브프로세스에서 `/tmp` 를 읽을 수 있는지 권한만 확인.
-**완화**: 각 story 의 "참고 파일" 에 절대 경로 명시. story-executor 는 파일 부재 시 즉시 텔레그램 알림 후 중단.
+**내용**: 모든 스토리가 `/tmp/seed-design-sync/` 가 유효한 daangn/seed-design clone 임을 전제. 2026-04-17 resume 시점에 경로가 비어 있었고, `node scripts/sync-from-seed.mjs --json` 을 1회 실행하여 자동 clone 을 트리거함 (sync 스크립트의 `cloneUpstream()` 로직). 이후 `/tmp/seed-design-sync/packages/rootage/components/avatar.yaml` 및 13 primitive yaml 존재 확인됨. baseline not-ported=72.
+**완화**:
+  - story-executor 는 작업 시작 시 `test -d /tmp/seed-design-sync/packages/rootage/components/` 로 선행 체크. 없으면 `node scripts/sync-from-seed.mjs --json > /dev/null` 으로 자동 clone 트리거 후 재확인. 여전히 없으면 텔레그램 알림 + 해당 스토리 스킵.
+  - 각 story 의 "참고 파일" 에 절대 경로 명시 (이미 반영됨).
 
 ### R2 — Avatar namespace API 문서화 혼동
 **내용**: upstream 의 `Avatar.tsx` 는 `AvatarRoot`, `AvatarImage`, `AvatarFallback`, `AvatarBadge`, `AvatarStack` 5 컴포넌트를 한 파일에서 export 하고 `Avatar.namespace.ts` 에서 `Avatar.Root · Avatar.Image · Avatar.Fallback · Avatar.Badge · Avatar.Stack` 으로 re-export 한다. 사용자 향 import 는 namespace 형태. W1-S2 (avatar.md) 와 W1-S3 (avatar-stack.md) 이 이 관계를 일관되게 설명해야 한다.
@@ -309,12 +319,12 @@ Wave 2:
 
 Wave 2 완료 후 반드시 실행 (W2-S8 내 포함):
 
-1. `node scripts/sync-from-seed.mjs` → components 섹션에서:
-   - `avatar`, `avatar-stack`, `badge`, `notification-badge`, `divider` 가 보고되지 않음 (포팅 완료)
-   - 13개 primitive 가 `internal-primitive (see composition.md)` 로 표시
-   - not-ported 총 카운트가 이전 대비 최소 18개 감소
+1. `node scripts/sync-from-seed.mjs --json` → components 섹션에서:
+   - `avatar`, `avatar-stack`, `badge`, `notification-badge`, `divider` 가 `status="ported"`
+   - 13개 primitive 가 `status` 에 `internal-primitive` 포함
+   - not-ported exact count = **54** (baseline 72 - 18)
 2. `node scripts/test.mjs` → signup · listDialog · feedback 3개 모두 pass
-3. `git status` → 수정 파일 7개 (composition.md · index.md · sync-from-seed.mjs) + 신규 5개 (avatar/avatar-stack/badge/notification-badge/divider .md)
+3. `git status` → 편집 3개 (composition.md · index.md · sync-from-seed.mjs) + 신규 5개 (avatar/avatar-stack/badge/notification-badge/divider .md) = 총 8개 파일
 4. `git diff --stat` → 삭제 라인 없음 (기존 컨텐츠 파괴 없음 확인)
 
 ---
@@ -323,7 +333,7 @@ Wave 2 완료 후 반드시 실행 (W2-S8 내 포함):
 
 - Tier 1F 포팅: 7 → 12 컴포넌트 (5 추가)
 - 내부 primitives 문서화: 13개 composition.md 단일 섹션
-- sync-from-seed.mjs not-ported 보고: 최소 18건 감소
+- sync-from-seed.mjs not-ported 보고: 72 → 54 (exact 18건 감소)
 - dry-run 회귀: 3/3 pass
 - lint · 실행 경고: 0개
 - 새 파일: 5개 · 편집 파일: 3개 · 삭제 파일: 0개
