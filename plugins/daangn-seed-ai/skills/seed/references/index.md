@@ -59,7 +59,7 @@ references/
 │   ├── segmented-control-item.md ← SegmentedControl 개별 아이템
 │   ├── switch.md               ← 즉시 적용 on/off 토글 (설정형)
 │   ├── tab.md                  ← Tab 개별 아이템 (label, badge, disabled)
-│   ├── tablist.md              ← TabList 컨테이너 (콘텐츠 전환, 가로 스크롤 지원)
+│   ├── tablist.md              ← Tabs namespace (Root/List/Trigger/Indicator/Content) — 콘텐츠 전환, 가로 스크롤 지원
 │   ├── toggle-button.md        ← 포맷 토글 버튼 (Bold/Italic 등 도구 UI)
 │   ├── input-button.md         ← FieldButton 폼 내부 선택 트리거 (날짜·위치 picker 등)
 │   ├── text-button.md          ← ⚠️ Rootage-only — React 미제공, 스펙 참고용

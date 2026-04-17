@@ -23,6 +23,8 @@ import { List } from "@seed-design/react";
 //   </List.Root>
 ```
 
+> **관련 문서** — List 섹션 바로 위에 배치하는 헤더는 [`./list-header.md`](./list-header.md) — 리스트 섹션 헤더 참조.
+
 > **⚠️ import 경로 주의** — upstream `docs/examples/react/list/*.tsx` 는 `seed-design/ui/list` 에서 아래 4개 wrapping 컴포넌트를 import 하지만, 이들은 **`@seed-design/react` namespace 에 존재하지 않는다** (해당 namespace 에는 Root/Item/Content/Prefix/Suffix/Title/Detail 7개만). 본 스킬은 **`@seed-design/react`** 직접 사용을 전제로 하므로 다음 패턴으로 변환한다:
 >
 > - `ListDivider` → [`./divider.md`](./divider.md) 의 `<Divider />` 사용
@@ -308,8 +310,9 @@ import { List, Switch } from "@seed-design/react";
 // BAD
 import { IconChevronRightLine } from "@karrotmarket/react-monochrome-icon";
 
-// GOOD — @seed-design/react 의 Icon 컴포넌트와 함께 named export 사용
-import { Icon, IconChevronRightFill } from "@seed-design/react";
+// GOOD — Icon 컴포넌트는 @seed-design/react, 아이콘 심볼은 @karrotmarket/react-monochrome-icon
+import { List, Icon } from "@seed-design/react";
+import { IconChevronRightFill } from "@karrotmarket/react-monochrome-icon";
 <List.Suffix><Icon svg={<IconChevronRightFill />} /></List.Suffix>
 ```
 
@@ -319,7 +322,8 @@ import { Icon, IconChevronRightFill } from "@seed-design/react";
 <List.Prefix><svg>...</svg></List.Prefix>
 
 // GOOD — Icon 컴포넌트 래핑으로 prefixIcon 토큰(22px, color) 적용
-import { Icon, IconPersonCircleFill } from "@seed-design/react";
+import { List, Icon } from "@seed-design/react";
+import { IconPersonCircleFill } from "@karrotmarket/react-monochrome-icon";
 <List.Prefix><Icon svg={<IconPersonCircleFill />} /></List.Prefix>
 ```
 
@@ -391,7 +395,8 @@ export function BasicList() {
 ### (b) Prefix/Suffix 아이콘
 
 ```tsx
-import { List, Icon, IconPersonCircleFill, IconChevronRightFill } from "@seed-design/react";
+import { List, Icon } from "@seed-design/react";
+import { IconPersonCircleFill, IconChevronRightFill } from "@karrotmarket/react-monochrome-icon";
 
 export function IconList() {
   return (
@@ -469,7 +474,8 @@ export function CheckboxList() {
 ### (d) clickable asChild — 전체 row 클릭
 
 ```tsx
-import { List, Icon, IconChevronRightFill } from "@seed-design/react";
+import { List, Icon } from "@seed-design/react";
+import { IconChevronRightFill } from "@karrotmarket/react-monochrome-icon";
 
 interface MenuItem {
   id: string;

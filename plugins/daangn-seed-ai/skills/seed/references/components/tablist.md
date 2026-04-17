@@ -164,6 +164,8 @@ tablist recipe (Indicator):
 
 ## Props
 
+`TabsPrimitive.RootProps` 및 `TabsVariantProps` 등 관련 타입은 `@seed-design/react` 에서 직접 re-export 된다. 별도 sub-path import 없이 아래와 같이 사용한다.
+
 ```ts
 import type {
   TabsPrimitive,

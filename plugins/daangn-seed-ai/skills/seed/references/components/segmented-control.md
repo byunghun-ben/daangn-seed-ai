@@ -261,6 +261,12 @@ interface SegmentedControlIndicatorProps
 // 반드시 `import { SegmentedControl } from "@seed-design/react"` 후
 // SegmentedControl.Root / .Item / .Indicator 형태로만 사용한다.
 ❌
+import { Root, Item, Indicator } from "@seed-design/react/SegmentedControl"; // 잘못된 sub-path import
+<Root defaultValue="a" aria-label="정렬">
+  <Indicator />
+  <Item value="a">인기</Item>
+  <Item value="b">최신</Item>
+</Root>
 
 // 6. 탭 콘텐츠 swap 에 SegmentedControl 을 Tabs 대신 사용
 ❌

@@ -1,2 +1,3 @@
 {"event":"story_start","story_id":"14-1D-10","title":"text-button.md Rootage 토큰 스펙 문서","timestamp":"2026-04-17T00:00:00Z"}
 {"event":"story_complete","story_id":"14-1D-10","title":"text-button.md Rootage 토큰 스펙 문서","passes":true,"timestamp":"2026-04-17T00:00:00Z","notes":"React 컴포넌트 미제공 확인, Rootage 토큰 전체 추출, 221줄, 수락 기준 10/10 통과"}
+{"ts":"2026-04-17T13:40:36Z","event":"fix_round","host":"byunghun","issue":"#20,#14-1B,#14-1E","round":1,"fixes":11,"critical_fixed":1,"high_fixed":3,"medium_fixed":6,"low_fixed":1}

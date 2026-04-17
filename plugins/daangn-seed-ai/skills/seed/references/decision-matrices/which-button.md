@@ -64,10 +64,10 @@
 
 ### 2. 탭 vs SegmentedControl
 
-```
-탭: 페이지 내에서 영역 전환, 5개 이상도 허용           → [Tabs](../components/tablist.md)
-SegmentedControl: 2-4개의 설정 전환, 폼 스타일        → [SegmentedControl](../components/segmented-control.md)
-```
+| 용도 | 컴포넌트 |
+|------|---------|
+| 페이지 내 영역 전환, 5개 이상도 허용 | [Tabs namespace](../components/tablist.md) |
+| 2-4개의 설정 전환, 폼 스타일 | [SegmentedControl](../components/segmented-control.md) |
 
 > 상세 비교는 [which-tab.md](./which-tab.md) 참조
 
