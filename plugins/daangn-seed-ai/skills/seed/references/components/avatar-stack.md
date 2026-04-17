@@ -65,12 +65,12 @@ gap 값은 `avatar-stack.yaml` definitions 기준. strokeWidth 토큰은 `item.s
 
 ```ts
 interface AvatarStackProps extends React.HTMLAttributes<HTMLDivElement> {
-  size?: 20 | 24 | 36 | 42 | 48 | 56 | 64 | 80 | 96 | 108;
+  size?: "20" | "24" | "36" | "42" | "48" | "56" | "64" | "80" | "96" | "108"; // default "48"
   children: React.ReactNode; // Avatar.Root 요소들만 허용
 }
 ```
 
-`size` 기본값은 없음 — 반드시 명시한다. `AvatarStack`은 내부적으로 `PropsProvider`로 `size`를 모든 하위 `Avatar.Root`에 전달하므로 children에서 중복 지정 불필요.
+`size` 기본값은 `"48"`이다 (upstream `AvatarStackVariantProps` default). 문자열 union이므로 `size="48"` 처럼 큰따옴표로 전달한다. `AvatarStack`은 내부적으로 `PropsProvider`로 `size`를 모든 하위 `Avatar.Root`에 전달하므로 children에서 중복 지정 불필요.
 
 ---
 
@@ -98,14 +98,14 @@ interface AvatarStackProps extends React.HTMLAttributes<HTMLDivElement> {
 ## Anti-patterns
 
 ```tsx
-❌ <Avatar.Stack size={48}>
-     <Avatar.Root size={36}>
+❌ <Avatar.Stack size="48">
+     <Avatar.Root size="36">
        <Avatar.Image src={src1} alt="김철수" />
      </Avatar.Root>
    </Avatar.Stack>
    {/* children Avatar.Root 에 size 중복 지정 — PropsProvider size 와 충돌 */}
 
-❌ <Avatar.Stack size={48}>
+❌ <Avatar.Stack size="48">
      <Avatar.Root>
        <Avatar.Image src={src1} alt="김철수" />
      </Avatar.Root>
@@ -113,9 +113,9 @@ interface AvatarStackProps extends React.HTMLAttributes<HTMLDivElement> {
    </Avatar.Stack>
    {/* Avatar.Root 가 아닌 다른 컴포넌트를 children 으로 전달 */}
 
-❌ <Avatar.Stack size={48}>
-     <Avatar.Root size={48}><Avatar.Image src={src1} alt="김철수" /></Avatar.Root>
-     <Avatar.Root size={36}><Avatar.Image src={src2} alt="이영희" /></Avatar.Root>
+❌ <Avatar.Stack size="48">
+     <Avatar.Root size="48"><Avatar.Image src={src1} alt="김철수" /></Avatar.Root>
+     <Avatar.Root size="36"><Avatar.Image src={src2} alt="이영희" /></Avatar.Root>
    </Avatar.Stack>
    {/* stack 안에 서로 다른 size — mixed size 금지 */}
 ```
@@ -129,7 +129,7 @@ interface AvatarStackProps extends React.HTMLAttributes<HTMLDivElement> {
 ```tsx
 import { Avatar } from "@seed-design/react";
 
-<Avatar.Stack size={48}>
+<Avatar.Stack size="48">
   <Avatar.Root>
     <Avatar.Image src="/profiles/user1.jpg" alt="김철수 프로필" />
     <Avatar.Fallback />
@@ -154,7 +154,7 @@ const visibleUsers = users.slice(0, 4);
 const overflowCount = users.length - visibleUsers.length;
 
 <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-  <Avatar.Stack size={36}>
+  <Avatar.Stack size="36">
     {visibleUsers.map((user) => (
       <Avatar.Root key={user.id}>
         <Avatar.Image src={user.avatarUrl} alt={`${user.name} 프로필`} />

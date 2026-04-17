@@ -187,12 +187,12 @@ node scripts/test.mjs --lint-only <path>     # 파일 린트만
 - `listDialog` — 파괴적 Dialog (criticalSolid, 주 액션 우측)
 - `feedback` — Snackbar vs Dialog 구분
 
-## 커버리지 (MVP)
+## 커버리지
 
-**포팅됨 (6 components)**: ActionButton, Callout, Snackbar, Dialog, BottomSheet, TextField + 토큰 전체 + 레이아웃 + 결정 매트릭스 4개.
+**포팅됨 (12 components)**: ActionButton, Callout, Snackbar, Dialog, BottomSheet, TextField, Icon, Avatar, AvatarStack, Badge, NotificationBadge, Divider + 토큰 전체 + 레이아웃 + 결정 매트릭스 4개 + 내부 primitives 13종 (composition.md).
 
 **미포팅** (필요하면 `components/_template.md`로 추가할 수 있어요):
-Avatar, Badge, Chip, Checkbox, RadioGroup, Switch, SegmentedControl, Tabs, List, Icon, Skeleton, Slider, SelectBox, FieldButton, Fab 등. `scripts/sync-from-seed.mjs`가 미포팅 항목을 `not-ported`로 리포트해줘요.
+Chip, Checkbox, RadioGroup, Switch, SegmentedControl, Tabs, List, Skeleton, Slider, SelectBox, FieldButton, Fab 등. `scripts/sync-from-seed.mjs`가 미포팅 항목을 `not-ported`로 리포트해줘요.
 
 ## Attribution
 

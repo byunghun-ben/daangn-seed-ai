@@ -102,8 +102,8 @@ Badge 는 긴 텍스트를 **자동으로 말줄임(ellipsis) 처리**한다.
 
 | size | maxWidth |
 |------|---------|
-| `medium` | `6.75rem` (108px) |
-| `large` | `7.5rem` (120px) |
+| `large` | `6.75rem` (108px) |
+| `medium` | `7.5rem` (120px) |
 
 - 10글자 이상 · 한글 섞인 길이에서 cut-off 발생.
 - CSS `text-overflow: ellipsis` + `white-space: nowrap` + `overflow: hidden` 조합 자동 적용.
@@ -116,7 +116,7 @@ Badge 는 긴 텍스트를 **자동으로 말줄임(ellipsis) 처리**한다.
 ```ts
 interface BadgeProps extends BadgeVariantProps, PrimitiveProps, React.HTMLAttributes<HTMLSpanElement> {
   size?: "medium" | "large";           // default: "medium"
-  variant?: "solid" | "outline" | "weak"; // default: "weak"
+  variant?: "solid" | "outline" | "weak"; // default: "solid"
   tone?: "neutral" | "brand" | "informative" | "positive" | "warning" | "critical"; // default: "neutral"
   children: React.ReactNode;           // 라벨 텍스트
 }
@@ -198,5 +198,5 @@ interface BadgeProps extends BadgeVariantProps, PrimitiveProps, React.HTMLAttrib
 <Badge tone="warning" variant="weak" size="medium">
   만료까지 3일 남았습니다
 </Badge>
-{/* maxWidth 6.75rem 에서 자동 ellipsis: "만료까지 3일 남…" */}
+{/* maxWidth 7.5rem (medium) 에서 자동 ellipsis: "만료까지 3일 남…" */}
 ```

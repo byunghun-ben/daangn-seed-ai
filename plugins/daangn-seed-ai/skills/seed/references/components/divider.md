@@ -151,10 +151,10 @@ Divider 의 스크린리더 행동은 **`as` 값에 전적으로 달려 있다**
   - `orientation="vertical"` 이면 `aria-orientation="vertical"` 을 **자동 부착** — 기본값과 달라진 순간 명시가 필요하기 때문.
   - 사용 시점: 섹션 간 **시맨틱 구분**을 SR 사용자도 인식해야 할 때 (설정 화면 그룹, 폼 섹션 경계 등).
 
-- **(b) `as="div"` — 장식적 요소**
-  - `<div>` 는 implicit role 이 없다. SR 은 이 요소를 **완전히 무시**한다.
-  - `role` / `aria-*` 를 **추가하면 안 된다** — 장식에 의미를 부여하는 건 SR 사용자에게 노이즈를 만든다.
-  - 사용 시점: 순수 시각적 구분만 필요한 경우 (카드 내부 헤더/본문 분리, 레이아웃 리듬 유지 등). 콘텐츠 구조가 SR 에게도 이미 명확하다면 Divider 를 굳이 시맨틱하게 만들 필요 없음.
+- **(b) `as="div"` — 장식 기본 · 필요 시 시맨틱 upgrade**
+  - `<div>` 는 implicit role 이 없어 기본적으로 SR 이 **완전히 무시** 한다. 장식용으로 쓰고 싶으면 이 상태로 두면 된다 — role/aria 추가 금지.
+  - 단, 콘텐츠 구조상 SR 에게도 구분을 알려야 한다면 **`role="separator"` 를 명시적으로 전달** 할 수 있다. Divider 내부 로직은 `as !== "hr"` + `role="separator"` 조합일 때 `aria-orientation` 을 자동 부착한다.
+  - 사용 시점: 대부분 시각적 장식 용도. 의미 있는 섹션 분리가 필요한 예외 케이스에서만 `role="separator"` 로 upgrade. 무심코 시맨틱하게 만들면 SR 이 "분할선" 을 과하게 읽어 노이즈가 된다.
 
 - **(c) `as="li"` — 리스트 내부 구분선**
   - `<li>` 의 기본 role 은 `listitem`. 아무 설정 없이 두면 SR 이 **"X 개 중 N 번째 항목"** 이라고 읽으며 구분선을 콘텐츠로 오인한다.
@@ -167,7 +167,7 @@ Divider 의 스크린리더 행동은 **`as` 값에 전적으로 달려 있다**
 | `as` | role | `aria-orientation` 출력 조건 | SR 동작 |
 |------|------|----------------------------|---------|
 | `"hr"` | implicit `separator` | `orientation==="vertical"` 일 때만 자동 | "수평/수직 분할선" |
-| `"div"` | 없음 | 안 붙음 | 완전 무시 |
+| `"div"` | 기본 없음 (`role="separator"` 수동 시 `separator`) | `role="separator"` 를 준 경우에만 자동 | 기본은 무시, `role="separator"` 시 "분할선" |
 | `"li"` | `listitem` (기본) → `"separator"` 수동 | `role="separator"` 를 준 경우에만 자동 | 구분자로 읽힘 (`role` 없으면 리스트 항목으로 오인) |
 
 ---

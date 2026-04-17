@@ -19,7 +19,7 @@ import { Avatar } from "@seed-design/react";
 |------|------|
 | 사용자·상점 프로필 이미지 (댓글·리스트·상세·수정 화면) | **Avatar** (이 컴포넌트) |
 | 여러 참여자 프로필을 겹쳐 보이기 (채팅방 참여자, 공저자) | `Avatar.Stack` ([`./avatar-stack.md`](./avatar-stack.md)) |
-| 이미지가 없거나 로드 실패한 기본 placeholder | `Avatar` + `fallback={<IdentityPlaceholder />}` |
+| 이미지가 없거나 로드 실패한 기본 placeholder | `Avatar` + `fallback={<IdentityPlaceholder.Root><IdentityPlaceholder.Image /></IdentityPlaceholder.Root>}` |
 | 카테고리·상태 심벌 (원형 아이콘, 장식) | ❌ Avatar 아님. `Icon` / `Badge` |
 | 상품·게시물 대표 이미지 (정사각·비정형) | ❌ Avatar 아님. `<img>` + 전용 카드 |
 | 선택 가능한 프로필 토글 (다중 선택 UI) | ❌ Avatar 단독 아님. `Checkbox` / `ControlChip`와 조합 |
@@ -36,7 +36,7 @@ import { Avatar } from "@seed-design/react";
 |------|------|------|
 | `Avatar.Root` | ✅ | 원형 컨테이너 (`cornerRadius: full`), size·strokeColor·strokeWidth 결정. `ref`는 `HTMLDivElement` |
 | `Avatar.Image` | ✅ | 실제 이미지 (`<img>`). `src` · `alt` 전달. 로드 실패 시 자동으로 Fallback으로 교체 |
-| `Avatar.Fallback` | ⚪ | `Image` 로드 실패·미지정 시 보여지는 대체 요소. 보통 `<IdentityPlaceholder />` · 이니셜 텍스트 |
+| `Avatar.Fallback` | ⚪ | `Image` 로드 실패·미지정 시 보여지는 대체 요소. 보통 `<IdentityPlaceholder.Root><IdentityPlaceholder.Image /></IdentityPlaceholder.Root>` · 이니셜 텍스트 |
 | `Avatar.Badge` | ⚪ | 우하단 상태 표시 (온라인·인증·매너온도). `badgeMask` 모양 하나를 부모에서 설정. **size=20에서는 미지원** |
 
 **중요**
@@ -126,7 +126,7 @@ import type * as React from "react";
 // 1) Root ─ sizing · stroke · badgeMask 결정 (부모)
 interface AvatarRootProps extends React.HTMLAttributes<HTMLDivElement> {
   size?: "20" | "24" | "36" | "42" | "48" | "56" | "64" | "80" | "96" | "108";  // default: "48"
-  badgeMask?: "circle" | "flower" | "shield";  // default: undefined (mask 없음). size=20에서 무시됨
+  badgeMask?: "none" | "circle" | "flower" | "shield";  // default: "none" (mask 없음). size=20에서 무시됨
   asChild?: boolean;                            // default: false (Radix Slot 병합)
 }
 
@@ -139,7 +139,7 @@ interface AvatarImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
 
 // 3) Fallback ─ 로드 실패·미지정 시 렌더
 interface AvatarFallbackProps extends React.HTMLAttributes<HTMLDivElement> {
-  children?: React.ReactNode;                   // 보통 <IdentityPlaceholder /> 또는 이니셜
+  children?: React.ReactNode;                   // 보통 <IdentityPlaceholder.Root><IdentityPlaceholder.Image /></IdentityPlaceholder.Root> 또는 이니셜
   asChild?: boolean;
 }
 
@@ -152,6 +152,7 @@ interface AvatarBadgeProps extends React.HTMLAttributes<HTMLDivElement> {
 
 **default 동작 요약**
 - `size` 미지정 → `"48"` (yaml의 기본 variant).
+- `badgeMask` 미지정 → `"none"` (upstream recipe default).
 - `alt` 미지정 → 빈 문자열 (스크린 리더 건너뜀 — 의미 있는 이미지면 반드시 지정).
 - `asChild={true}` → 자식 element를 그대로 root로 쓰며 className만 병합 (Radix Slot 규약).
 
@@ -172,7 +173,7 @@ interface AvatarBadgeProps extends React.HTMLAttributes<HTMLDivElement> {
 
 - `Avatar.Image`의 `alt`는 **의미 있는 이미지일 때 반드시 지정**. 프로필의 경우 보통 `alt="<사용자명>의 프로필"` 또는 맥락상 이름이 이미 노출되면 `alt=""` (중복 안내 방지).
 - **장식용 Badge**에는 `aria-hidden` 자동 적용되지 않는다 — 순전히 시각 정보면 직접 `aria-hidden="true"` 부착. 의미가 있으면 (예: "본인 인증됨") 주변 텍스트나 `aria-label`로 그 뜻이 전달돼야 한다.
-- **Fallback의 `<IdentityPlaceholder />`** 는 기본적으로 `aria-hidden`. 로드 실패 시 사용자에게 이름·이메일 등 다른 식별자가 보여지고 있는지 확인.
+- **Fallback의 `<IdentityPlaceholder.Root><IdentityPlaceholder.Image /></IdentityPlaceholder.Root>`** 는 기본적으로 `aria-hidden`. 로드 실패 시 사용자에게 이름·이메일 등 다른 식별자가 보여지고 있는지 확인.
 - **Color 단독 의미 전달 금지** — 녹색 Badge = 온라인 같은 매핑을 할 때 색만으로 상태를 전달하지 말고 `aria-label` 또는 보조 텍스트 병행 ("온라인").
 - Avatar가 버튼 역할이면 (예: 클릭해서 프로필 모달 열기) 반드시 `<button>` 으로 감싸고 `aria-label` 지정. Avatar 자체를 `role="button"`으로 만들지 말 것.
 
@@ -222,12 +223,12 @@ interface AvatarBadgeProps extends React.HTMLAttributes<HTMLDivElement> {
 
 ✅ <Avatar.Root size="48">
      <Avatar.Image src={user.avatarUrl} alt="" />
-     <Avatar.Fallback><IdentityPlaceholder identity="person" /></Avatar.Fallback>
+     <Avatar.Fallback><IdentityPlaceholder.Root identity="person"><IdentityPlaceholder.Image /></IdentityPlaceholder.Root></Avatar.Fallback>
    </Avatar.Root>
 
 ✅ <Avatar.Root size="64" badgeMask="circle">
      <Avatar.Image src={user.avatarUrl} alt="" />
-     <Avatar.Fallback><IdentityPlaceholder /></Avatar.Fallback>
+     <Avatar.Fallback><IdentityPlaceholder.Root><IdentityPlaceholder.Image /></IdentityPlaceholder.Root></Avatar.Fallback>
      <Avatar.Badge asChild>
        <Box bg="bg.positive-solid" borderRadius="full" aria-label="온라인" />
      </Avatar.Badge>
@@ -257,12 +258,14 @@ import { IdentityPlaceholder } from "@seed-design/react";
 <Avatar.Root size="64">
   <Avatar.Image src={user.avatarUrl} alt="" />
   <Avatar.Fallback>
-    <IdentityPlaceholder identity="person" />
+    <IdentityPlaceholder.Root identity="person">
+      <IdentityPlaceholder.Image />
+    </IdentityPlaceholder.Root>
   </Avatar.Fallback>
 </Avatar.Root>
 ```
 
-`src`가 없거나 로드에 실패하면 `IdentityPlaceholder`로 자동 전환된다. 개발자가 `onError` 걸 필요 없음.
+`src`가 없거나 로드에 실패하면 `IdentityPlaceholder`로 자동 전환된다. 개발자가 `onError` 걸 필요 없음. `IdentityPlaceholder`는 namespace로만 export되므로 `.Root` + `.Image` 형태로 사용한다 (callable component 아님).
 
 ### 3. Badge 붙이기 (온라인 상태 표시)
 
@@ -273,7 +276,9 @@ import { IdentityPlaceholder } from "@seed-design/react";
 <Avatar.Root size="64" badgeMask="circle">
   <Avatar.Image src={user.avatarUrl} alt="" />
   <Avatar.Fallback>
-    <IdentityPlaceholder />
+    <IdentityPlaceholder.Root>
+      <IdentityPlaceholder.Image />
+    </IdentityPlaceholder.Root>
   </Avatar.Fallback>
   <Avatar.Badge asChild>
     <Box bg="bg.positive-solid" borderRadius="full" aria-label="온라인" />
@@ -288,7 +293,7 @@ import { IdentityPlaceholder } from "@seed-design/react";
 ```tsx
 <Avatar.Root size="80" badgeMask="shield">
   <Avatar.Image src={user.avatarUrl} alt="" />
-  <Avatar.Fallback><IdentityPlaceholder /></Avatar.Fallback>
+  <Avatar.Fallback><IdentityPlaceholder.Root><IdentityPlaceholder.Image /></IdentityPlaceholder.Root></Avatar.Fallback>
   <Avatar.Badge asChild>
     <img src="/shield_blue_checkmark.svg" alt="본인 인증됨" />
   </Avatar.Badge>
@@ -308,7 +313,7 @@ Badge가 의미를 가지면 (인증 배지) `alt` / `aria-label` 로 그 의미
 >
   <Avatar.Root size="56">
     <Avatar.Image src={user.avatarUrl} alt="" />
-    <Avatar.Fallback><IdentityPlaceholder /></Avatar.Fallback>
+    <Avatar.Fallback><IdentityPlaceholder.Root><IdentityPlaceholder.Image /></IdentityPlaceholder.Root></Avatar.Fallback>
   </Avatar.Root>
 </button>
 ```
