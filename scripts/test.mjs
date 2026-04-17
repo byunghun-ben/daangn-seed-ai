@@ -30,7 +30,7 @@ const SCENARIOS = {
     summary: "폼 중심: TextField × 3 + Checkbox + Callout + 2-button footer",
     // HTML-mode scenario: expectations match token/class patterns, not React names.
     expected: ["--seed-color-bg-brand-solid", "neutral-weak", "aria-invalid", "type=\"email\""],
-    forbidden: ["Dialog", "BottomSheet"],
+    forbidden: [/role="(?:alert)?dialog"/, "BottomSheet"],
     prompt: (outPath) => `daangn-seed-ai 스킬을 사용해서 당근 스타일 회원가입 페이지를 만들어줘.
 
 요구사항:
@@ -51,8 +51,11 @@ const SCENARIOS = {
 
   listDialog: {
     summary: "리스트 + 파괴적 Dialog (criticalSolid, 주 액션 우측)",
-    expected: ["critical-solid", "neutral-weak", "--seed-color-bg-overlay", "role=\"dialog\""],
-    forbidden: ["Snackbar", "BottomSheet"],
+    // `alertdialog` is the ARIA role for destructive confirms — accept either.
+    expected: ["critical-solid", "neutral-weak", "--seed-color-bg-overlay", /role="(?:alert)?dialog"/],
+    // Match the component tag/class, not the loose word, so comments explaining
+    // "why not Snackbar" don't trip the rule.
+    forbidden: [/\bclass="[^"]*snackbar/i, /<snackbar\b/i, "BottomSheet"],
     prompt: (outPath) => `daangn-seed-ai 스킬을 사용해서 당근 중고거래 "내 판매 목록" 페이지 HTML을 만들어줘.
 
 요구사항:
@@ -76,7 +79,7 @@ anti-patterns.md 체크리스트 준수.
   feedback: {
     summary: "Snackbar (성공 vs 실패+재시도), Dialog 금지 검증",
     expected: ["snackbar", "positive", "critical", "--seed-color-bg-neutral-inverted"],
-    forbidden: ["Dialog", "BottomSheet", "role=\"dialog\""],
+    forbidden: [/role="(?:alert)?dialog"/, "BottomSheet"],
     prompt: (outPath) => `daangn-seed-ai 스킬을 사용해서 "저장 피드백" 데모 HTML을 만들어줘.
 
 요구사항:
@@ -142,10 +145,15 @@ function lint(html, scenario) {
     });
   }
 
-  // 3) Native <button> in body without an ActionButton-style variant class
+  // 3) Native <button> in body without a variant signal. Accept any of:
+  //   - ActionButton-style class (action-button, btn, button--variant)
+  //   - BEM element class (component__element, e.g. snackbar__action)
+  //   - data-variant attribute
   const buttonTags = htmlBody.match(/<button\b[^>]*>/g) || [];
   const nonVariantButtons = buttonTags.filter(
-    (t) => !/class="[^"]*(?:action-button|btn|button--)/.test(t),
+    (t) =>
+      !/class="[^"]*(?:action-button|btn|button--|__)/.test(t) &&
+      !/\bdata-variant\s*=/.test(t),
   );
   if (nonVariantButtons.length) {
     findings.push({
@@ -197,23 +205,29 @@ function lint(html, scenario) {
     });
   }
 
-  // 7) Scenario-specific: expected tokens present
+  // 7) Scenario-specific: expected tokens present / forbidden tokens absent.
+  // Match against `noComments` so Claude's explanatory comments (like
+  // "Snackbar 금지") don't trip forbidden rules. Items can be string
+  // (substring match) or RegExp (full regex match).
   if (scenario) {
+    const matches = (haystack, needle) =>
+      needle instanceof RegExp ? needle.test(haystack) : haystack.includes(needle);
+    const describe = (n) => (n instanceof RegExp ? n.toString() : `"${n}"`);
     for (const tok of scenario.expected ?? []) {
-      if (!html.includes(tok)) {
+      if (!matches(noComments, tok)) {
         findings.push({
           rule: "scenario-missing-expected",
           severity: "warn",
-          detail: `Expected to find "${tok}" in output`,
+          detail: `Expected to find ${describe(tok)} in output`,
         });
       }
     }
     for (const tok of scenario.forbidden ?? []) {
-      if (html.includes(tok)) {
+      if (matches(noComments, tok)) {
         findings.push({
           rule: "scenario-forbidden-used",
           severity: "error",
-          detail: `Scenario forbids "${tok}" but it appears in output`,
+          detail: `Scenario forbids ${describe(tok)} but it appears in output`,
         });
       }
     }
