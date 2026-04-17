@@ -1,0 +1,43 @@
+Ralph ABC Round 2 — Progress
+=====================================
+Run label: Ralph ABC (polish + 1B navigation + 1E lists)
+Issues: #20 + #14-1B + #14-1E (parent epic #14)
+Upstream SHA: 1f1d21d
+Started: 2026-04-17T12:24Z
+Host: byunghun
+
+Phase 0: Init (complete)
+Phase 1: Triage (complete, direct_classify)
+Phase 2: Plan (complete, critic R2 APPROVE_minor)
+Phase 3: prd.json (complete)
+Phase 4: Implementation (complete — 11/11 stories passed)
+Phase 5: Review (in progress)
+
+Wave 1 — #20 polish (2 stories, parallel)
+  [x] S1 input-button.md Token 매핑 헤더 (commit 666a422)
+  [x] S2 checkbox-group + checkbox deep-path→named (commit b9a9990)
+
+Wave 2 — #14-1B independent (3 stories, parallel)
+  [x] S3 tablist.md new (commit 06e0901, 458 lines)
+  [x] S4 segmented-control.md new (commit e53377e, 363 lines)
+  [x] S5 top-navigation.md + sync script (commit 4539849, 368 lines, rootage-only)
+
+Wave 3 — #14-1B dependent (2 stories, parallel)
+  [x] S6 tab.md new (commit d95ce51, 233 lines)
+  [x] S7 segmented-control-item.md new (commit a9b1923, 301 lines)
+
+Wave 4 — #14-1E lists (3 stories, parallel)
+  [x] S8 list-item.md new (commit 47ade44, 500 lines)
+  [x] S9 list-header.md new (commit 3135007, 312 lines)
+  [x] S10 link-content.md new (commit baf42f6, 122 lines, deprecated stub)
+
+Wave 5 — Integration (1 story)
+  [x] S11 index.md + which-tab.md + links (commit c5aa5e3)
+
+Coverage delta (sync --json):
+  ported: 22 → 29 (+7)
+  rootage-only: 2 → 3 (+1)
+  not-ported: 40 → 32 (-8)
+  total documented: 26 → 32
+
+Review State: pending — ralph-reviewer + codex parallel

@@ -1,0 +1,58 @@
+{
+  "triage_mode": "direct_classify",
+  "rationale": "3 issues clearly scoped; #20 polish is MEDIUM-only, #14 1B/1E are documented in epic body with upstream yaml paths verified. No design decisions pending.",
+  "issues": [
+    {
+      "issue": "#20",
+      "classification": "execute",
+      "cluster": "A-polish",
+      "scope": "input-button.md Token 매핑 섹션 정합성 + checkbox-group.md anti-pattern 내부 모순",
+      "complexity": "S",
+      "files": [
+        "plugins/daangn-seed-ai/skills/seed/references/components/input-button.md",
+        "plugins/daangn-seed-ai/skills/seed/references/components/checkbox-group.md"
+      ],
+      "notes": "R3 codex MEDIUM 2. Token 매핑 상단에 YAML slot ≠ React 컴포넌트 명시 + deep-path import anti-pattern 재정의 (choose: named export 통일 OR Tips 로 이동)."
+    },
+    {
+      "issue": "#14-1B",
+      "classification": "execute",
+      "cluster": "B-navigation",
+      "scope": "Tier 1 1B cluster — tab, tablist, segmented-control, segmented-control-item, top-navigation",
+      "complexity": "M",
+      "files": [
+        "plugins/daangn-seed-ai/skills/seed/references/components/tab.md",
+        "plugins/daangn-seed-ai/skills/seed/references/components/tablist.md",
+        "plugins/daangn-seed-ai/skills/seed/references/components/segmented-control.md",
+        "plugins/daangn-seed-ai/skills/seed/references/components/segmented-control-item.md",
+        "plugins/daangn-seed-ai/skills/seed/references/components/top-navigation.md",
+        "plugins/daangn-seed-ai/skills/seed/references/decision-matrices/which-tab.md (신규 또는 which-input 확장 판단)"
+      ],
+      "upstream": "packages/react-headless/tabs, packages/react-headless/segmented-control, packages/react/src/components/Tabs, SegmentedControl",
+      "notes": "5 components, all not-ported. Upstream YAML 존재 확인. React 구현 확인 — Tabs(Tab+Tablist), SegmentedControl(+Item), top-navigation."
+    },
+    {
+      "issue": "#14-1E",
+      "classification": "execute",
+      "cluster": "C-lists",
+      "scope": "Tier 1 1E cluster — list-item, list-header, link-content",
+      "complexity": "M",
+      "files": [
+        "plugins/daangn-seed-ai/skills/seed/references/components/list-item.md",
+        "plugins/daangn-seed-ai/skills/seed/references/components/list-header.md",
+        "plugins/daangn-seed-ai/skills/seed/references/components/link-content.md",
+        "plugins/daangn-seed-ai/skills/seed/references/decision-matrices/which-list.md (신규 판단)"
+      ],
+      "upstream": "packages/react/src/components/List, LinkContent",
+      "notes": "3 components, all not-ported. Upstream YAML 존재. React List 컴포넌트에 list-item/list-header 소속 확인."
+    }
+  ],
+  "integration": {
+    "files": [
+      "plugins/daangn-seed-ai/skills/seed/references/index.md",
+      "plugins/daangn-seed-ai/skills/seed/references/decision-matrices/which-button.md (tab/segment 연결 고려)"
+    ],
+    "notes": "index.md 커버리지 26→34. 1B/1E 통합 후 Tier 1 28/31 → 31/31 달성 (text-button, radio rootage-only 포함)."
+  },
+  "questions_for_user": []
+}

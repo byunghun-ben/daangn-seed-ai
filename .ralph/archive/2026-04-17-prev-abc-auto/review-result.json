@@ -1,0 +1,122 @@
+{
+  "round": "R2",
+  "verdict": "pass",
+  "critical": 0,
+  "high": 0,
+  "medium": 0,
+  "low": 1,
+  "baseline": {
+    "r1_codex": { "critical": 0, "high": 4, "medium": 2 },
+    "r1_ralph": { "critical": 0, "high": 3, "medium": 5, "low": 2 }
+  },
+  "r1_resolution_verification": [
+    {
+      "id": "R1-H1",
+      "file": "checkbox-group.md",
+      "original": "HIGH — fabricated group-scoped value/defaultValue/onValueChange API on Checkbox.Group",
+      "status": "RESOLVED",
+      "evidence": "plugins/daangn-seed-ai/skills/seed/references/components/checkbox-group.md:40-48, 69-77, 92-97 — upstream 선언 `CheckboxGroup = withGroupContext<HTMLDivElement, CheckboxGroupProps>(Primitive.div)` 와 `CheckboxGroupProps extends CheckboxGroupVariantProps, PrimitiveProps, React.HTMLAttributes<HTMLDivElement>` 를 그대로 인용. Anti-patterns §에서 `<Checkbox.Group value={} onChange={}>` 를 '타입 에러' 로 명시. 예제 2 (Controlled) 는 부모 `useState<string[]>` + per-Checkbox `checked={selected.includes(v)}` + `onCheckedChange` 패턴으로 재작성. fabricated prop 기재 0건 확인 (grep 결과 해당 위치는 전부 Anti-pattern 경고 문맥). 교차검증: /tmp/seed-design-sync/packages/react/src/components/Checkbox/Checkbox.tsx:29-34 와 정확히 일치."
+    },
+    {
+      "id": "R1-H2",
+      "file": "input-button.md:228 (@daangn/ import)",
+      "original": "HIGH — non-existent @daangn/react-monochrome-icon import",
+      "status": "RESOLVED",
+      "evidence": "input-button.md:310 — `import { IconPinLine, IconChevronDownLine } from \"@karrotmarket/react-monochrome-icon\"` 로 교체. page-banner.md:257 도 동일하게 `@karrotmarket/react-monochrome-icon` 로 교체 확인. grep `@daangn/react-monochrome-icon` on changed files: 0 hits."
+    },
+    {
+      "id": "R1-H3",
+      "file": "text-button.md:127-139",
+      "original": "HIGH — pressed overlay was applied to style.color (label fg) instead of background",
+      "status": "RESOLVED",
+      "evidence": "text-button.md:131-141 — `onMouseDown/Up/Leave` 핸들러가 `e.currentTarget.style.backgroundColor` 를 `var(--seed-v3-color-bg-layer-default-pressed)` / `transparent` 로 토글하도록 수정. 라인 130의 주석이 'pressed overlay는 root slot의 color (=background) 에 적용. label 색 (fg.neutral-muted) 은 pressed state 에서도 그대로 유지' 로 의도를 명시. 교차검증: /tmp/seed-design-sync/packages/rootage/components/text-button.yaml:44-46 `pressed.root.color: $color.bg.layer-default-pressed` — Rootage root slot 의 `color` 필드는 background 역할 (schema.slots.root.properties.color = type:color). text-button.yaml 에 `label.color` pressed 규칙 없음 → label fg 유지 주장 일관."
+    },
+    {
+      "id": "R1-H4",
+      "file": "input-button.md FieldButton Root props",
+      "original": "HIGH — single-value value/onValueChange claim mismatched upstream values[]/onValuesChange",
+      "status": "RESOLVED",
+      "evidence": "input-button.md:169-184 — `values?: string[]; onValuesChange?: (values: string[]) => void` 로 정확히 기술. `배열 API 인 이유` 블록에서 단일값 사용 패턴 `values={[value]}/onValuesChange={([v]) => setValue(v ?? \"\")}` 를 명시. 모든 세 예제(:285, :319, :351)가 동일 패턴 사용. 교차검증: /tmp/seed-design-sync/packages/react-headless/field-button/src/useFieldButton.ts:6-9 `UseFieldButtonStateProps { values?: string[]; onValuesChange?: (values: string[]) => void }` 와 정확히 일치. docs/examples/react/field-button/basic-usage.tsx:11-12 동일 패턴. FieldButton.tsx:15-26 `FieldButtonRoot` 가 `<Primitive.div>` 로 렌더되고 `useFieldButton` hook 에 values/onValuesChange 를 pass-through 함을 확증."
+    },
+    {
+      "id": "R1-H5",
+      "file": "switch.md onCheckedChange signature",
+      "original": "HIGH — signature docs claimed { checked } destructuring; upstream is (checked: boolean) => void",
+      "status": "RESOLVED",
+      "evidence": "switch.md:210 — `onCheckedChange?: (checked: boolean) => void`. line 246 의 default 동작 설명에서 명시적으로 '객체 destructuring(`{ checked }`) 이 아니고, 네이티브 `onChange` 이벤트도 아니다' 로 경고. 예제 2(:356)가 `async (checked) =>` 로 직접 파라미터 사용. 교차검증: /tmp/seed-design-sync/packages/react-headless/switch/src/useSwitch.ts:13-19 `onCheckedChange?: (checked: boolean) => void` 정확 일치."
+    },
+    {
+      "id": "R1-H6",
+      "file": "input-button.md H2 order & Token 매핑 absence",
+      "original": "MEDIUM — H2 sections deviate from _template.md standard; Token 매핑 section missing",
+      "status": "RESOLVED",
+      "evidence": "input-button.md H2 순서: 언제쓰나 → Anatomy → Variants → States → Token 매핑 (:122-159) → Props → 합성규칙 → 접근성 → Anti-patterns → 예제 → 참고. Token 매핑 절이 State 뒤에 삽입되어 _template 표준과 일치. 'Field 조합 시 추가 slot' 은 Anatomy 내부 서브섹션으로 흡수됨(:81)."
+    },
+    {
+      "id": "R1-H7",
+      "file": "toggle-button.md loading/progressCircle 설명",
+      "original": "MEDIUM — claimed CSS pseudo-element renders progressCircle automatically; evidence weak",
+      "status": "RESOLVED",
+      "evidence": "toggle-button.md:60, 68, 73, 140-159 — 'spinner DOM 을 자동 렌더하지 않는다' 로 정정. `data-loading` attribute 는 root background 만 전환한다고 명시. 교차검증: /tmp/seed-design-sync/packages/css/recipes/toggle-button.css grep `data-loading` → 4 match, 모두 `background:` rule 만. `progressCircle|spinner` grep → 0 match. 주장 정확."
+    },
+    {
+      "id": "R1-H8",
+      "file": "toggle-button.md Anti-patterns symbols",
+      "original": "LOW — `ㄨ`/`O` instead of `❌`/`✅`",
+      "status": "RESOLVED",
+      "evidence": "toggle-button.md:251, 258, 266, 274, 281, 285, 290, 297, 304 — 모두 `❌` 로 교체. 성공 예시 :304 는 `✅`. 다른 MD 와 symbol 일관성 확보."
+    },
+    {
+      "id": "R1-H9",
+      "file": "radio.md frontmatter status",
+      "original": "LOW — missing `status: rootage-only` frontmatter tag",
+      "status": "RESOLVED",
+      "evidence": "radio.md:4 — `status: rootage-only` 추가. text-button.md:4 와 동일한 frontmatter 정책."
+    },
+    {
+      "id": "R1-H10",
+      "file": "page-banner.md:257 @daangn/ import",
+      "original": "MEDIUM — legacy @daangn/react-monochrome-icon in AI promotion example",
+      "status": "RESOLVED",
+      "evidence": "page-banner.md:257 — `import { IconSparkleFill } from \"@karrotmarket/react-monochrome-icon\"`."
+    },
+    {
+      "id": "R1-H11",
+      "file": "radio-group.md Props 근거",
+      "original": "MEDIUM — external primitive inheritance claim without explicit source",
+      "status": "NOT-APPLICABLE",
+      "evidence": "radio-group.md 는 이번 R1 fix round 의 스코프에 포함되지 않았음 (git diff fb78804^..HEAD 파일 리스트에 radio-group.md 없음). R2 verdict 에서는 별도 신규 finding 으로 재평가하지 않음 — 내용이 이전과 동일하고 원 MEDIUM 은 ‘근거 명시 약함’ 수준의 스타일 이슈이며 실제 타입/동작 오류는 없음."
+    },
+    {
+      "id": "R1-H12",
+      "file": "sync-from-seed.mjs status enum",
+      "original": "MEDIUM — pragmatic close pending backward-compat verification",
+      "status": "RESOLVED",
+      "evidence": "scripts/sync-from-seed.mjs:115-123 — 결정 근거 주석 추가(외부 JSON consumer 존재 여부 grep 으로 확인, package.json scripts 와 .github/workflows 검토 결과 내부 docs 참조만). 추후 외부 consumer 추가 시 enum 확장/새 필드 권장 방침 명시. 스냅샷 안정성 유지."
+    }
+  ],
+  "new_findings_r2": [
+    {
+      "severity": "LOW",
+      "file": "plugins/daangn-seed-ai/skills/seed/references/components/text-button.md:127-141",
+      "issue": "R1 에서 HIGH 로 지적된 pressed 토큰 위치는 올바르게 수정됐으나, 구현 방식이 여전히 JS mutation (`onMouseDown/Up/Leave` 핸들러로 style.backgroundColor 토글) 이다. 키보드 포커스 (Space keydown 으로 버튼 활성) · 터치 · pointer cancel · window blur 중 mouseup 미발화 시 hover 잔상 등 edge case 에서 동작하지 않는다. 근본 해결은 CSS `:active` pseudo-class 이지만 inline style 접근의 한계라서 'native button + Seed CSS 변수' 라는 예제 취지 자체와 얽혀 있다.",
+      "suggested_fix": "문서 본문에 'keyboard/touch/pointercancel 에서는 :active pseudo-class 기반 CSS 가 더 견고하다. stylesheet 사용이 가능한 프로젝트는 global CSS 또는 CSS Module 로 `.text-button:active { background-color: var(--seed-v3-color-bg-layer-default-pressed); }` 를 권장.' 한 문단 추가. 예제 자체는 교체하지 않아도 됨 (inline style 은 CSS Module 이 없을 때 fallback 으로 유용).",
+      "rationale_keep_low": "R1 HIGH 수정의 주된 목적(토큰 위치 오류)은 해소. 남은 edge case 는 문서화 보강 수준이며 사용자가 그대로 copy-paste 해도 일반적인 mouse 인터랙션은 올바르게 동작."
+    }
+  ],
+  "cross_verification": {
+    "method": "upstream SHA 1f1d21d clone at /tmp/seed-design-sync — 각 HIGH 수정에 대해 원문 소스 라인을 직접 인용.",
+    "files_verified": [
+      "/tmp/seed-design-sync/packages/react/src/components/FieldButton/FieldButton.tsx (Root=Primitive.div+withFieldProvider, Button=FieldButton.Button+withContext)",
+      "/tmp/seed-design-sync/packages/react-headless/field-button/src/FieldButton.tsx (FieldButtonRoot forwardRef<HTMLDivElement>, FieldButtonButton forwardRef<HTMLButtonElement>, FieldButtonHiddenInput valueIndex:number prop)",
+      "/tmp/seed-design-sync/packages/react-headless/field-button/src/useFieldButton.ts:6-9 (values:string[] / onValuesChange:(values:string[])=>void)",
+      "/tmp/seed-design-sync/packages/react-headless/switch/src/useSwitch.ts:13-19 (onCheckedChange:(checked:boolean)=>void)",
+      "/tmp/seed-design-sync/packages/react/src/components/Checkbox/Checkbox.tsx:29-34 (CheckboxGroup=withGroupContext(Primitive.div), no values/onValuesChange)",
+      "/tmp/seed-design-sync/packages/rootage/components/text-button.yaml:31-47 (pressed.root.color=$color.bg.layer-default-pressed — root slot color=background)",
+      "/tmp/seed-design-sync/packages/css/recipes/toggle-button.css (data-loading 4 rules, background-only; progressCircle/spinner 0 matches)",
+      "/tmp/seed-design-sync/docs/examples/react/field-button/basic-usage.tsx:11-12 (values=[v]+onValuesChange=([v])=>... pattern)",
+      "/tmp/seed-design-sync/docs/examples/react/field-button/clear-button.tsx (동일 패턴)"
+    ]
+  },
+  "summary": "R1 지적 12 항목(HIGH 7 + MEDIUM 3 + LOW 2) 중 11건 RESOLVED, 1건 NOT-APPLICABLE (radio-group.md — R1 fix scope 외). 모든 R1 HIGH 는 upstream 1f1d21d 소스와 정확히 일치하도록 수정됐음을 diff + upstream 파일 교차검증으로 확인. 재작성된 checkbox-group.md 는 layout-wrapper-only 를 정확히 기술하고, input-button.md 는 Root(div)/Button(button) 분리 + values[]/onValuesChange 배열 API 를 useFieldButton.ts 와 1:1 매칭. switch onCheckedChange 시그니처, text-button pressed 토큰 위치, toggle-button data-loading 동작 모두 upstream 과 일치. 새로 도입된 문제는 1건 (LOW) — text-button.md JS mutation 방식의 edge-case 내구성 — 이며 사용자 UX 에 실질 영향 없고 문서 보강 수준. CRITICAL 0, HIGH 0, MEDIUM 0, LOW 1. verdict: pass — Phase 6 진행 가능."
+}

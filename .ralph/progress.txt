@@ -1,16 +1,41 @@
-# Ralph Progress — ABC composite run (COMPLETE)
-phase: 6 (complete)
-issues: #14 (parent) + #19 (polish) + #18 (polish)
-upstream_sha: 1f1d21d
-wave_1_polish: 4/4 complete
-wave_2a_1A_indep: 3/3 complete
-wave_2b_1A_dep: 2/2 complete
-wave_3_1D: 3/3 complete
-wave_4_integration: 1/1 complete
-stories: 13/13 complete
-review_rounds: 3 (R1 ralph H3+M5+L2, codex H4+M2 → fix10 → R2 ralph PASS, codex H2+M2 → fix4 → R3 codex M2 → landing)
-fixes: 14 total (R1=10, R2=4)
-follow_up: #20
-ported_delta: 18 → 26
-commits: 53ad75c 6fcbb69 4b03080 dc087c9 91f4747 fb78804 3e7c974
-duration: 64 min
+Ralph ABC Round 2 — COMPLETE
+=====================================
+Run label: Ralph ABC (polish + 1B navigation + 1E lists)
+Issues: #20 + #14-1B + #14-1E (parent epic #14)
+Upstream SHA: 1f1d21d
+Started: 2026-04-17T12:24Z
+Completed: 2026-04-17T13:48Z
+Duration: 83 min
+Host: byunghun
+
+All Phases: COMPLETE
+
+Stories: 11/11 passed
+  S1 input-button Token header (666a422)
+  S2 checkbox + checkbox-group named import (b9a9990)
+  S3 tablist.md 458L (06e0901)
+  S4 segmented-control.md 363L (e53377e)
+  S5 top-navigation.md + sync script 368L (4539849)
+  S6 tab.md 233L (d95ce51)
+  S7 segmented-control-item.md 301L (a9b1923)
+  S8 list-item.md 500L (47ade44)
+  S9 list-header.md 312L (3135007)
+  S10 link-content.md deprecated stub 122L (baf42f6)
+  S11 integration index + which-tab + which-button/input (c5aa5e3)
+
+Review Rounds: 3
+  R1 (ralph): CRITICAL 1 + HIGH 2 + MEDIUM 3 + LOW 3
+  R1 (codex): HIGH 1 + MEDIUM 3
+  R1 fix: 11 issues resolved (1758c6c)
+  R2 (ralph): PASS (missed L92/L107 top-level SC — codex caught)
+  R2 (codex): HIGH 1 (which-tab SegmentedControl still top-level)
+  R2 fix: 1 issue resolved (c5f1604)
+  R3 (codex): PASS — 0 issues
+
+Coverage delta (sync --json):
+  ported: 22 → 29 (+7)
+  rootage-only: 2 → 3 (+1)
+  not-ported: 40 → 32 (-8)
+  total documented: 26 → 32
+
+Follow-up: none (all issues resolved in run)

@@ -1,0 +1,94 @@
+{
+  "ts": "2026-04-17T00:00:00Z",
+  "source": "review",
+  "round": 2,
+  "verdict": "pass",
+  "r1_issues_status": {
+    "critical_1_which_tab_jsx": "fixed",
+    "high_1_index_tablist_container": "fixed",
+    "high_2_which_tab_prose": "fixed",
+    "high_3_which_tab_backlink": "fixed",
+    "medium_1_which_button_fenced": "fixed",
+    "medium_2_list_item_backlink": "fixed",
+    "medium_3_which_tab_back_button_link": "fixed",
+    "medium_4_segmented_control_antipattern5": "fixed",
+    "medium_5_which_tab_chiptabs_path": "fixed",
+    "medium_6_tablist_props_note": "fixed",
+    "low_2_list_item_icon_import": "fixed"
+  },
+  "r1_evidence": {
+    "critical_1_which_tab_jsx": {
+      "check": "grep for top-level <TabList / <Tab in which-tab.md",
+      "result": "0 matches; Tabs.Root/List/Trigger/Content/Indicator namespace used at L49-59 and L126-134",
+      "namespace_form_count": 17
+    },
+    "high_1_index_tablist_container": {
+      "file": "references/index.md",
+      "line": 62,
+      "current": "tablist.md ← Tabs namespace (Root/List/Trigger/Indicator/Content) — 콘텐츠 전환, 가로 스크롤 지원",
+      "note": "L99 still contains 'TabList' inside the component roster string ('...신규 8(ListItem, ListHeader, LinkContent, Tab, TabList, ...)') which is the canonical component/file name in the Seed package roster, not a usage-level reference. Not in scope of R1 HIGH-1."
+    },
+    "high_2_which_tab_prose": {
+      "check": "grep 'TabList' in which-tab.md",
+      "result": "0 matches in prose; all usage-level references replaced with 'Tabs namespace'"
+    },
+    "high_3_which_tab_backlink": {
+      "location": "which-tab.md L21",
+      "current": "관련 matrix: [which-button.md](./which-button.md) — Chip / ControlChip 선택 판단",
+      "note": "moved outside the fenced decision-tree block; markdown link now clickable"
+    },
+    "medium_1_which_button_fenced": {
+      "location": "which-button.md L65-70",
+      "before": "```-fenced plain text table with inline bracket links",
+      "after": "proper markdown table with [Tabs namespace](../components/tablist.md) and [SegmentedControl](../components/segmented-control.md) as real markdown links"
+    },
+    "medium_2_list_item_backlink": {
+      "location": "list-item.md L26",
+      "current": "> **관련 문서** — List 섹션 바로 위에 배치하는 헤더는 [`./list-header.md`](./list-header.md) — 리스트 섹션 헤더 참조.",
+      "target_exists": true
+    },
+    "medium_3_which_tab_back_button_link": "covered by high_3 — link is now a plain markdown link outside fenced block",
+    "medium_4_segmented_control_antipattern5": {
+      "location": "segmented-control.md L263-269",
+      "current": "Anti-pattern #5 now includes concrete JSX block showing the forbidden `import { Root, Item, Indicator } from '@seed-design/react/SegmentedControl'` + destructured Root/Item/Indicator usage",
+      "fenced_block_integrity": "intact — outer ```tsx ... ``` wraps items 1-6 and closing ✅ example"
+    },
+    "medium_5_which_tab_chiptabs_path": {
+      "location": "which-tab.md L156",
+      "before": "`packages/rootage/components/chip-tabs.yaml`(upstream clone)",
+      "after": "upstream seed-design rootage spec (no local clone path)",
+      "grep_clone_keywords": "0 matches for 'packages/rootage' / 'rootage clone' / 'local rootage'"
+    },
+    "medium_6_tablist_props_note": {
+      "location": "tablist.md L167",
+      "current": "`TabsPrimitive.RootProps` 및 `TabsVariantProps` 등 관련 타입은 `@seed-design/react` 에서 직접 re-export 된다. 별도 sub-path import 없이 아래와 같이 사용한다.",
+      "consistency_with_variants": "consistent — Variants table (L91~112) and Props type list (L170-173) both use top-level `@seed-design/react` import with no sub-path"
+    },
+    "low_2_list_item_icon_import": {
+      "locations_fixed": [
+        "L308-317 Anti-pattern #3 split: Icon from @seed-design/react, IconChevronRightFill from @karrotmarket/react-monochrome-icon",
+        "L319-328 Anti-pattern #4 split: Icon + IconPersonCircleFill similarly",
+        "L397-398 example (b): List, Icon from @seed-design/react; IconPersonCircleFill, IconChevronRightFill from @karrotmarket",
+        "L476-477 example (d): List, Icon from @seed-design/react; IconChevronRightFill from @karrotmarket"
+      ]
+    }
+  },
+  "new_issues": [],
+  "regression_scan": {
+    "broken_links": "none — list-header.md exists as backlink target",
+    "jsx_syntax": "all fix-round code blocks parse cleanly (no unmatched braces, prop typos, or broken ReactNode trees). Notable forbidden-pattern JSX in segmented-control.md L264-269 is intentionally invalid (Root/Item/Indicator used without namespace) but annotated as ❌ Anti-pattern; correctly scoped.",
+    "fenced_block_integrity": "segmented-control.md Anti-patterns ```tsx block opens at L226 and closes at L288 with all 6 ❌ items + closing ✅ example enclosed. No stray fences.",
+    "variants_vs_props_consistency": "tablist.md Variants table and new Props note both reference @seed-design/react root import; no contradiction.",
+    "index_md_l99_note": "L99 'TabList' inside component roster ('...Tab, TabList, SegmentedControl...') refers to the canonical file/component name in Seed; decision-matrix-level wording ('TabList 컨테이너') is what R1 flagged and is fully replaced. L99 is outside R1 HIGH-1 scope and semantically accurate as package inventory."
+  },
+  "metrics": {
+    "critical_remaining": 0,
+    "high_remaining": 0,
+    "medium_remaining": 0,
+    "low_remaining": 0,
+    "files_reviewed": 6,
+    "r1_issues_total": 11,
+    "r1_issues_fixed": 11
+  },
+  "summary": "R1 review의 CRITICAL 1 + HIGH 3 + MEDIUM 6 + LOW 1 = 11건 전부 수정 확인. which-tab.md 의 top-level <TabList/<Tab JSX 완전 제거 및 Tabs.Root/List/Trigger/Indicator/Content namespace 로 전면 교체됨. which-button.md 의 fenced-text block은 proper markdown table 로 전환되어 링크 클릭 가능. segmented-control.md Anti-pattern #5 구체 JSX 삽입, tablist.md Props re-export 주석 추가, list-item.md 전체의 아이콘 import 경로 (@seed-design/react + @karrotmarket/react-monochrome-icon) 분리 완료. 각 예제와 fenced block 구조 무결. regression 없음. verdict = pass."
+}
