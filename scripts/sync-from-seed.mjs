@@ -81,6 +81,10 @@ function diffTokens(upstreamRoot) {
   return report;
 }
 
+// Local-only component docs that intentionally have no upstream rootage yaml.
+// These document slot utilities or guidance, not tokenized components.
+const LOCAL_ONLY_COMPONENTS = new Set(["icon"]);
+
 function diffComponents(upstreamRoot) {
   const report = {};
   const localDir = join(SKILL_ROOT, "references/components");
@@ -101,6 +105,10 @@ function diffComponents(upstreamRoot) {
   );
 
   for (const name of localNames) {
+    if (LOCAL_ONLY_COMPONENTS.has(name)) {
+      report[name] = { status: "local-only (slot utility / guidance)" };
+      continue;
+    }
     if (!upstreamNames.has(name)) report[name] = { status: "removed-upstream" };
   }
   for (const name of upstreamNames) {

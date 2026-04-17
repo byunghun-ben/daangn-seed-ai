@@ -29,9 +29,9 @@ import { ActionButton } from "@seed-design/react";
 |------|------|------|
 | `root` | ✅ | `<button>` 요소, 배경·보더·상태 관리 |
 | `label` | ⚪ | 텍스트 레이블 (layout=withText) |
-| `icon` | ⚪ | layout=iconOnly일 때의 단독 아이콘 |
-| `prefixIcon` | ⚪ | 라벨 앞 아이콘 (suffixIcon과 동시 사용 금지) |
-| `suffixIcon` | ⚪ | 라벨 뒤 아이콘 (prefixIcon과 동시 사용 금지, Chevron·메뉴 표시용) |
+| `icon` | ⚪ | layout=iconOnly일 때의 단독 아이콘. [`icon.md`](./icon.md) 참조. |
+| `prefixIcon` | ⚪ | 라벨 앞 아이콘 (suffixIcon과 동시 사용 금지). [`icon.md`](./icon.md) 참조. |
+| `suffixIcon` | ⚪ | 라벨 뒤 아이콘 (prefixIcon과 동시 사용 금지, Chevron·메뉴 표시용). [`icon.md`](./icon.md) 참조. |
 | `progressCircle` | ⚪ | loading=true일 때 자동 렌더 |
 
 ---

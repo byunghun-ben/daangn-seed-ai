@@ -35,7 +35,8 @@ references/
 │   ├── snackbar.md             ← 일시 피드백 토스트
 │   ├── dialog.md               ← 중앙 모달
 │   ├── bottom-sheet.md         ← 하단 시트
-│   └── text-field.md           ← 텍스트 입력
+│   ├── text-field.md           ← 텍스트 입력
+│   └── icon.md                 ← Icon 슬롯 컨테이너 + BYO 아이콘 라이브러리 가이드
 │
 ├── layout/
 │   └── primitives.md           ← Box/Flex/Stack/Grid 등 레이아웃 컴포넌트
@@ -67,9 +68,11 @@ references/
 
 ## 커버리지
 
-**MVP 스코프**: 토큰 전체 + 고빈도 컴포넌트 6개(ActionButton, Callout, Snackbar, Dialog, BottomSheet, TextField) + 레이아웃 + 결정 매트릭스 4개.
+**MVP 스코프**: 토큰 전체 + 고빈도 컴포넌트 6개(ActionButton, Callout, Snackbar, Dialog, BottomSheet, TextField) + Icon 슬롯 컨테이너 가이드 + 레이아웃 + 결정 매트릭스 4개.
+
+**Icon 관련 주의** — Seed는 아이콘 **슬롯 API**(`Icon`/`PrefixIcon`/`SuffixIcon`/`IconRequired`)만 제공하고 **아이콘 에셋은 의도적으로 제공하지 않는다**. `components/icon.md`는 슬롯 anatomy + BYO(Bring Your Own) 라이브러리 선택 가이드까지 다룬다. 당근팀은 `@karrotmarket/react-monochrome-icon`, 외부는 Lucide/Tabler 권장.
 
 **미포팅 컴포넌트** (필요 시 `_template.md` 기반으로 추가):
-- Avatar, Badge, Chip, Checkbox, RadioGroup, Switch, SegmentedControl, Tabs, List, Icon, Skeleton, ProgressCircle, Slider, SelectBox, FieldButton, Fab 등
+- Avatar, Badge, Chip, Checkbox, RadioGroup, Switch, SegmentedControl, Tabs, List, Skeleton, ProgressCircle, Slider, SelectBox, FieldButton, Fab 등
 
 추가 시 `packages/rootage/components/{name}.yaml`(upstream clone)에서 slot/variant 데이터를 가져오고 `_template.md` 포맷으로 작성. `scripts/sync-from-seed.mjs`의 component diff가 미포팅을 `not-ported`로 표시한다.

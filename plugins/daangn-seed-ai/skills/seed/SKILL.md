@@ -40,6 +40,7 @@ description: "당근 Seed 디자인 시스템을 AI-first로 재구조화한 sel
 | 그림자·모션 | `references/tokens/shadow.json`, `duration.json`, `timing-function.json` (raw) |
 | 레이아웃 구성 (Flex/Stack/Grid) | `references/layout/primitives.md` (spacing rhythm은 `tokens/spacing.md`) |
 | 특정 컴포넌트 사용 | `references/components/{name}.md` |
+| 아이콘 삽입 / 아이콘 라이브러리 선택 | `references/components/icon.md` (슬롯 API + BYO 가이드) |
 | "어떤 버튼/오버레이/입력을 써야 하나" | `references/decision-matrices/{which-*}.md` |
 | 여러 컴포넌트를 조합 | `references/decision-matrices/composition.md` |
 | 금지 사항 / 리뷰 | `references/anti-patterns.md` (항상 권장) |

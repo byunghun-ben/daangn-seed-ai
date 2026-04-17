@@ -30,7 +30,7 @@ import { Snackbar } from "@seed-design/react";
 | `region` | ✅ | 화면 하단의 컨테이너 영역 (안전 영역 고려) |
 | `root` | ✅ | Snackbar 카드 (다크 배경, 짙은 반전) |
 | `message` | ✅ | 본문 텍스트 |
-| `prefixIcon` | ⚪ | 좌측 아이콘 (positive/critical 시 상태 컬러) |
+| `prefixIcon` | ⚪ | 좌측 아이콘 (positive/critical 시 상태 컬러). [`icon.md`](./icon.md) 참조. |
 | `content` | ✅ | 텍스트 영역 wrapper |
 | `actionButton` | ⚪ | "실행 취소", "다시 시도" 같은 1개의 인라인 액션 |
 

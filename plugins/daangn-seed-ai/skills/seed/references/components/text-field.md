@@ -20,7 +20,7 @@ import { TextField } from "@seed-design/react";
 | 짧은 클릭 선택형 (날짜, 위치) | `FieldButton` |
 | 옵션 중 선택 | `SelectBox`, `RadioGroup` |
 | boolean 토글 | `Switch`, `Checkbox` |
-| 검색 전용 (아이콘·X 버튼 포함) | `TextField`에 prefixIcon·suffixAction 조합 |
+| 검색 전용 (아이콘·X 버튼 포함) | `TextField`에 prefixIcon·suffixAction 조합 ([`icon.md`](./icon.md) 참조) |
 
 ---
 

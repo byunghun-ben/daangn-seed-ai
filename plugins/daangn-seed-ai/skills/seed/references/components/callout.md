@@ -27,11 +27,11 @@ import { Callout } from "@seed-design/react";
 | Slot | 필수 | 역할 |
 |------|------|------|
 | `root` | ✅ | 배경·패딩·보더 반경 (12px `paddingX/Y`) |
-| `prefixIcon` | ⚪ | 좌측 아이콘 (**Fill 타입 권장**) |
+| `prefixIcon` | ⚪ | 좌측 아이콘 (**Fill 타입 권장**). [`icon.md`](./icon.md) 참조. |
 | `title` | ⚪ | 제목 (bold) |
 | `description` | ⚪ | 설명 (regular) |
 | `link` | ⚪ | 인라인 링크 텍스트 (Actionable Callout에선 비권장) |
-| `suffixIcon` | ⚪ | 우측 아이콘 (닫기·화살표) |
+| `suffixIcon` | ⚪ | 우측 아이콘 (닫기·화살표). [`icon.md`](./icon.md) 참조. |
 
 ---
 

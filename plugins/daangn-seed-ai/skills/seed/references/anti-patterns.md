@@ -228,6 +228,35 @@ Seed는 **flat + neutral-dominant + 정돈된 간격**이 기본.
 
 ---
 
+## 14. 아이콘 슬롯 우회 (raw SVG · emoji · 라이브러리 혼용)
+
+Seed는 `Icon`/`PrefixIcon`/`SuffixIcon` 슬롯을 통해서만 아이콘을 받는다 ([`components/icon.md`](./components/icon.md) 참조). 슬롯을 우회하면 sizing/coloring 토큰 연결이 끊어지고 IconRequired 런타임 에러가 난다.
+
+```tsx
+❌ <ActionButton layout="iconOnly" aria-label="검색">
+     <svg viewBox="0 0 24 24">...</svg>
+   </ActionButton>
+   {/* raw SVG — IconRequired 가드 실패, 토큰 미연결 */}
+
+❌ <Callout prefixIcon="⚠️">경고</Callout>
+   {/* emoji 아이콘 — 플랫폼별 렌더링 차이, 컬러 토큰 미적용 */}
+
+❌ <PrefixIcon svg={<img src="/icons/heart.svg" />} />
+   {/* <img>로 SVG 삽입 — currentColor·CSS 변수 기반 coloring 실패 */}
+
+❌ import { IconHeart } from "lucide-react";
+   import { IconPlusFill } from "@karrotmarket/react-monochrome-icon";
+   {/* 두 라이브러리 혼용 — stroke width·corner radius 불일치 */}
+
+✅ <ActionButton layout="iconOnly" aria-label="검색">
+     <Icon svg={<IconSearchLine />} />
+   </ActionButton>
+```
+
+한 프로젝트는 **하나의 아이콘 라이브러리만** 고정. 당근 팀은 `@karrotmarket/react-monochrome-icon`, 외부는 Lucide/Tabler 중 하나.
+
+---
+
 ## 리뷰 체크리스트
 
 작성 후 이 목록으로 자기 검증:
@@ -242,3 +271,5 @@ Seed는 **flat + neutral-dominant + 정돈된 간격**이 기본.
 - [ ] 한국어 앱이면 `maxGraphemeCount` 사용
 - [ ] Snackbar와 Dialog 구분되어 있음 (피드백 vs 차단)
 - [ ] `bg.X-solid` + `fg.X-contrast` 페어 유지
+- [ ] 아이콘은 `Icon`/`PrefixIcon`/`SuffixIcon` 슬롯으로만 삽입 (raw SVG·emoji·img 금지)
+- [ ] 한 프로젝트에 아이콘 라이브러리 1개만 (Lucide, Tabler, `@karrotmarket/*` 중 하나)
