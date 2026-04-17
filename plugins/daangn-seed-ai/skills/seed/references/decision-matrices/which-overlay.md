@@ -17,7 +17,7 @@
     ├── 하단에서 잠깐 뜨고 사라지는 피드백           → Snackbar
     ├── 페이지 상단의 영구 고지                       → PageBanner
     ├── 섹션 내부 고정 알림                           → Callout
-    ├── 리스트 아이템 근처의 플로팅 안내              → InlineBanner
+    ├── 리스트 아이템 근처의 플로팅 안내              → PageBanner (InlineBanner는 deprecated)
     └── 아이콘·버튼의 숫자 뱃지                       → NotificationBadge / Badge
 ```
 
@@ -36,7 +36,7 @@
 | **Snackbar** | ❌ | 하단 | ✅ (4-6초) | 0-1개 (최대) |
 | **PageBanner** | ❌ | 페이지 상단 | ❌ | 1개 (X 버튼) |
 | **Callout** | ❌ | 섹션 내부 | ❌ | 0-1개 인라인 |
-| **InlineBanner** | ❌ | 리스트 내부 | ❌ | 0-1개 |
+| **InlineBanner** ⚠️ deprecated | ❌ | 리스트 내부 | ❌ | 0-1개 |
 
 ---
 

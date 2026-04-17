@@ -41,7 +41,13 @@ references/
 │   ├── avatar-stack.md         ← 여러 Avatar를 수평으로 겹쳐 그룹 멤버를 미리 보여주는 컨테이너
 │   ├── badge.md                ← 객체의 속성·상태·카테고리를 표현하는 텍스트 라벨
 │   ├── notification-badge.md   ← 아이콘·탭에 겹쳐 붙는 미확인 알림 카운트/도트 마커
-│   └── divider.md              ← 콘텐츠 블록 간 시각적 구분선 (가로/세로)
+│   ├── divider.md              ← 콘텐츠 블록 간 시각적 구분선 (가로/세로)
+│   ├── content-placeholder.md  ← 빈 상태 일러스트 + 메시지 (12 type preset)
+│   ├── inline-banner.md        ← ⚠️ deprecated — PageBanner 마이그레이션 가이드
+│   ├── page-banner.md          ← 페이지 최상단 고정 알림 띠 (weak/solid × 6 tone)
+│   ├── progress-circle.md      ← 원형 로딩 스피너 / 진행률 (indeterminate true/false)
+│   ├── skeleton.md             ← 로딩 중 임시 골격 (shimmer 애니메이션)
+│   └── typography.md           ← Text 컴포넌트 (51 textStyle, tokens/typography.md와 별개)
 │
 ├── layout/
 │   └── primitives.md           ← Box/Flex/Stack/Grid 등 레이아웃 컴포넌트
@@ -73,11 +79,15 @@ references/
 
 ## 커버리지
 
-**MVP 스코프**: 토큰 전체 + MVP 6(ActionButton, Callout, Snackbar, Dialog, BottomSheet, TextField) + Icon + Tier 1F 5(Avatar, AvatarStack, Badge, NotificationBadge, Divider) = 총 12 컴포넌트 + 레이아웃 + 결정 매트릭스 4개.
+**MVP 스코프**: 토큰 전체 + MVP 6(ActionButton, Callout, Snackbar, Dialog, BottomSheet, TextField) + Icon + Tier 1F 5(Avatar, AvatarStack, Badge, NotificationBadge, Divider) + **Tier 1G 6**(InlineBanner⚠️, PageBanner, ContentPlaceholder, Skeleton, ProgressCircle, Typography) = 총 **18 컴포넌트** + 레이아웃 + 결정 매트릭스 4개.
 
 **Icon 관련 주의** — Seed는 아이콘 **슬롯 API**(`Icon`/`PrefixIcon`/`SuffixIcon`/`IconRequired`)만 제공하고 **아이콘 에셋은 의도적으로 제공하지 않는다**. `components/icon.md`는 슬롯 anatomy + BYO(Bring Your Own) 라이브러리 선택 가이드까지 다룬다. 당근팀은 `@karrotmarket/react-monochrome-icon`, 외부는 Lucide/Tabler 권장.
 
+**Tier 1G 주의사항**:
+- `Typography`는 React에선 `Text` 컴포넌트. `tokens/typography.md`(스케일 정의)와 `components/typography.md`(컴포넌트 API)를 분리. 혼동 주의.
+- `InlineBanner`는 upstream에서 deprecated — 마이그레이션 가이드로 유지. 신규 사용 금지 → PageBanner.
+
 **미포팅 컴포넌트** (필요 시 `_template.md` 기반으로 추가):
-- Chip, Checkbox, RadioGroup, Switch, SegmentedControl, Tabs, List, Skeleton, ProgressCircle, Slider, SelectBox, FieldButton, Fab 등
+- Chip, Checkbox, RadioGroup, Switch, SegmentedControl, Tabs, List, Slider, SelectBox, FieldButton, Fab 등
 
 추가 시 `packages/rootage/components/{name}.yaml`(upstream clone)에서 slot/variant 데이터를 가져오고 `_template.md` 포맷으로 작성. `scripts/sync-from-seed.mjs`의 component diff가 미포팅을 `not-ported`로 표시한다.
