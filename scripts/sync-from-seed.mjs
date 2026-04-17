@@ -112,6 +112,15 @@ const INTERNAL_PRIMITIVES = new Set([
   "field-label",
 ]);
 
+// status enum (canonical kebab tags, machine-friendly):
+//   ported | not-ported | removed-upstream | local-only | internal-primitive | rootage-only
+// details live in the parallel `kind` / `note` fields. Prior plans used legacy
+// composite strings like "local-only (slot utility / guidance)" — those were
+// dropped in R2 after confirming no external JSON consumers exist in this repo
+// (checked via `grep sync-from-seed` across the tree, plus package.json scripts
+// and .github/workflows — only README mentions and internal docs reference it).
+// If an external consumer is added later, prefer widening the enum or adding a
+// new structured field over resurrecting composite strings.
 function diffComponents(upstreamRoot) {
   const report = {};
   const localDir = join(SKILL_ROOT, "references/components");

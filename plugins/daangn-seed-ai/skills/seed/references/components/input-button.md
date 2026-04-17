@@ -31,68 +31,69 @@ import { FieldButton } from "@seed-design/react";
 
 ### TextField vs InputButton — 경계
 
-**TextField 는 "자유 입력"**, **InputButton 은 "탭해서 선택"** 이다. 사용자가 키보드로 문자를 치는 흐름이면 TextField 를 써야 한다. 반대로 값의 후보가 유한하고, 선택은 별도 화면(바텀시트/다이얼로그)에서 이뤄진다면 InputButton 이 맞다. 시각적으로 둘 다 stroke 와 padding 이 비슷해 보이지만, InputButton 은 내부에 `<input>` 이 없고 버튼(`role="button"`) 이다. 자세한 자유 입력 합성은 [`./text-field.md`](./text-field.md) 를 참조.
+**TextField 는 "자유 입력"**, **InputButton 은 "탭해서 선택"** 이다. 사용자가 키보드로 문자를 치는 흐름이면 TextField 를 써야 한다. 반대로 값의 후보가 유한하고, 선택은 별도 화면(바텀시트/다이얼로그)에서 이뤄진다면 InputButton 이 맞다. 시각적으로 둘 다 stroke 와 padding 이 비슷해 보이지만, InputButton 은 내부에 `<input>` 이 없고 `<button>` 이다. 자세한 자유 입력 합성은 [`./text-field.md`](./text-field.md) 를 참조.
 
 ---
 
 ## Anatomy
 
-InputButton(`FieldButton`) 의 기본 구성은 8개 slot 이며, 모두 `input-button.yaml` 에 정의되어 있다.
+InputButton(`FieldButton`) 의 Rootage 스펙(`input-button.yaml`)은 **8개 slot** 으로 정의되지만, 실제 React 구현에서는 **Root(layout wrapper)** 와 **Button(interactive trigger)** 이 **분리**되어 있다. Root 는 `<Primitive.div>` 로 렌더되며 데이터-상태(data-hover, data-active, data-disabled 등)를 자식에게 내려보내는 컨텍스트 공급자고, 실제 클릭 트리거는 내부의 `FieldButton.Button`(`<Primitive.button>`)이 담당한다. `onClick`/`aria-label`/`aria-haspopup` 같은 인터랙션 props 는 반드시 **Button** 에 부착해야 한다.
 
 ```
-┌─────────────────────────────────────────────────┐
-│ [prefixIcon] prefixText  [value | placeholder]  │  ← root
-│                          suffixText [suffixIcon │
-│                                    clearButton] │
-└─────────────────────────────────────────────────┘
+┌─ FieldButton.Root (div — layout wrapper, data-state carrier) ─┐
+│ ┌─ FieldButton.Button (button — interactive trigger) ───────┐ │
+│ │ [prefixIcon] prefixText  [value | placeholder] suffixText │ │
+│ │                                                [suffixIcon│ │
+│ └────────────────────────────────────────────────────────────┘ │
+│                                         [FieldButton.ClearButton (별도 button)]
+└───────────────────────────────────────────────────────────────┘
 ```
 
-| Slot | 필수 | 역할 |
-|------|------|------|
-| `root` | ✅ | 외곽 컨테이너 (stroke, padding, height) |
-| `value` | ✅ | 선택된 값 텍스트 — 존재 시 placeholder 대신 표시 |
-| `placeholder` | ⚪ | 미선택 상태 안내 문구 |
-| `prefixText` | ⚪ | 값 앞 보조 텍스트 (예: "출발지") |
-| `prefixIcon` | ⚪ | 값 앞 아이콘 (예: 핀 아이콘) |
-| `suffixText` | ⚪ | 값 뒤 보조 텍스트 (예: 단위) |
-| `suffixIcon` | ⚪ | 값 뒤 아이콘 (예: chevron-down) |
-| `clearButton` | ⚪ | 선택 해제 버튼 (X) |
+| Slot | 필수 | 역할 | 엘리먼트 |
+|------|------|------|----------|
+| `root` (layout) | ✅ | 외곽 div wrapper — stroke, padding, height, data-state 공급 | `<div>` |
+| `button` (trigger) | ✅ | 실제 클릭 트리거 — onClick/aria-label 을 받음 | `<button>` |
+| `value` | ✅ | 선택된 값 텍스트 — 존재 시 placeholder 대신 표시 | `<div aria-hidden>` |
+| `placeholder` | ⚪ | 미선택 상태 안내 문구 | `<div aria-hidden>` |
+| `prefixText` | ⚪ | 값 앞 보조 텍스트 (예: "출발지") | `<span aria-hidden>` |
+| `prefixIcon` | ⚪ | 값 앞 아이콘 (예: 핀 아이콘) | `<svg>` |
+| `suffixText` | ⚪ | 값 뒤 보조 텍스트 (예: 단위) | `<span aria-hidden>` |
+| `suffixIcon` | ⚪ | 값 뒤 아이콘 (예: chevron-down) | `<svg>` |
+| `clearButton` | ⚪ | 선택 해제 버튼 (X) — Button 과 별개의 native `<button>` | `<button>` |
 
 ### YAML ↔ React 매핑표
 
-`input-button.yaml` 의 8 slot 은 `FieldButton` namespace 의 sub-component 로 1:1 매핑된다.
+`input-button.yaml` 의 `root` slot 은 React 구현에서 **두 개**로 쪼개진다 — `FieldButton.Root`(레이아웃/컨텍스트)와 `FieldButton.Button`(인터랙션). 이는 upstream react-headless/field-button 의 구조(`FieldButtonRoot` = `<Primitive.div>` provider, `FieldButtonButton` = `<Primitive.button>` consumer)를 그대로 반영한다.
 
-| YAML slot (`input-button.yaml`) | React (`FieldButton.*`) |
-|---|---|
-| `root` | `FieldButton.Root` |
-| `value` | `FieldButton.Value` |
-| `placeholder` | `FieldButton.Placeholder` |
-| `prefixText` | `FieldButton.PrefixText` |
-| `prefixIcon` | `FieldButton.PrefixIcon` |
-| `suffixText` | `FieldButton.SuffixText` |
-| `suffixIcon` | `FieldButton.SuffixIcon` |
-| `clearButton` | `FieldButton.ClearButton` |
-
----
-
-## Field 조합 시 추가 slot
-
-`FieldButton` namespace 는 총 18개를 export 하지만, 그중 10개는 **`input-button.yaml` 에는 정의되어 있지 않다**. 이들은 label/description/error-message 등 *Field wrapper 전체* 를 함께 렌더링할 때만 사용하는 slot 으로, Rootage 단독 스펙 기준 InputButton 에는 포함되지 않는다. **기본 input-button 사용 시에는 불필요**하며, 레이블·에러 메시지 등 상위 Field 구조가 필요한 경우에만 추가한다.
-
-| `FieldButton.*` (Field 조합 전용) | 역할 | 기본 input-button 사용 시 |
+| YAML slot (`input-button.yaml`) | React (`FieldButton.*`) | 역할 구분 |
 |---|---|---|
-| `FieldButton.Header` | 레이블 영역 컨테이너 | 불필요 |
-| `FieldButton.Label` | 필드 제목 | 불필요 |
-| `FieldButton.IndicatorText` | 필수/선택 텍스트 표시 | 불필요 |
-| `FieldButton.RequiredIndicator` | 필수 아이콘(*) | 불필요 |
-| `FieldButton.Footer` | 설명/에러 영역 컨테이너 | 불필요 |
-| `FieldButton.Description` | 도움말 텍스트 | 불필요 |
-| `FieldButton.ErrorMessage` | 에러 메시지 | 불필요 |
-| `FieldButton.HiddenInput` | 폼 제출용 hidden input | 불필요 |
-| `FieldButton.Button` | 네이티브 button element | 불필요 (Root 내부에서 이미 사용) |
-| `FieldButton.Control` | Value/Placeholder 컨테이너 | 불필요 |
+| `root` | `FieldButton.Root` | **layout wrapper** — `<div>`, stroke/padding/data-state |
+| `root` | `FieldButton.Button` | **interactive trigger** — `<button>`, onClick/aria-label |
+| `value` | `FieldButton.Value` | 선택된 값 텍스트 |
+| `placeholder` | `FieldButton.Placeholder` | 미선택 placeholder |
+| `prefixText` | `FieldButton.PrefixText` | 값 앞 텍스트 |
+| `prefixIcon` | `FieldButton.PrefixIcon` | 값 앞 아이콘 |
+| `suffixText` | `FieldButton.SuffixText` | 값 뒤 텍스트 |
+| `suffixIcon` | `FieldButton.SuffixIcon` | 값 뒤 아이콘 |
+| `clearButton` | `FieldButton.ClearButton` | 값 해제 X 버튼 |
 
-즉, 최소 InputButton 은 `Root` 하나만으로 동작하며, 필요한 slot 만 골라 조합한다. Field wrapper 10 slot 을 함께 써야 한다면 [`./text-field.md`](./text-field.md) 의 Field 구조와 합성 규칙을 함께 참고.
+### Field 조합 시 추가 slot
+
+`FieldButton` namespace 는 총 18개를 export 한다. 위 9개(Root + Button + 7 slot)가 **기본 InputButton** 에 해당하고, 나머지 9개는 label/description/error-message 등 *Field wrapper 전체* 를 함께 렌더링할 때 사용하는 slot 으로, Rootage 단독 스펙 기준 `input-button.yaml` 에는 정의되어 있지 않다. 레이블·에러 메시지 등 상위 Field 구조가 필요한 경우에만 추가한다.
+
+| `FieldButton.*` (Field 조합 전용) | 역할 |
+|---|---|
+| `FieldButton.Header` | 레이블 영역 컨테이너 |
+| `FieldButton.Label` | 필드 제목 |
+| `FieldButton.IndicatorText` | 필수/선택 텍스트 표시 |
+| `FieldButton.RequiredIndicator` | 필수 아이콘(*) |
+| `FieldButton.Footer` | 설명/에러 영역 컨테이너 |
+| `FieldButton.Description` | 도움말 텍스트 |
+| `FieldButton.ErrorMessage` | 에러 메시지 |
+| `FieldButton.HiddenInput` | 폼 제출용 hidden input (values 배열 index 지정) |
+| `FieldButton.Control` | Value/Placeholder 를 Button 내부에서 묶는 컨테이너 |
+
+Field wrapper 전체 합성 패턴은 [`./text-field.md`](./text-field.md) 의 Field 구조와 동일하다.
 
 ---
 
@@ -104,15 +105,25 @@ InputButton 은 **variant 축이 없다**. size 나 color variant 대신, 상태
 
 ## States
 
-| State | 트리거 | 시각 변화 | token (from `input-button.yaml`) |
-|-------|--------|-----------|----|
-| `enabled` | 기본 | stroke 1px, 투명 배경 | `strokeColor = stroke.neutral-weak`, `color = bg.transparent` |
-| `pressed` | 탭/press | 배경 약간 어두움 | `color = bg.transparent-pressed` |
-| `invalid` | `invalid` prop | stroke 2px, critical 색 | `strokeWidth = 2px`, `strokeColor = stroke.critical-solid` |
-| `disabled` | `disabled` prop | 배경 disabled, 텍스트 흐려짐 | `color = bg.disabled`, `value.color = fg.disabled` |
-| `readonly` | `readonly` prop | 배경 disabled, 텍스트는 유지 | `color = bg.disabled`, `value.color = fg.neutral` |
+| State | 트리거 | 시각 변화 | data attribute |
+|-------|--------|-----------|----------------|
+| `enabled` | 기본 | stroke 1px, 투명 배경 | — |
+| `hover` | 포인터 오버 | (테마마다 다름, Root 에 `data-hover`) | `data-hover` |
+| `pressed` | 탭/press | 배경 약간 어두움 | `data-active` |
+| `focus` | 포커스 | focus ring | `data-focus` / `data-focus-visible` |
+| `invalid` | `invalid` prop | stroke 2px, critical 색 | `data-invalid` |
+| `disabled` | `disabled` prop | 배경 disabled, 텍스트 흐려짐, pointer-events 차단 | `data-disabled` |
+| `readonly` | `readOnly` prop | 배경 disabled, 텍스트는 유지 | `data-readonly` |
 
-### 핵심 토큰 (root / enabled 기준)
+> upstream `useFieldButton` 이 Root/Button 양쪽에 이 data-attribute 를 `stateProps` 로 부여한다. Button 의 `disabled`/`readonly` 는 native `disabled` 속성으로 내려가, 추가로 hidden input 의 submit 동작도 제어한다(disabled = 미제출, readonly = 제출).
+
+---
+
+## Token 매핑
+
+`input-button.yaml` 의 `definitions.base` 를 그대로 따르며, React 구현은 `@seed-design/css/recipes/input-button` recipe 를 통해 자동 주입한다.
+
+### root (layout wrapper) — enabled
 
 | 속성 | 값 |
 |---|---|
@@ -120,38 +131,81 @@ InputButton 은 **variant 축이 없다**. size 나 color variant 대신, 상태
 | cornerRadius | `$radius.r3` |
 | paddingX | `$dimension.x4` |
 | gap | `$dimension.x2_5` |
-| strokeWidth | `1px` (enabled), `2px` (invalid) |
-| strokeColor | `$color.stroke.neutral-weak` (enabled), `$color.stroke.critical-solid` (invalid) |
+| strokeWidth | `1px` |
+| strokeColor | `$color.stroke.neutral-weak` |
+| color (bg) | `$color.bg.transparent` |
+| colorDuration | `$duration.color-transition` |
+| strokeDuration | `0.1s` (invalid ↔ enabled fade) |
 
-`stroke` 는 투명도 기반 fade 트랜지션 (`strokeDuration = 0.1s`) 으로 invalid ↔ enabled 가 자연스럽게 전환된다.
+### 상태별 오버라이드
+
+| State | root | value | placeholder |
+|---|---|---|---|
+| `pressed` | `color = bg.transparent-pressed` | — | — |
+| `invalid` | `strokeWidth = 2px`, `strokeColor = stroke.critical-solid` | — | — |
+| `disabled` | `color = bg.disabled` | `color = fg.disabled` | `color = fg.disabled` |
+| `readonly` | `color = bg.disabled` | `color = fg.neutral` (유지) | `color = fg.placeholder` |
+
+### 텍스트/아이콘 slot
+
+| Slot | fontSize / size | color |
+|---|---|---|
+| `value` | `$font-size.t5` / `$line-height.t5` | `$color.fg.neutral` |
+| `placeholder` | `$font-size.t5` | `$color.fg.placeholder` |
+| `prefixText` / `suffixText` | `$font-size.t5` | `$color.fg.neutral-muted` |
+| `prefixIcon` / `suffixIcon` | `$dimension.x5` (20px) | `$color.fg.neutral-muted` |
+| `clearButton` | `22px` | `$color.fg.neutral-subtle` |
+
+`stroke` 는 투명도 기반 fade 트랜지션(`strokeDuration = 0.1s`)으로 invalid ↔ enabled 가 자연스럽게 전환된다.
 
 ---
 
 ## Props (핵심만)
 
+### `FieldButton.Root` — 상태/값 컨테이너
+
 ```ts
-// FieldButton.Root — 주로 쓰는 props
-interface RootProps {
-  value?: string;            // 선택된 값 (controlled)
-  defaultValue?: string;
-  onValueChange?: (value: string) => void;
+// upstream: packages/react-headless/field-button/src/useFieldButton.ts
+interface FieldButtonRootProps {
+  // 값 — 배열 기반 (multi-value 지원 가능, 단일 값도 [v] 로 넘긴다)
+  values?: string[];
+  onValuesChange?: (values: string[]) => void;
+
+  // 상태
   disabled?: boolean;
-  readonly?: boolean;
+  readOnly?: boolean;   // camelCase (HTML prop 과 동일)
   invalid?: boolean;
-  required?: boolean;
-  onClick?: (e: React.MouseEvent) => void;  // picker 열기
+
+  // 폼
+  name?: string;        // 없으면 내부 useId() 사용
 }
 ```
 
-Value/Placeholder 는 일반적으로 children 으로 텍스트를 받고, PrefixText/SuffixText 는 `aria-hidden` 으로 렌더된다 (보조 장식이므로 스크린리더는 value 만 읽는다).
+> **배열 API 인 이유** — FieldButton 은 내부적으로 `FieldButton.HiddenInput` 으로 폼에 값을 제출하며, 다중 선택(multi-picker)도 지원하도록 설계되었다. 단일 값을 쓸 때는 `values={[value]}` / `onValuesChange={([v]) => setValue(v ?? "")}` 패턴을 사용한다. upstream examples(`basic-usage.tsx`, `clear-button.tsx`)와 동일.
+
+### `FieldButton.Button` — 인터랙션 트리거
+
+```ts
+// upstream: FieldButtonButtonProps extends ButtonHTMLAttributes<HTMLButtonElement>
+interface FieldButtonButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  // 표준 button 속성이 그대로 — 여기에 onClick/aria-label/aria-haspopup 을 단다
+  onClick?: (e: React.MouseEvent) => void;
+}
+```
+
+> **onClick 은 Root 가 아니라 Button 에** — Root 는 `<div>` 라 기본 버튼 동작이 없다. `onClick`, `aria-label`, `aria-haspopup="dialog"` 같은 인터랙션 props 는 반드시 `FieldButton.Button` 에 부착해야 한다.
+
+Value/Placeholder/PrefixText/SuffixText 는 `aria-hidden` 으로 렌더되며, Button 의 accessible name(주로 `aria-label`)만 스크린리더에 전달된다.
 
 ---
 
 ## 합성 규칙 (composition)
 
-- **탭 시 picker 를 반드시 열 것** — InputButton 은 자체적으로 값을 변경하지 않는다. onClick 으로 BottomSheet/Dialog 를 띄워 picker 를 호스팅한다.
-- **`value` 와 `placeholder` 는 동시 렌더하지 말 것** — 값이 있으면 placeholder 는 숨긴다. (CSS 상 `[data-has-value] placeholder { display: none }` 패턴)
-- **`clearButton` 은 `value` 가 있을 때만** — 선택된 값이 없는데 X 버튼이 나오면 사용자가 혼란.
+- **`onClick` 은 `FieldButton.Button` 에 부착** — Root 는 div 라서 click 을 받지 못한다. upstream examples 가 `buttonProps={{ onClick, "aria-label" }}` 로 Button 에 내려보내는 이유.
+- **탭 시 picker 를 반드시 열 것** — FieldButton 은 자체적으로 값을 변경하지 않는다. Button 의 onClick 으로 BottomSheet/Dialog 를 띄워 picker 를 호스팅한다.
+- **`value` 와 `placeholder` 는 동시 렌더하지 말 것** — 값이 있으면 placeholder 는 숨긴다. 일반적으로 `{value ? <Value>{value}</Value> : <Placeholder>...</Placeholder>}` 삼항으로 처리.
+- **`clearButton` 은 `values` 가 비어있지 않을 때만** — 선택된 값이 없는데 X 버튼이 나오면 혼란. upstream `useFieldButton` 은 disabled/readonly 시 clearButton 을 `hidden` 처리한다.
+- **clear 는 `onValuesChange([])` 로** — ClearButton 은 내부적으로 `setValues([])` 를 호출한다. 외부에서 controlled 로 다룰 때는 동일하게 빈 배열을 넘긴다.
 - **자유 입력이 필요하면 [`./text-field.md`](./text-field.md) 로 전환** — InputButton 에 직접 keyboard 입력을 붙이지 말 것 (anti-pattern).
 - **아이콘은 [`./icon.md`](./icon.md) 의 svg 규격** — `prefixIcon`/`suffixIcon` size 는 `$dimension.x5` (20px).
 
@@ -159,63 +213,91 @@ Value/Placeholder 는 일반적으로 children 으로 텍스트를 받고, Prefi
 
 ## 접근성 (constraints, not suggestions)
 
-- `role="button"` 이 자동 부여되며, 키보드 Enter/Space 로 활성화.
-- 상위에 레이블이 없으면 `aria-label` 필수 (예: `aria-label="지역 선택"`).
-- `invalid` 시 `aria-invalid="true"` 자동.
-- `disabled` / `readonly` 는 HTML attr 과 ARIA 모두 반영.
-- `PrefixText`/`SuffixText`/`Value`/`Placeholder` 는 `aria-hidden` — 스크린리더는 Root 의 accessible name 만 읽는다. 따라서 value 가 accessible name 에 포함되도록 `aria-label` 을 동적으로 구성하거나, Field 조합을 써서 `Label` 과 연결.
+- `FieldButton.Button` 이 `<button type="button">` 으로 렌더되며, 키보드 Enter/Space 로 활성화.
+- 상위 Field.Label 이 없으면 Button 에 `aria-label` 필수 (예: `aria-label="지역 선택"`).
+- picker 를 여는 버튼이면 `aria-haspopup="dialog"` (또는 `"listbox"`) 를 함께.
+- `invalid` 시 Root/Button 양쪽에 `data-invalid` + `aria-invalid="true"` 가 자동 부여.
+- `disabled` / `readOnly` 는 Button 의 native `disabled` 속성과 `aria-disabled` 양쪽에 반영.
+- `PrefixText`/`SuffixText`/`Value`/`Placeholder` 는 `aria-hidden` — 스크린리더는 **Button 의 accessible name만** 읽는다. 따라서 현재 값을 스크린리더에 알리려면 `aria-label` 을 동적으로 구성한다(예: `aria-label={value ? \`도시 변경. 현재: ${value}\` : "도시 선택"}`).
 
 ---
 
 ## Anti-patterns
 
 ```tsx
-// 자유 입력이 필요한데 InputButton 사용
-// 사용자가 이메일을 "타이핑" 해야 하는 흐름 — picker 가 없다
-<FieldButton.Root onClick={...}>
-  <FieldButton.Placeholder>이메일</FieldButton.Placeholder>
+// 1. FieldButton.Root 에 onClick 직접 부착 — Root 는 div 라서 trigger 가 아니다
+<FieldButton.Root onClick={openPicker}>
+  <FieldButton.Placeholder>지역</FieldButton.Placeholder>
 </FieldButton.Root>
-// → 대신 TextField 사용: ./text-field.md 참조
+// → onClick 은 FieldButton.Button 에:
+// <FieldButton.Root values={[v]} onValuesChange={...}>
+//   <FieldButton.Button onClick={openPicker} aria-label="지역 선택">
+//     <FieldButton.Placeholder>지역</FieldButton.Placeholder>
+//   </FieldButton.Button>
+// </FieldButton.Root>
 
-// value 와 placeholder 동시 렌더
+// 2. 자유 입력이 필요한데 InputButton 사용 — picker 가 없는 흐름
 <FieldButton.Root>
+  <FieldButton.Button aria-label="이메일">
+    <FieldButton.Placeholder>이메일</FieldButton.Placeholder>
+  </FieldButton.Button>
+</FieldButton.Root>
+// → TextField 사용: ./text-field.md 참조
+
+// 3. value 와 placeholder 동시 렌더
+<FieldButton.Button>
   <FieldButton.Value>서울 강남구</FieldButton.Value>
   <FieldButton.Placeholder>지역을 선택하세요</FieldButton.Placeholder>
-</FieldButton.Root>
+</FieldButton.Button>
 // → value 가 있으면 placeholder 는 조건부 렌더
 
-// picker 없이 단독 사용 (탭해도 아무 일도 안 일어남)
-<FieldButton.Root /> // onClick 없음
-// → 반드시 onClick 으로 BottomSheet/Dialog 트리거
-
-// aria-label 없이 iconOnly 성격으로 사용
+// 4. 단일 값을 values/onValuesChange 없이 스타일만 쓰기 — clear, hidden input 이 깨짐
 <FieldButton.Root>
-  <FieldButton.PrefixIcon svg={<PinIcon />} />
+  <FieldButton.Button>...</FieldButton.Button>
 </FieldButton.Root>
-// → aria-label="출발지 선택" 필수
+// → values={[current]} onValuesChange={([v]) => setCurrent(v ?? "")} 로 묶을 것
+
+// 5. aria-label 없이 iconOnly 성격으로 사용
+<FieldButton.Root values={[v]} onValuesChange={...}>
+  <FieldButton.Button>
+    <FieldButton.PrefixIcon svg={<PinIcon />} />
+  </FieldButton.Button>
+</FieldButton.Root>
+// → Button 에 aria-label="출발지 선택" 필수
 ```
 
 ---
 
 ## 예제 (minimum usage)
 
-### 1) 기본 — 지역 선택 trigger
+### 1) 기본 — 도시 선택 trigger
 
 ```tsx
 import { FieldButton } from "@seed-design/react";
+import { useState } from "react";
 
-function RegionPicker({ region, onOpen }: { region?: string; onOpen: () => void }) {
+function CityPicker() {
+  const [city, setCity] = useState("");
+
   return (
     <FieldButton.Root
-      aria-label="지역 선택"
-      value={region}
-      onClick={onOpen}
+      values={[city]}
+      onValuesChange={([v]) => setCity(v ?? "")}
     >
-      {region ? (
-        <FieldButton.Value>{region}</FieldButton.Value>
-      ) : (
-        <FieldButton.Placeholder>지역을 선택하세요</FieldButton.Placeholder>
-      )}
+      <FieldButton.Button
+        onClick={() => {
+          // Open your picker dialog/sheet here
+          setCity("서울");
+        }}
+        aria-label={city ? `도시 변경. 현재: ${city}` : "도시 선택"}
+        aria-haspopup="dialog"
+      >
+        {city ? (
+          <FieldButton.Value>{city}</FieldButton.Value>
+        ) : (
+          <FieldButton.Placeholder>도시를 선택해주세요</FieldButton.Placeholder>
+        )}
+      </FieldButton.Button>
     </FieldButton.Root>
   );
 }
@@ -225,42 +307,64 @@ function RegionPicker({ region, onOpen }: { region?: string; onOpen: () => void 
 
 ```tsx
 import { FieldButton } from "@seed-design/react";
-import { IconPinLine, IconChevronDownLine } from "@daangn/react-monochrome-icon";
+import { IconPinLine, IconChevronDownLine } from "@karrotmarket/react-monochrome-icon";
+import { useState } from "react";
 
-<FieldButton.Root aria-label="출발지" onClick={openDeparturePicker}>
-  <FieldButton.PrefixIcon svg={<IconPinLine />} />
-  <FieldButton.PrefixText>출발</FieldButton.PrefixText>
-  {departure ? (
-    <FieldButton.Value>{departure}</FieldButton.Value>
-  ) : (
-    <FieldButton.Placeholder>어디서 출발하나요?</FieldButton.Placeholder>
-  )}
-  <FieldButton.SuffixIcon svg={<IconChevronDownLine />} />
-</FieldButton.Root>
+function DepartureField({ onOpen }: { onOpen: () => void }) {
+  const [departure, setDeparture] = useState("");
+
+  return (
+    <FieldButton.Root
+      values={[departure]}
+      onValuesChange={([v]) => setDeparture(v ?? "")}
+    >
+      <FieldButton.Button onClick={onOpen} aria-label="출발지 선택" aria-haspopup="dialog">
+        <FieldButton.PrefixIcon svg={<IconPinLine />} />
+        <FieldButton.PrefixText>출발</FieldButton.PrefixText>
+        {departure ? (
+          <FieldButton.Value>{departure}</FieldButton.Value>
+        ) : (
+          <FieldButton.Placeholder>어디서 출발하나요?</FieldButton.Placeholder>
+        )}
+        <FieldButton.SuffixIcon svg={<IconChevronDownLine />} />
+      </FieldButton.Button>
+    </FieldButton.Root>
+  );
+}
 ```
 
-### 3) invalid 상태 — 폼 제출 후 미선택
+### 3) invalid 상태 + clearButton — 날짜 선택
 
 ```tsx
-const [date, setDate] = useState<string | undefined>();
-const [submitted, setSubmitted] = useState(false);
-const invalid = submitted && !date;
+import { FieldButton } from "@seed-design/react";
+import { useState } from "react";
 
-<FieldButton.Root
-  aria-label="예약 날짜"
-  invalid={invalid}
-  value={date}
-  onClick={openDatePicker}
->
-  {date ? (
-    <FieldButton.Value>{date}</FieldButton.Value>
-  ) : (
-    <FieldButton.Placeholder>날짜를 선택하세요</FieldButton.Placeholder>
-  )}
-  {date && (
-    <FieldButton.ClearButton onClick={(e) => { e.stopPropagation(); setDate(undefined); }} />
-  )}
-</FieldButton.Root>
+function DateField({ onOpenDatePicker }: { onOpenDatePicker: () => void }) {
+  const [date, setDate] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+  const invalid = submitted && !date;
+
+  return (
+    <FieldButton.Root
+      invalid={invalid}
+      values={[date]}
+      onValuesChange={([v]) => setDate(v ?? "")}
+    >
+      <FieldButton.Button
+        onClick={onOpenDatePicker}
+        aria-label={date ? `예약 날짜 변경. 현재: ${date}` : "예약 날짜 선택"}
+        aria-haspopup="dialog"
+      >
+        {date ? (
+          <FieldButton.Value>{date}</FieldButton.Value>
+        ) : (
+          <FieldButton.Placeholder>날짜를 선택하세요</FieldButton.Placeholder>
+        )}
+      </FieldButton.Button>
+      {date && <FieldButton.ClearButton aria-label="날짜 지우기" />}
+    </FieldButton.Root>
+  );
+}
 ```
 
 ---
@@ -268,6 +372,7 @@ const invalid = submitted && !date;
 ## 참고
 
 - Rootage 스펙: `packages/rootage/components/input-button.yaml` (upstream sha `1f1d21d`)
-- React 구현: `packages/react/src/components/FieldButton/` — namespace 이름이 `FieldButton` 인 이유는 Field 와 Button 합성 의미를 강조하기 위함.
+- React 구현: `packages/react/src/components/FieldButton/` + `packages/react-headless/field-button/` — namespace 이름이 `FieldButton` 인 이유는 Field 와 Button 합성 의미를 강조하기 위함.
+- upstream examples: `docs/examples/react/field-button/` — `basic-usage.tsx`, `form-bottom-sheet.tsx`, `clear-button.tsx` 가 values/onValuesChange/buttonProps 패턴을 보여준다.
 - 자유 입력 필드: [`./text-field.md`](./text-field.md)
-- 아이콘 규격: [`./icon.md`](./icon.md)
+- 아이콘 규격: [`./icon.md`](./icon.md) · 아이콘 패키지: `@karrotmarket/react-monochrome-icon`

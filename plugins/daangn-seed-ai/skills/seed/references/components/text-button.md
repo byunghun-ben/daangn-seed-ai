@@ -125,17 +125,19 @@ export function TextButton({ children, style, ...props }: TextButtonProps) {
         ...style,
       }}
       onMouseDown={(e) => {
-        // pressed overlay: $color.bg.layer-default-pressed
-        (e.currentTarget as HTMLButtonElement).style.color =
+        // pressed overlay는 root slot의 color (=background) 에 적용.
+        // text-button.yaml pressed.root.color = $color.bg.layer-default-pressed.
+        // label 색 (fg.neutral-muted) 은 pressed state 에서도 그대로 유지.
+        (e.currentTarget as HTMLButtonElement).style.backgroundColor =
           "var(--seed-v3-color-bg-layer-default-pressed)";
       }}
       onMouseUp={(e) => {
-        (e.currentTarget as HTMLButtonElement).style.color =
-          "var(--seed-v3-color-fg-neutral-muted)";
+        (e.currentTarget as HTMLButtonElement).style.backgroundColor =
+          "transparent";
       }}
       onMouseLeave={(e) => {
-        (e.currentTarget as HTMLButtonElement).style.color =
-          "var(--seed-v3-color-fg-neutral-muted)";
+        (e.currentTarget as HTMLButtonElement).style.backgroundColor =
+          "transparent";
       }}
       {...props}
     >

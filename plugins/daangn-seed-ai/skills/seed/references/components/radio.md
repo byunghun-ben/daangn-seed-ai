@@ -1,6 +1,7 @@
 ---
 name: radio
 upstream_sha: 1f1d21d
+status: rootage-only
 ---
 
 # Radio (Rootage 스펙)

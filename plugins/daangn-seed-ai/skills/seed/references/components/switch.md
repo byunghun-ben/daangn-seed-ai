@@ -207,7 +207,7 @@ interface SwitchRootProps extends React.LabelHTMLAttributes<HTMLLabelElement> {
   tone?: "neutral" | "brand";                      // default: "brand"
   checked?: boolean;                               // controlled
   defaultChecked?: boolean;                        // uncontrolled
-  onCheckedChange?: (details: { checked: boolean }) => void;
+  onCheckedChange?: (checked: boolean) => void;
   disabled?: boolean;                              // default: false
   invalid?: boolean;                               // 폼 검증 실패 시각 표시
   required?: boolean;
@@ -243,7 +243,7 @@ interface SwitchHiddenInputProps extends React.InputHTMLAttributes<HTMLInputElem
 - `size` 미지정 → `"32"`. deprecated `"small"` / `"medium"` 입력 시 자동으로 `"16"` / `"32"` 로 매핑되며 개발 환경에서 콘솔 경고.
 - `tone` 미지정 → `"brand"`.
 - `defaultChecked` 미지정 → `false` (off 로 시작).
-- `onCheckedChange` 는 `{ checked: boolean }` 객체를 받는다 — 네이티브 `onChange` 이벤트가 아니다.
+- `onCheckedChange` 는 `(checked: boolean)` 을 직접 인자로 받는다 — 객체 destructuring (`{ checked }`) 이 아니고, 네이티브 `onChange` 이벤트도 아니다.
 - `value` 미지정 → HiddenInput 이 checked 상태일 때 `"on"` 이 FormData 에 실림.
 
 ---
@@ -310,7 +310,7 @@ interface SwitchHiddenInputProps extends React.InputHTMLAttributes<HTMLInputElem
      size="32"
      tone="brand"
      checked={pushEnabled}
-     onCheckedChange={({ checked }) => setPushEnabled(checked)}
+     onCheckedChange={(checked) => setPushEnabled(checked)}
    >
      <Switch.Control><Switch.Thumb /></Switch.Control>
      <Switch.Label>푸시 알림</Switch.Label>
@@ -352,7 +352,7 @@ function DarkModeToggle() {
       size="24"
       tone="neutral"
       checked={dark}
-      onCheckedChange={async ({ checked }) => {
+      onCheckedChange={async (checked) => {
         setDark(checked);
         await savePreference({ darkMode: checked });
       }}
@@ -367,7 +367,7 @@ function DarkModeToggle() {
 }
 ```
 
-`onCheckedChange` 는 `{ checked }` 객체를 받는다 — 네이티브 `onChange` 가 아님. 서버 저장이 실패했을 때는 `setDark(!checked)` 로 롤백하는 패턴과 조합.
+`onCheckedChange` 는 `(checked: boolean)` 을 직접 받는다 — 네이티브 `onChange` 이벤트가 아님. 서버 저장이 실패했을 때는 `setDark(!checked)` 로 롤백하는 패턴과 조합.
 
 ### 3. tone=brand (강조) vs tone=neutral (시스템)
 

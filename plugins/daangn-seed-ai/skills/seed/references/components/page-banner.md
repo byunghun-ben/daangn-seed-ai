@@ -254,7 +254,7 @@ import { PageBanner } from "@seed-design/react";
 
 ```tsx
 import { PageBanner } from "@seed-design/react";
-import { IconSparkleFill } from "@daangn/react-monochrome-icon";
+import { IconSparkleFill } from "@karrotmarket/react-monochrome-icon";
 
 <PageBanner.Root variant="weak" tone="magic">
   <PageBanner.Body>
