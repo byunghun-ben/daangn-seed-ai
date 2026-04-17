@@ -1,9 +1,16 @@
-# Ralph Progress — #14 1G cluster (COMPLETE)
+# Ralph Progress — ABC composite run (COMPLETE)
 phase: 6 (complete)
-issue: #14 (Tier 1 1G cluster)
+issues: #14 (parent) + #19 (polish) + #18 (polish)
 upstream_sha: 1f1d21d
-wave_1: 6/6 complete
-wave_2: 1/1 complete
-review: R1(1H+11M) → fix → R2(0C+0H+2M, pass)
-follow_up: #19
-ported_delta: not-ported 54→48, ported 12→18
+wave_1_polish: 4/4 complete
+wave_2a_1A_indep: 3/3 complete
+wave_2b_1A_dep: 2/2 complete
+wave_3_1D: 3/3 complete
+wave_4_integration: 1/1 complete
+stories: 13/13 complete
+review_rounds: 3 (R1 ralph H3+M5+L2, codex H4+M2 → fix10 → R2 ralph PASS, codex H2+M2 → fix4 → R3 codex M2 → landing)
+fixes: 14 total (R1=10, R2=4)
+follow_up: #20
+ported_delta: 18 → 26
+commits: 53ad75c 6fcbb69 4b03080 dc087c9 91f4747 fb78804 3e7c974
+duration: 64 min

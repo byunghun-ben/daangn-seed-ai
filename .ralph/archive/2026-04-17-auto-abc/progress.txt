@@ -1,0 +1,9 @@
+# Ralph Progress — #14 1G cluster (COMPLETE)
+phase: 6 (complete)
+issue: #14 (Tier 1 1G cluster)
+upstream_sha: 1f1d21d
+wave_1: 6/6 complete
+wave_2: 1/1 complete
+review: R1(1H+11M) → fix → R2(0C+0H+2M, pass)
+follow_up: #19
+ported_delta: not-ported 54→48, ported 12→18

@@ -1,0 +1,248 @@
+{
+  "project": "daangn-seed-ai",
+  "branchName": "main",
+  "description": "Tier 1G cluster port (inline-banner deprecated, page-banner, content-placeholder, skeleton, progress-circle, typography/Text) + integration of index.md & which-overlay.md",
+  "follow_up_issue": "#19",
+  "epic": "#2",
+  "source_issues": [
+    "#14"
+  ],
+  "cluster": "1G",
+  "upstream_sha": "1f1d21d",
+  "waves": {
+    "1": {
+      "description": "6 disjoint component MDs — parallel safe (no file overlap, cross-links use relative paths)",
+      "stories": [
+        "W1-S1",
+        "W1-S2",
+        "W1-S3",
+        "W1-S4",
+        "W1-S5",
+        "W1-S6"
+      ]
+    },
+    "2": {
+      "description": "Integration — index.md coverage + which-overlay deprecated marking",
+      "stories": [
+        "W2-S7"
+      ],
+      "depends_on_wave": 1
+    }
+  },
+  "issues": {
+    "#14": {
+      "status": "in_progress",
+      "cluster": "1G",
+      "review_rounds": 0
+    }
+  },
+  "userStories": [
+    {
+      "id": "W1-S1",
+      "title": "InlineBanner reference (deprecated)",
+      "description": "plugins/daangn-seed-ai/skills/seed/references/components/inline-banner.md 작성. upstream이 deprecated 표시했으므로 MD 상단 경고 블록 + PageBanner 마이그레이션 가이드 역할. Namespace API 기반 Anatomy(Root/Content/Title/Description/Link/CloseButton 6 slot) + YAML Slot tokens 보조 표(root/prefixIcon/title/description/link/suffixIcon 6 slot 별도 섹션).",
+      "files": [
+        "plugins/daangn-seed-ai/skills/seed/references/components/inline-banner.md"
+      ],
+      "sources": [
+        "/tmp/seed-design-sync/packages/rootage/components/inline-banner.yaml",
+        "/tmp/seed-design-sync/packages/react/src/components/InlineBanner/"
+      ],
+      "acceptanceCriteria": [
+        "파일 상단에 '⚠️ Deprecated' 경고 블록 + [PageBanner](./page-banner.md) 링크",
+        "Anatomy 테이블: React namespace 6 slot (Root/Content/Title/Description/Link/CloseButton)",
+        "YAML Slot tokens 보조 표: 별도 섹션으로 YAML 6 slot (root/prefixIcon/title/description/link/suffixIcon) + 토큰 properties + 네이밍 차이 1줄 설명",
+        "Variants 테이블: variant 7개 전체 (neutralWeak/positiveWeak/informativeWeak/warningWeak/warningSolid/criticalWeak/criticalSolid) + bg/fg 토큰",
+        "import: import { InlineBanner } from \"@seed-design/react\";",
+        "예제 코드 namespace 패턴 사용 (<InlineBanner.Root><InlineBanner.Title>...)",
+        "'언제 쓰나' 첫 행: '기존 코드 유지보수'. 신규는 PageBanner로 라우팅",
+        "Anti-pattern 섹션에 '신규 기능에 InlineBanner 사용' 케이스 포함",
+        "150-250 lines"
+      ],
+      "priority": 1,
+      "passes": true,
+      "source_issue": "#14",
+      "wave": 1,
+      "complexity": "M",
+      "model": "opus",
+      "dependencies": []
+    },
+    {
+      "id": "W1-S2",
+      "title": "PageBanner reference",
+      "description": "plugins/daangn-seed-ai/skills/seed/references/components/page-banner.md 작성. variant × tone 매트릭스 + magic tone gradient 특수 규칙. React namespace (7 slot) + YAML slot tokens 보조 표.",
+      "files": [
+        "plugins/daangn-seed-ai/skills/seed/references/components/page-banner.md"
+      ],
+      "sources": [
+        "/tmp/seed-design-sync/packages/rootage/components/page-banner.yaml",
+        "/tmp/seed-design-sync/packages/react/src/components/PageBanner/"
+      ],
+      "acceptanceCriteria": [
+        "Anatomy: React namespace 7 slot (Root/Body/Content/Title/Description/Button/CloseButton)",
+        "YAML Slot tokens 보조 표: YAML 7 slot (root/prefixIcon/content/title/description/button/suffixIcon) + Body/CloseButton는 React layout wrapper (no YAML token) + prefixIcon/suffixIcon는 YAML-only slot임을 1줄 설명",
+        "Variants: variant(weak/solid) + tone(neutral/positive/informative/warning/critical/magic) 분리 테이블",
+        "호환 매트릭스: magic+solid = '❌ not supported'",
+        "States: enabled / pressed (YAML pressed 토큰 반영)",
+        "tone=magic: $gradient.glow-magic 사용 명시",
+        "import: import { PageBanner } from \"@seed-design/react\";",
+        "합성 규칙: PageBanner(페이지 최상단) vs Callout(섹션 내부) vs InlineBanner(deprecated) 구분",
+        "250-350 lines"
+      ],
+      "priority": 1,
+      "passes": true,
+      "source_issue": "#14",
+      "wave": 1,
+      "complexity": "L",
+      "model": "opus",
+      "dependencies": []
+    },
+    {
+      "id": "W1-S3",
+      "title": "ContentPlaceholder reference",
+      "description": "plugins/daangn-seed-ai/skills/seed/references/components/content-placeholder.md. 12 type variants(empty state). React namespace(Root, Asset) + preset SVG 설명.",
+      "files": [
+        "plugins/daangn-seed-ai/skills/seed/references/components/content-placeholder.md"
+      ],
+      "sources": [
+        "/tmp/seed-design-sync/packages/rootage/components/content-placeholder.yaml",
+        "/tmp/seed-design-sync/packages/react/src/components/ContentPlaceholder/"
+      ],
+      "acceptanceCriteria": [
+        "Anatomy: Root / Asset 2 slot",
+        "Variants: type 12개 (default/buySell/car/commerce/coupon/food/group/image/jobs/business/post/realty) + 각 용례",
+        "React preset SVG 위치(presets.tsx) 명시 + BYO SVG 가능 표기",
+        "base 토큰은 YAML 원문 그대로: $color.palette.gray-200, $dimension.x4, $dimension.x40, 0.5 (heightFraction)",
+        "'언제 쓰나' 표에 Skeleton과의 대비 행 포함 (Skeleton=로딩 중 임시 골격, ContentPlaceholder=영속적 empty state)",
+        "import: import { ContentPlaceholder } from \"@seed-design/react\"; namespace 패턴",
+        "180-250 lines"
+      ],
+      "priority": 1,
+      "passes": true,
+      "source_issue": "#14",
+      "wave": 1,
+      "complexity": "M",
+      "model": "opus",
+      "dependencies": []
+    },
+    {
+      "id": "W1-S4",
+      "title": "Skeleton reference",
+      "description": "plugins/daangn-seed-ai/skills/seed/references/components/skeleton.md. Flat export(namespace 아님). tone × radius 매트릭스 + shimmer base tokens.",
+      "files": [
+        "plugins/daangn-seed-ai/skills/seed/references/components/skeleton.md"
+      ],
+      "sources": [
+        "/tmp/seed-design-sync/packages/rootage/components/skeleton.yaml",
+        "/tmp/seed-design-sync/packages/react/src/components/Skeleton/"
+      ],
+      "acceptanceCriteria": [
+        "Anatomy: Root(=Skeleton 자체) + Shimmer(pseudo-element) 2 slot 설명",
+        "Variants: tone(neutral/magic), radius(0/8/16/full — full=pill/circle)",
+        "tone=magic: $gradient.shimmer-magic 사용 명시",
+        "base shimmer 토큰(shimmer.duration: 1.5s, shimmer.timingFunction: $timing-function.easing) Motion 또는 base token 섹션에 기록",
+        "width/height prop 필수 — 자주 쓰는 패턴 예제 3개 이상 (text line / card / avatar circle)",
+        "import: import { Skeleton } from \"@seed-design/react\"; (flat, namespace 아님 — 1줄 주석)",
+        "'언제 쓰나' 표에 ProgressCircle과의 비교 행 포함",
+        "150-200 lines"
+      ],
+      "priority": 1,
+      "passes": true,
+      "source_issue": "#14",
+      "wave": 1,
+      "complexity": "S",
+      "model": "sonnet",
+      "dependencies": []
+    },
+    {
+      "id": "W1-S5",
+      "title": "ProgressCircle reference",
+      "description": "plugins/daangn-seed-ai/skills/seed/references/components/progress-circle.md. size × tone × indeterminate 매트릭스 + 접근성.",
+      "files": [
+        "plugins/daangn-seed-ai/skills/seed/references/components/progress-circle.md"
+      ],
+      "sources": [
+        "/tmp/seed-design-sync/packages/rootage/components/progress-circle.yaml",
+        "/tmp/seed-design-sync/packages/react/src/components/ProgressCircle/"
+      ],
+      "acceptanceCriteria": [
+        "Anatomy: Root / Track(배경 원) / Range(진행 호·스피너) 3 slot (namespace)",
+        "Variants: size(24 inline / 40 page) × tone(neutral/brand/staticWhite) × indeterminate(true/false)",
+        "indeterminate=true 애니메이션 토큰(lengthDuration 1.2s, rotateDuration 1.2s, head/tail/rotate timingFunction) 명시",
+        "indeterminate=false: lengthDuration 300ms + value prop 0-1 사용 패턴 예제",
+        "접근성: role=progressbar, aria-valuenow/valuemin/valuemax(indeterminate=false만), aria-busy=true+aria-label(indeterminate=true)",
+        "import: import { ProgressCircle } from \"@seed-design/react\"; namespace",
+        "'언제 쓰나' 표에 Skeleton과의 비교 행 포함",
+        "180-260 lines"
+      ],
+      "priority": 1,
+      "passes": true,
+      "source_issue": "#14",
+      "wave": 1,
+      "complexity": "M",
+      "model": "opus",
+      "dependencies": []
+    },
+    {
+      "id": "W1-S6",
+      "title": "Typography (Text) reference",
+      "description": "plugins/daangn-seed-ai/skills/seed/references/components/typography.md. YAML=Typography, React=Text. 51 textStyle variants(3 semantic + 24 rem + 24 static) + 토큰과 구분.",
+      "files": [
+        "plugins/daangn-seed-ai/skills/seed/references/components/typography.md"
+      ],
+      "sources": [
+        "/tmp/seed-design-sync/packages/rootage/components/typography.yaml",
+        "/tmp/seed-design-sync/packages/react/src/components/Text/"
+      ],
+      "acceptanceCriteria": [
+        "파일 상단 네이밍 노트: 'upstream rootage는 Typography, React는 Text 컴포넌트'",
+        "'tokens/typography.md와의 관계' 섹션 Anatomy 다음 위치. 토큰=스케일 정의, 컴포넌트=적용 API. → [tokens/typography.md](../tokens/typography.md) 링크",
+        "textStyle 51개를 3그룹 테이블 분리: Semantic(3: screenTitle/articleBody/articleNote) / Rem scale(24: t1-t7 각 R/M/B + t8-t10 Bold-only) / Static(24: 동일 구조 Static prefix)",
+        "Props 테이블: React-only 기능 전부 (as / maxLines / color / align / userSelect / whiteSpace / textDecorationLine / fontSize / lineHeight / fontWeight 부분 오버라이드)",
+        "as prop 허용 값: span(default) / p / h1-h6 / strong / dt / dd / legend 명시",
+        "maxLines 동작: 1=ellipsis single line, 2+=multi-line clamp",
+        "import: import { Text } from \"@seed-design/react\";",
+        "Anti-pattern: textStyle 없이 Text로 감싸고 fontSize만 지정 / Text 대신 plain div + 수동 className 2가지",
+        "250-350 lines"
+      ],
+      "priority": 1,
+      "passes": true,
+      "source_issue": "#14",
+      "wave": 1,
+      "complexity": "L",
+      "model": "opus",
+      "dependencies": []
+    },
+    {
+      "id": "W2-S7",
+      "title": "Integration — index.md + which-overlay.md",
+      "description": "references/index.md 트리·커버리지 갱신 + decision-matrices/which-overlay.md의 InlineBanner deprecated 표기 패치 + sync-from-seed.mjs 재실행 검증.",
+      "files": [
+        "plugins/daangn-seed-ai/skills/seed/references/index.md",
+        "plugins/daangn-seed-ai/skills/seed/references/decision-matrices/which-overlay.md"
+      ],
+      "acceptanceCriteria": [
+        "index.md components/ 트리에 6개 신규 파일 + 1줄 설명 추가 (inline-banner/page-banner/content-placeholder/skeleton/progress-circle/typography)",
+        "index.md 커버리지 섹션: MVP 12→18 컴포넌트 반영, Skeleton/ProgressCircle 미포팅 목록에서 제거, Typography ↔ tokens/typography.md 구분 1줄, InlineBanner 'deprecated 마이그레이션 가이드로 유지' 표기",
+        "which-overlay.md 결정트리의 '리스트 아이템 근처 플로팅 안내' 라인을 'PageBanner (InlineBanner는 deprecated 마이그레이션 대상)'로 수정",
+        "which-overlay.md 비교표 InlineBanner 행 첫 컬럼을 '**InlineBanner** ⚠️ deprecated'로 변경",
+        "node scripts/sync-from-seed.mjs 실행 결과: inline-banner/page-banner/content-placeholder/skeleton/progress-circle/typography 가 not-ported에서 없다",
+        "ls components/*.md | grep -v '/_' | wc -l = 18"
+      ],
+      "priority": 2,
+      "passes": true,
+      "source_issue": "#14",
+      "wave": 2,
+      "complexity": "S",
+      "model": "sonnet",
+      "dependencies": [
+        "W1-S1",
+        "W1-S2",
+        "W1-S3",
+        "W1-S4",
+        "W1-S5",
+        "W1-S6"
+      ]
+    }
+  ]
+}
